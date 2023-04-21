@@ -2,7 +2,7 @@
 
 ### To Run:
 
-- Clone git
+- clone git
 - npm install in WORKING_ML folder
 - expo install in WORKING_ML folder
 - expo start
@@ -15,4 +15,6 @@
 
 #### on Emulator
 - after expo start, press `i` for iOS or `a` for Android emulator
+
+You can't take pictures on emulator, so use the debug function on the Scan screen to navigate to a specific details page by inputting the number of the image
 
