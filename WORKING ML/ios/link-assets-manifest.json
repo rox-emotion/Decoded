@@ -1,0 +1,17 @@
+{
+  "migIndex": 1,
+  "data": [
+    {
+      "path": "assets/fonts/CALIFI.ttf",
+      "sha1": "ddb6ed4919a724b9775aa6431f551c11da19b302"
+    },
+    {
+      "path": "assets/fonts/CALIFR.ttf",
+      "sha1": "932eb0748ea63723e708b28d99d812efb3b4340c"
+    },
+    {
+      "path": "assets/fonts/CalifornianFB-Bold.ttf",
+      "sha1": "703a24900de3ae1ac704f705f98e01611263d037"
+    }
+  ]
+}
