@@ -1,4 +1,5 @@
-import { StyleSheet } from 'react-native'
+import { Platform, StyleSheet } from 'react-native'
+import { StatusBar } from 'react-native';
 
 const styles = StyleSheet.create({
     title: {
@@ -48,6 +49,13 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         height: '90%',
+    },
+    mainContainer:
+    {
+        flex: 1,
+        backgroundColor: '#fff',
+        paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0,
+
     }
 
 })

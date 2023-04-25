@@ -121,7 +121,7 @@ const DetailScreenClean = ({ route }) => {
     const strokeDashoffset = circleCircumference - (circleCircumference * percetange) / 100;
 
     return (
-        <SafeAreaView>
+        <SafeAreaView style={styles.mainContainer}>
             <Header hasMenu={false} hasBackButton={true} />
             {
                 isScrolled

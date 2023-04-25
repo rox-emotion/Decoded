@@ -26,7 +26,7 @@ const AllScreen = () => {
         );
     };
     return (
-        <SafeAreaView>
+        <SafeAreaView style={styles.mainContainer}>
             <Header hasMenu={false} hasBackButton={true} />
             <View style={styles.container}>
                 <FlatList

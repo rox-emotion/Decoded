@@ -18,24 +18,6 @@ const ScanScreen = () => {
     console.error('ceau calule')
     const modelJson = require('./../../assets/model_normalized/model.json');
     const modelWeights = require('./../../assets/model_normalized/weights.bin')
-
-    // const modelWeights1 = require('./../../assets/my_model/1.bin')
-    // const modelWeights2 = require('./../../assets/my_model/2.bin')
-    // const modelWeights3 = require('./../../assets/my_model/3.bin')
-    // const modelWeights4 = require('./../../assets/my_model/4.bin')
-    // const modelWeights5 = require('./../../assets/my_model/5.bin')
-    // const modelWeights6 = require('./../../assets/my_model/6.bin')
-    // const modelWeights7 = require('./../../assets/my_model/7.bin')
-    // const modelWeights8 = require('./../../assets/my_model/8.bin')
-    // const modelWeights9 = require('./../../assets/my_model/9.bin')
-
-
-    // const model = await tf.loadLayersModel(
-    //   bundleResourceIO(modelJson,[modelWeights1, modelWeights2, modelWeights3, modelWeights4, modelWeights5, modelWeights6, modelWeights7, modelWeights8])
-    // )
-    // setModel(model);
-    // return model;
-
     const model = await tf.loadLayersModel(
       bundleResourceIO(modelJson, modelWeights)
     ).catch((e) => {
@@ -84,7 +66,6 @@ const ScanScreen = () => {
   };
 
   const preprocessTensor = (array) => {
-
     const emptyMatrix: number[][] = [];
 
     for (let i = 0; i < 256; i++) {
@@ -122,11 +103,10 @@ const ScanScreen = () => {
     }
     newMatrixI.reverse(); // Reverse the order of the rows
 
-
-    console.log(newMatrixI[0][0]); // [99, 86, 151]
-    console.log(newMatrixI[0][255]); // [51, 59, 83]
-    console.log(newMatrixI[255][0]); // [42, 55, 75]
-    console.log(newMatrixI[255][255]); // [52, 70, 86]
+    // console.log(newMatrixI[0][0]); // [99, 86, 151]
+    // console.log(newMatrixI[0][255]); // [51, 59, 83]
+    // console.log(newMatrixI[255][0]); // [42, 55, 75]
+    // console.log(newMatrixI[255][255]); // [52, 70, 86]
 
     return newMatrixI
   }
@@ -177,28 +157,16 @@ const ScanScreen = () => {
       // console.log(array[0][255][0]); // [42, 55, 75]
       // console.log(array[0][255][255]); // [52, 70, 86]
 
-      // const normalizedArray = array.map(row => row.map(pixel => pixel.map(value => value / 255)));
-
-      // const tensor = tf.tensor3d(normalizedArray, [1, 256, 256, 3]);
-
-      // const tensorFinal = tf.tensor4d(normalizedArray,[1,256,256,3])
-
       const newData = preprocessTensor(array)
 
       const tensor = reshapeTensor(newData);
 
       const toCheck = tensor.arraySync()
 
-      console.log(toCheck[0][0][0]); // [99, 86, 151]
-      console.log(toCheck[0][0][255]); // [51, 59, 83]
-      console.log(toCheck[0][255][0]); // [42, 55, 75]
-      console.log(toCheck[0][255][255]); // [52, 70, 86]
-
-      // console.log(toCheck)
-
-      // console.log(toCheck[0][128][128]/255)
-
-      // return tensor
+      // console.log(toCheck[0][0][0]); // [99, 86, 151]
+      // console.log(toCheck[0][0][255]); // [51, 59, 83]
+      // console.log(toCheck[0][255][0]); // [42, 55, 75]
+      // console.log(toCheck[0][255][255]); // [52, 70, 86]
 
       return reshapedImageTensor
     }
@@ -265,21 +233,9 @@ const ScanScreen = () => {
     }
   }
 
-  const handleCameraReady = () => {
-    setIsCameraReady(true);
-  };
-
-
+ 
   return (
-    <View
-      style={{
-        height: '100%',
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        justifyContent: 'center',
-      }}
-    >
+    <View style={styles.mainContainer}>
       {/* <Header hasMenu={false} hasBackButton={false} /> */}
       <TouchableOpacity style={{ zIndex: 1 }} onPress={() => { navigation.navigate('Debug') }}>
         <Text style={{ fontSize: 28, color: 'red' }}>Debug</Text>
@@ -289,8 +245,6 @@ const ScanScreen = () => {
         type={CameraType.back} ref={cameraRef}
       >
       </Camera>
-
-      {result !== '' && <Text>{result}</Text>}
     </View>
   );
 

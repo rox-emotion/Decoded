@@ -9,7 +9,7 @@ import AboutScreen from './screens/about/AboutScreen.component';
 import ScanScreen from './screens/scan/ScanScreen.component';
 import DetailScreen from './screens/detail/DetailScreen.component';
 import DebugScreen from './screens/debug/DebugScreen.component';
-
+import CorrectScanScreen from './screens/scan/NewScanScreen.component';
 const Stack = createNativeStackNavigator();
 
 const navTheme = DefaultTheme;
@@ -23,7 +23,7 @@ const App = () => {
       >
         <Stack.Screen name="Splash" component={SplashScreen} />
         <Stack.Screen name="Home" component={HomeScreen} />
-        <Stack.Screen name="Scan" component={ScanScreen} />
+        <Stack.Screen name="Scan" component={CorrectScanScreen} />
         <Stack.Screen name="Detail" component={DetailScreen} />
         <Stack.Screen name="All" component={AllScreen} />
         <Stack.Screen name="About" component={AboutScreen} />

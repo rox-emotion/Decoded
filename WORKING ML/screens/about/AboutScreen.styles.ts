@@ -1,4 +1,4 @@
-import { StyleSheet } from 'react-native';
+import { Platform, StatusBar, StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
     container: {
@@ -13,6 +13,13 @@ const styles = StyleSheet.create({
     },
     smallText: {
         fontSize: 16
+    },
+    mainContainer:
+    {
+        flex: 1,
+        backgroundColor: '#fff',
+        paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0,
+
     }
 })
 

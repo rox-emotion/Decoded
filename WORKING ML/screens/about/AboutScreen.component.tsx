@@ -10,7 +10,7 @@ const AboutScreen = () => {
 
     }
     return (
-        <SafeAreaView >
+        <SafeAreaView style={styles.mainContainer}>
             <Header hasMenu={true} hasBackButton={true} />
             <View style={styles.container}>
                 <ScrollView style={styles.scrollContainer}>
