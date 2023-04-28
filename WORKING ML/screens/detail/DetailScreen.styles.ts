@@ -1,26 +1,33 @@
-import { Platform, StyleSheet } from 'react-native'
+import { Dimensions, Platform, StyleSheet } from 'react-native'
 import { StatusBar } from 'react-native';
+import { TEXT_COLOR } from '../../utils';
 
 const styles = StyleSheet.create({
     title: {
         fontSize: 20,
         textAlign: 'center',
+        fontFamily: 'californian-regular',
+        fontWeight: "400",
     },
     name:
     {
         fontSize: 20,
         textAlign: 'center',
+        fontFamily: 'californian-bold',
+        fontWeight: "700",
     },
     smallText: {
-        fontSize: 16
+        fontSize: 18,
+        fontFamily: 'californian-regular',
+        color: TEXT_COLOR,
     },
     container: {
-        margin: 28,
-        marginBottom: 0,
+        marginBottom: 160,
+        marginTop: 58,
+        marginHorizontal: 28,
         flexDirection: 'column',
         justifyContent: 'center',
         alignItems: 'center',
-
     },
     modal: {
         padding: 16,
@@ -37,18 +44,18 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center'
     },
-
     player: {
         display: 'flex',
         flexDirection: 'row',
         alignSelf: 'center',
     },
     containerScroll: {
-        margin: 16,
         flexDirection: 'column',
         justifyContent: 'center',
         alignItems: 'center',
         height: '90%',
+        width: Dimensions.get('window').width - 56,
+        alignSelf: 'center',
     },
     mainContainer:
     {

@@ -1,16 +1,16 @@
-import { Platform, StatusBar, StyleSheet } from 'react-native'
+import { Dimensions, Platform, StatusBar, StyleSheet } from 'react-native'
 
 const styles = StyleSheet.create({
     container: {
-        margin: 28,
-        flexDirection: 'column',
+        width: Dimensions.get('window').width - 56,
+        alignSelf: 'center',
         height: '90%',
+        marginTop:24
+
     },
-    pictureRow: {
-        display: 'flex',
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'center',
+    image: {
+        height: 99,
+        width: 74,
     },
     mainContainer:
     {

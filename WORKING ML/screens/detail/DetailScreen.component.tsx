@@ -3,20 +3,17 @@ import { View, Text, SafeAreaView, Platform, Animated, Image, TouchableOpacity }
 import { useEffect, useState } from "react";
 import Svg, { G, Circle, Rect } from 'react-native-svg';
 import { Audio } from 'expo-av';
-import FadedScrollView from 'rn-faded-scrollview';
 import { useIsFocused } from "@react-navigation/native";
 
 import Header from "../../components/header/Header";
 import styles from "./DetailScreen.styles";
 import data from './data.json'
 import images from "./images";
-import { ScrollView } from "react-native-gesture-handler";
-import * as Font from 'expo-font';
-import { useCustomFonts } from './../fonts';
+import { Dimensions } from 'react-native';
+import RNFadedScrollView from 'expo-faded-scrollview';
 
-const DetailScreenClean = ({ route }) => {
+const DetailScreenClean = ({ route, navigation }) => {
 
-    const isFocused = useIsFocused();
     const id = route.params.id
     const allData = data
     const [sound, setSound] = useState();
@@ -25,28 +22,37 @@ const DetailScreenClean = ({ route }) => {
     const [isPaused, setIsPaused] = useState(false);
     const [isScrolled, setIsScrolled] = useState(true)
     const text = allData[id].transcript
-    const [fontsLoaded] = useCustomFonts();
+    const isFocused = useIsFocused()
+
+    const win = Dimensions.get('window');
+    const ratio = win.width / 1944;
 
     useEffect(() => {
         if (Platform.OS === 'ios') {
             enableAudio();
         }
 
-        if (isFocused) {
+        if (isFocused === true) {
+            console.log('play')
             playSound();
-        }
-        else {
-            sound.stopAsync();
+        } else if (isFocused === false) {
+            console.log('stop')
+            pauseSound();
         }
 
-        // Return a cleanup function to stop the sound when the component unmounts
         return () => {
-            console.log('Stopping Sound');
-            if (sound !== undefined) {
-                sound.stopAsync();
-            }
-        };
+            pauseSound()
+        }
     }, [isFocused]);
+
+    useEffect(() => {
+        // ...
+        const unsubscribe = navigation.addListener('blur', () => {
+          console.log('blur');
+          pauseSound();
+        });
+        return unsubscribe;
+      }, []);
 
     useEffect(() => {
         const timer = setInterval(() => {
@@ -78,17 +84,30 @@ const DetailScreenClean = ({ route }) => {
         if (status.isPlaying) {
             const progress = status.positionMillis / status.durationMillis;
             const percentage = Math.floor(progress * 100);
-            console.log(`Played ${percentage}% of the audio`);
+            // console.log(`Played ${percentage}% of the audio`);
             setPercentage(percentage)
         }
     }
 
     const playSound = async () => {
-        console.log('Loading Sound');
-        const { sound } = await Audio.Sound.createAsync(require('./../../assets/audio/001.ios.m4a'), { shouldPlay: true });
-        setSound(sound)
-        console.log('Playing Sound');
-        await sound.playAsync();
+        if (sound) {
+            await sound.playAsync();
+        }
+        else {
+            console.log('Loading Sound');
+            const { sound } = await Audio.Sound.createAsync(require('./../../assets/audio/001.ios.m4a'), { shouldPlay: true });
+            setSound(sound)
+            console.log('Playing Sound');
+            await sound.playAsync();
+        }
+
+    }
+
+    const pauseSound = async () => {
+        if (sound) {
+            console.log('Pausing Sound');
+            await sound.pauseAsync();
+        }
     }
 
     const enableAudio = async () => {
@@ -122,19 +141,19 @@ const DetailScreenClean = ({ route }) => {
 
     return (
         <SafeAreaView style={styles.mainContainer}>
-            <Header hasMenu={false} hasBackButton={true} />
+            <Header hasBack={true} hasIcon={true} hasMenu={false} />
             {
                 isScrolled
                     ? (
                         <View style={styles.container}>
                             <Image source={images[id]}
-                                style={{ height: 400, width: 300, marginBottom: 23 }} />
+                                style={{ width: win.width - 56, height: 2598 * ratio - 100, marginBottom: 16 }} />
                             <View style={{ justifyContent: 'space-evenly' }}>
 
-                                <Text style={[styles.name, { color: allData[id].color }]}>Full Name</Text>
+                                <Text style={[styles.name, { color: allData[id].color }]}>Alyssarhaye Graciano</Text>
                                 <Text style={[styles.title, { color: allData[id].color }]}>Artist and Writer</Text>
-                                <Text style={[styles.title, { color: allData[id].color }]}>02_1994</Text>
-                                <View style={styles.player}>
+                                <Text style={[styles.title, { color: allData[id].color, marginBottom: 20 }]}>02_1994</Text>
+                                <View style={[styles.player, { marginBottom: 24 }]}>
                                     <TouchableOpacity
                                         onPress={toggleSound}
                                     >
@@ -162,9 +181,9 @@ const DetailScreenClean = ({ route }) => {
                     : (
 
                         <View style={styles.containerScroll}>
-                            <Text style={styles.title}>Full Name</Text>
-                            <Text style={styles.title}>Artist and Writer</Text>
-                            <Text style={styles.title}>02_1994</Text>
+                            <Text style={[styles.name, { color: allData[id].color }]}>Alyssarhaye Graciano</Text>
+                            <Text style={[styles.title, { color: allData[id].color }]}>Artist and Writer</Text>
+                            <Text style={[styles.title, { color: allData[id].color }]}>02_1994</Text>
                             <View style={[styles.player, { marginBottom: 14 }]}>
                                 <TouchableOpacity
                                     onPress={toggleSound}
@@ -184,9 +203,10 @@ const DetailScreenClean = ({ route }) => {
                                     </Svg>
                                 </TouchableOpacity>
                             </View>
-                            {/* <ScrollView fadeSize={40} fadeColors={['#ffffff', '#ffffff00']} */}
-                            <ScrollView
-                                style={{ height: '80%' }}>
+                            <RNFadedScrollView allowStartFade={true} fadeSize={40} allowEndFade={false}
+                                fadeColors={['rgba(216, 216, 216, 0.1)', 'rgba(255, 255, 255, 0.3)', 'rgba(255, 255, 255, 0.99)']}
+                            >
+
                                 <Text style={styles.smallText}>
                                     {text}
                                 </Text>
@@ -197,7 +217,7 @@ const DetailScreenClean = ({ route }) => {
                                     <Image source={require('./../../assets/icons/up_arrow.png')} style={{ height: 50, width: 50, alignSelf: 'center' }} />
                                 </TouchableOpacity>
 
-                            </ScrollView>
+                            </RNFadedScrollView>
                         </View>
 
 

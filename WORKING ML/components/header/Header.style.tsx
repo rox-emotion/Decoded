@@ -1,12 +1,16 @@
-import { StyleSheet } from "react-native"
+import { Dimensions, StyleSheet } from "react-native"
 const styles = StyleSheet.create({
     container: {
-        display: 'flex',
         flexDirection: 'row',
         justifyContent: 'space-between',
-        alignItems: 'center',    
-        marginLeft: 28,
-        marginRight: 28
+        width: Dimensions.get('window').width - 58,
+        alignSelf: 'center',
+        alignItems: 'center',
+    },
+    singleContainer: {
+        flexDirection: 'row',
+        width: Dimensions.get('window').width - 58,
+        justifyContent: 'flex-end'
     }
 })
 

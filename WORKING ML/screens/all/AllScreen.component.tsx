@@ -5,6 +5,7 @@ import Header from "../../components/header/Header";
 import { useState } from "react";
 import styles from "./AllScreen.styles";
 import { useNavigation } from "@react-navigation/native";
+import { useEffect } from "react";
 
 const AllScreen = () => {
     const scrollRef = useRef();
@@ -20,16 +21,18 @@ const AllScreen = () => {
         return (
             <View>
                 <TouchableOpacity onPress={() => { navigateToDetail(index) }}>
-                    <Image style={{ height: 94, width: 74, margin: 6 }} source={images[index + 2]} />
+                    <Image style={{ height: 99, width: 74, marginBottom: 10 }} source={images[index + 2]} />
                 </TouchableOpacity>
             </View>
         );
     };
     return (
         <SafeAreaView style={styles.mainContainer}>
-            <Header hasMenu={false} hasBackButton={true} />
+            <Header hasBack={true} hasIcon={true} hasMenu={false} />
             <View style={styles.container}>
                 <FlatList
+                    // contentContainerStyle={styles.pictureRow}
+                    columnWrapperStyle={{justifyContent: 'space-between'}}
                     data={images}
                     renderItem={renderItem}
                     keyExtractor={item => item}

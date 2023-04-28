@@ -60,10 +60,5 @@
 	<key>UIStatusBarStyle</key>
 	<string>UIStatusBarStyleDefault</string>
 	<key>UIAppFonts</key>
-	<array>
-		<string>CALIFI.ttf</string>
-		<string>CALIFR.ttf</string>
-		<string>CalifornianFB-Bold.ttf</string>
-	</array>
 </dict>
 </plist>

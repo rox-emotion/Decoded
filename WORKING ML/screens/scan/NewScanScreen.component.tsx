@@ -1,30 +1,25 @@
 import React, { useEffect } from 'react';
-import { View, TouchableOpacity, Text, Platform } from 'react-native';
+import { View, TouchableOpacity, Text, Platform, Dimensions } from 'react-native';
 import Header from '../../components/header/Header';
 import styles from './ScanScreen.styles';
 import { Camera, CameraType } from 'expo-camera';
 import { useRef, useState } from 'react';
 import { useIsFocused } from '@react-navigation/native';
-import { bundleResourceIO, decodeJpeg } from '@tensorflow/tfjs-react-native';
+import { decodeJpeg } from '@tensorflow/tfjs-react-native';
 import * as tf from '@tensorflow/tfjs';
-import { LayersModel } from '@tensorflow/tfjs';
 import * as MediaLibrary from 'expo-media-library';
 import * as ImageManipulator from 'expo-image-manipulator';
 import * as FileSystem from 'expo-file-system';
-
+import { useSelector } from 'react-redux';
+import { Image } from 'react-native';
 
 const CorrectScanScreen = ({ navigation }) => {
     const cameraRef = useRef<Camera>(null);
     const isFocused = useIsFocused();
-    const [model, setModel] = useState<LayersModel>();
+    const model = useSelector(state => state.model.model);
     const [hasCameraPermission, setHasCameraPermission] = useState<boolean>();
-    const [isTfReady, setIsTfReady] = useState(false);
     const [imageURI, setImageURI] = useState('./');
 
-    useEffect(() => {
-        askForPermissions()
-        loadTensorFlow()
-    }, [])
 
     useEffect(() => {
         const unsubscribe = navigation.addListener('focus', () => {
@@ -33,28 +28,6 @@ const CorrectScanScreen = ({ navigation }) => {
 
         return unsubscribe;
     }, [navigation]);
-
-
-    const prepareModel = async () => {
-        console.log("prepareModel")
-        const modelJson = require('./../../assets/model_normalized/model.json');
-        const modelWeights = require('./../../assets/model_normalized/weights.bin')
-        const model = await tf.loadLayersModel(
-            bundleResourceIO(modelJson, modelWeights)
-        ).catch((e) => {
-            console.log("[LOADING MODEL ERROR] info:", e)
-        })
-        setModel(model)
-        console.log("model prepared")
-        return model;
-    }
-
-    const loadTensorFlow = async () => {
-        console.log("load tensorflow")
-        await tf.ready();
-        setIsTfReady(true)
-        console.log("tensorflow loaded")
-    }
 
     const askForPermissions = async () => {
         console.log("ask for permissions")
@@ -65,12 +38,13 @@ const CorrectScanScreen = ({ navigation }) => {
 
     const main = async () => {
         console.log("main")
-        const model = await prepareModel()
-
+        console.log('n-am intrat')
+        console.error(cameraRef.current)
         if (model && cameraRef.current) {
+            console.log('am intrat')
             const photo = await takePicture()
 
-            const processedImg = await transformImageToTensor(photo.uri)
+            const processedImg = await transformImageToTensor(imageURI)
             const predictionMe = await model.predict(processedImg)
             console.error('gata prezicerea')
             console.log("The prediction is: " + predictionMe)
@@ -79,25 +53,30 @@ const CorrectScanScreen = ({ navigation }) => {
             navigation.navigate("Detail", { id: predictedClassIndex })
 
         }
-
-
     }
+    
     const takePicture = async () => {
         console.log("takePicture")
         let photo = { uri: './' }
+        console.log(cameraRef.current)
         if (cameraRef.current) {
-            photo = await cameraRef.current.takePictureAsync({
-                skipProcessing: true
-            })
-            setImageURI(photo.uri)
-
-            //TO DELETE IN FINAL VERSION
-            try {
-                const asset = await MediaLibrary.createAssetAsync(photo.uri);
-                console.log('Saved asset:', asset);
-            } catch (error) {
-                console.log('An error occurred while saving the asset:', error);
+            try{
+                photo = await cameraRef.current.takePictureAsync({
+                    skipProcessing: true
+                })
+                setImageURI(photo.uri)
+    
+                //TO DELETE IN FINAL VERSION
+                try {
+                    const asset = await MediaLibrary.createAssetAsync(photo.uri);
+                    console.log('Saved asset:', asset);
+                } catch (error) {
+                    console.log('An error occurred while saving the asset:', error);
+                }
+            } catch (error){
+                console.log("PROBLEMA CU CAMERA CEVA: ", error)
             }
+            
         }
         console.log("gata takePicture")
         return photo
@@ -228,7 +207,7 @@ const CorrectScanScreen = ({ navigation }) => {
 
     return (
         <View style={styles.mainContainer}>
-            <Header hasMenu={false} hasBackButton={false} />
+            <Header hasMenu={false} hasBack={false} hasIcon={true} />
             <TouchableOpacity style={{ zIndex: 1 }} onPress={() => { navigation.navigate('Debug') }}>
                 <Text style={{ fontSize: 28, color: 'red' }}>Debug</Text>
             </TouchableOpacity>
@@ -239,6 +218,11 @@ const CorrectScanScreen = ({ navigation }) => {
                         type={CameraType.back}
                         ref={cameraRef}
                     >
+                        <Image
+                            source={require('./../../assets/icons/target_icon.png')}
+                            style={{ height: 157, width: 95, marginTop: Dimensions.get('window').height * 0.23, alignSelf: 'center' }}
+
+                        />
                     </Camera>
                 )
             }
