@@ -1,10 +1,9 @@
-import React from "react";
+import React, { useRef } from "react";
 import { View, Text, SafeAreaView, Platform, Animated, Image, TouchableOpacity } from 'react-native';
 import { useEffect, useState } from "react";
 import Svg, { G, Circle, Rect } from 'react-native-svg';
 import { Audio } from 'expo-av';
 import { useIsFocused } from "@react-navigation/native";
-
 import Header from "../../components/header/Header";
 import styles from "./DetailScreen.styles";
 import data from './data.json'
@@ -12,18 +11,16 @@ import images from "./images";
 import { Dimensions } from 'react-native';
 import RNFadedScrollView from 'expo-faded-scrollview';
 
+
 const DetailScreenClean = ({ route, navigation }) => {
 
     const id = route.params.id
     const allData = data
     const [sound, setSound] = useState();
     const [percetange, setPercentage] = useState(0)
-    const [passed, setPassed] = useState(0)
     const [isPaused, setIsPaused] = useState(false);
-    const [isScrolled, setIsScrolled] = useState(true)
     const text = allData[id].transcript
     const isFocused = useIsFocused()
-
     const win = Dimensions.get('window');
     const ratio = win.width / 1944;
 
@@ -46,13 +43,12 @@ const DetailScreenClean = ({ route, navigation }) => {
     }, [isFocused]);
 
     useEffect(() => {
-        // ...
         const unsubscribe = navigation.addListener('blur', () => {
-          console.log('blur');
-          pauseSound();
+            console.log('blur');
+            pauseSound();
         });
         return unsubscribe;
-      }, []);
+    }, []);
 
     useEffect(() => {
         const timer = setInterval(() => {
@@ -84,7 +80,6 @@ const DetailScreenClean = ({ route, navigation }) => {
         if (status.isPlaying) {
             const progress = status.positionMillis / status.durationMillis;
             const percentage = Math.floor(progress * 100);
-            // console.log(`Played ${percentage}% of the audio`);
             setPercentage(percentage)
         }
     }
@@ -118,118 +113,152 @@ const DetailScreenClean = ({ route, navigation }) => {
         })
     }
 
-    const scrollDown = () => {
-        setIsScrolled(false)
-    }
-
-    const scrollUp = () => {
-        setIsScrolled(true)
-    }
 
     const AnimatedCircle = Animated.createAnimatedComponent(Circle);
     const radius = 55;
     const strokeWidth = 20;
-    const duration = 500;
     const color = allData[id].color;
     const inactiveColor = '#EBE9E4'
-    const delay = 0;
-    const max = 100;
     const halfCircle = radius + strokeWidth;
     const circleCircumference = 2 * Math.PI * radius;
     const circleRef = React.useRef();
     const strokeDashoffset = circleCircumference - (circleCircumference * percetange) / 100;
 
+
+    //ANIMATIONS
+    const scrollAnim = useRef(new Animated.Value(0)).current;
+    const [isScrolled, setIsScrolled] = useState(false)
+    const fadeAnim = useRef(new Animated.Value(0)).current;
+
+
+    const scrollDown = () => {
+        Animated.parallel([
+            Animated.timing(scrollAnim, {
+                toValue: 1,
+                duration: 900,
+                useNativeDriver: true,
+            }),
+            Animated.timing(fadeAnim, {
+                toValue: -2000 * ratio,
+                duration: 900,
+                useNativeDriver: true,
+            })
+        ]).start();
+        const timer = setTimeout(() => {
+            setIsScrolled(true)
+        }, 900)
+    }
+
+    const scrollUp = () => {
+        setIsScrolled(false)
+        Animated.timing(scrollAnim, {
+            toValue: 0,
+            duration: 0,
+            useNativeDriver: true,
+        }).start()
+    };
+
     return (
-        <SafeAreaView style={styles.mainContainer}>
-            <Header hasBack={true} hasIcon={true} hasMenu={false} />
-            {
-                isScrolled
-                    ? (
-                        <View style={styles.container}>
-                            <Image source={images[id]}
-                                style={{ width: win.width - 56, height: 2598 * ratio - 100, marginBottom: 16 }} />
-                            <View style={{ justifyContent: 'space-evenly' }}>
+        <SafeAreaView style={styles.pageContainer}>
+            <View style={styles.mainContainer}>
+                <Header hasBack={true} hasIcon={true} hasMenu={false} />
+                <Animated.Image
+                    source={images[id]}
+                    style={{
+                        width: win.width - 56,
+                        height: 2598 * ratio - 100,
+                        marginBottom: 16,
+                        opacity: scrollAnim.interpolate({
+                            inputRange: [0, 1],
+                            outputRange: [1, 0],
+                            extrapolate: 'clamp',
+                        }),
+                        transform: [
+                            {
+                                translateY: scrollAnim.interpolate({
+                                    inputRange: [0, 1],
+                                    outputRange: [0, -2598 * ratio],
+                                    extrapolate: 'clamp',
+                                }),
+                            },
+                        ],
+                        marginTop: 24
+                    }}
+                />
 
-                                <Text style={[styles.name, { color: allData[id].color }]}>Alyssarhaye Graciano</Text>
-                                <Text style={[styles.title, { color: allData[id].color }]}>Artist and Writer</Text>
-                                <Text style={[styles.title, { color: allData[id].color, marginBottom: 20 }]}>02_1994</Text>
-                                <View style={[styles.player, { marginBottom: 24 }]}>
-                                    <TouchableOpacity
-                                        onPress={toggleSound}
-                                    >
-                                        <Svg width={radius * 2} height={radius * 2} viewBox={`0 0 ${halfCircle * 2} ${halfCircle * 2}`}>
-                                            <G rotation='-90' origin={`${halfCircle}, ${halfCircle}`}>
-                                                <Circle cy='50%' cx='50%' stroke={inactiveColor} strokeWidth={strokeWidth} r={radius} fill='transparent' />
-                                                {
-                                                    isPaused
-                                                        ? <Image source={require('./../../assets/icons/pause.png')} style={{ width: 25, height: 30, alignSelf: 'center', marginTop: '35%' }} />
+                <Animated.View
+                    style={{
+                        transform: [
+                            {
+                                translateY: scrollAnim.interpolate({
+                                    inputRange: [0, 1],
+                                    outputRange: [0, -2150 * ratio],
+                                    extrapolate: 'clamp',
+                                }),
+                            },
+                        ],
+                        height: Dimensions.get('window').height - 80,
 
-                                                        : null
-                                                }
-                                                <AnimatedCircle ref={circleRef} cy='50%' cx='50%' stroke={color} strokeWidth={strokeWidth} r={radius} fill='transparent' strokeDasharray={circleCircumference} strokeDashoffset={strokeDashoffset} />
+                    }}
+                >
+                    <View style={{ justifyContent: 'space-evenly' }}>
 
-                                            </G>
-                                        </Svg>
-                                    </TouchableOpacity>
-                                </View>
-                                <TouchableOpacity onPress={scrollDown}>
+                        <Text style={[styles.name, { color: allData[id].color }]}>Alyssarhaye Graciano</Text>
+                        <Text style={[styles.title, { color: allData[id].color }]}>Artist and Writer</Text>
+                        <Text style={[styles.title, { color: allData[id].color, marginBottom: 20 }]}>02_1994</Text>
+                        {/* //PLAYER */}
+                        <View style={[styles.player, { marginBottom: 24 }]}>
+                            <TouchableOpacity
+                                onPress={toggleSound}
+                            >
+                                <Svg width={radius * 2} height={radius * 2} viewBox={`0 0 ${halfCircle * 2} ${halfCircle * 2}`}>
+                                    <G rotation='-90' origin={`${halfCircle}, ${halfCircle}`}>
+                                        <Circle cy='50%' cx='50%' stroke={inactiveColor} strokeWidth={strokeWidth} r={radius} fill='transparent' />
+                                        {
+                                            isPaused
+                                                ? <Image source={require('./../../assets/icons/pause.png')} style={{ width: 25, height: 30, alignSelf: 'center', marginTop: '35%' }} />
+
+                                                : null
+                                        }
+                                        <AnimatedCircle ref={circleRef} cy='50%' cx='50%' stroke={color} strokeWidth={strokeWidth} r={radius} fill='transparent' strokeDasharray={circleCircumference} strokeDashoffset={strokeDashoffset} />
+
+                                    </G>
+                                </Svg>
+                            </TouchableOpacity>
+                        </View>
+                        {
+                            isScrolled
+                                ? null
+                                : <TouchableOpacity onPress={() => { scrollDown() }}>
                                     <Image source={require('./../../assets/icons/down_arrow.png')} style={{ height: 50, width: 50, alignSelf: 'center' }} />
                                 </TouchableOpacity>
-                            </View>
-                        </View>
-                    )
-                    : (
-
-                        <View style={styles.containerScroll}>
-                            <Text style={[styles.name, { color: allData[id].color }]}>Alyssarhaye Graciano</Text>
-                            <Text style={[styles.title, { color: allData[id].color }]}>Artist and Writer</Text>
-                            <Text style={[styles.title, { color: allData[id].color }]}>02_1994</Text>
-                            <View style={[styles.player, { marginBottom: 14 }]}>
-                                <TouchableOpacity
-                                    onPress={toggleSound}
-                                >
-                                    <Svg width={radius * 2} height={radius * 2} viewBox={`0 0 ${halfCircle * 2} ${halfCircle * 2}`}>
-                                        <G rotation='-90' origin={`${halfCircle}, ${halfCircle}`}>
-                                            <Circle cy='50%' cx='50%' stroke={inactiveColor} strokeWidth={strokeWidth} r={radius} fill='transparent' />
-                                            {
-                                                isPaused
-                                                    ? <Image source={require('./../../assets/icons/pause.png')} style={{ width: 25, height: 30, alignSelf: 'center', marginTop: '35%' }} />
-
-                                                    : null
-                                            }
-                                            <AnimatedCircle ref={circleRef} cy='50%' cx='50%' stroke={color} strokeWidth={strokeWidth} r={radius} fill='transparent' strokeDasharray={circleCircumference} strokeDashoffset={strokeDashoffset} />
-
-                                        </G>
-                                    </Svg>
-                                </TouchableOpacity>
-                            </View>
-                            <RNFadedScrollView allowStartFade={true} fadeSize={40} allowEndFade={false}
-                                fadeColors={['rgba(216, 216, 216, 0.1)', 'rgba(255, 255, 255, 0.3)', 'rgba(255, 255, 255, 0.99)']}
-                            >
-
+                        }
+                    </View>
+                    {
+                        isScrolled
+                            ? <RNFadedScrollView allowStartFade={true} fadeSize={40} allowEndFade={false}
+                                fadeColors={['rgba(255, 255, 255, 0.1)', 'rgba(255, 255, 255, 0.3)', 'rgba(255, 255, 255, 0.99)']}>
                                 <Text style={styles.smallText}>
                                     {text}
                                 </Text>
-
-                                <TouchableOpacity
-                                    onPress={scrollUp}
-                                >
-                                    <Image source={require('./../../assets/icons/up_arrow.png')} style={{ height: 50, width: 50, alignSelf: 'center' }} />
-                                </TouchableOpacity>
-
                             </RNFadedScrollView>
-                        </View>
 
+                            : null
+                    }
+                    {
+                        isScrolled
+                            ? <TouchableOpacity
+                                onPress={scrollUp}
+                            >
+                                <Image source={require('./../../assets/icons/up_arrow.png')} style={{ height: 50, width: 50, alignSelf: 'center' }} />
+                            </TouchableOpacity>
+                            : null
+                    }
+                </Animated.View>
+            </View>
 
-
-                    )
-            }
-
-        </SafeAreaView>
+        </SafeAreaView >
     )
-
-
-
 }
 
 export default DetailScreenClean;

@@ -17,7 +17,6 @@ import Header from '../../components/header/Header';
 const FinalScanScreen = () => {
 
 
-    const [isTfReady, setIsTfReady] = useState(false);
     const [hasCameraPermission, setHasCameraPermission] = useState(false);
     const cameraRef = useRef<Camera>(null);
     const [imageURI, setImageURI] = useState('./');
@@ -133,16 +132,16 @@ const FinalScanScreen = () => {
             const imageTensor = decodeJpeg(imageBytes);
             const normalizedImageTensor = imageTensor.div(255.0);
             const reshapedImageTensor = tf.reshape(normalizedImageTensor, [1, 256, 256, 3])
-            const array = reshapedImageTensor.arraySync();
+            // const array = reshapedImageTensor.arraySync();
 
             // console.log(array[0][0][0]); // [99, 86, 151]
             // console.log(array[0][0][255]); // [51, 59, 83]
             // console.log(array[0][255][0]); // [42, 55, 75]
             // console.log(array[0][255][255]); // [52, 70, 86]
 
-            const newData = preprocessTensor(array)
+            // const newData = preprocessTensor(array)
 
-            const tensor = reshapeTensor(newData);
+            // const tensor = reshapeTensor(newData);
 
             // console.log(toCheck[0][0][0]); // [99, 86, 151]
             // console.log(toCheck[0][0][255]); // [51, 59, 83]
@@ -155,8 +154,6 @@ const FinalScanScreen = () => {
             console.error('PIC BROKEN')
         }
     }
-
-
 
     const takePicture = async () => {
         console.error('READY FOR PICTURES')
@@ -186,7 +183,6 @@ const FinalScanScreen = () => {
 
             }
 
-
             const processedImg = await transformImageToTensor(photo)
             console.error('gata procesarea')
             const predictionMe = await model.predict(processedImg)
@@ -197,7 +193,7 @@ const FinalScanScreen = () => {
             const confidenceLevel = parseFloat((predictionMe.dataSync()[predictedClassIndex] * 100).toFixed(2));
             console.log("The confidence level is: ", confidenceLevel);
 
-            if (confidenceLevel < 7) {
+            if (confidenceLevel < 5) {
                 takePicture()
             } else {
                 console.log(predictedClassIndex)
@@ -206,7 +202,6 @@ const FinalScanScreen = () => {
 
         }
     }
-
 
     return (
         <View style={styles.mainContainer}>

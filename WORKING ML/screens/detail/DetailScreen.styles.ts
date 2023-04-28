@@ -24,10 +24,12 @@ const styles = StyleSheet.create({
     container: {
         marginBottom: 160,
         marginTop: 58,
+        // height:  Dimensions.get('window').height,
         marginHorizontal: 28,
         flexDirection: 'column',
         justifyContent: 'center',
         alignItems: 'center',
+        backgroundColor: 'yellow'
     },
     modal: {
         padding: 16,
@@ -57,12 +59,15 @@ const styles = StyleSheet.create({
         width: Dimensions.get('window').width - 56,
         alignSelf: 'center',
     },
-    mainContainer:
+    pageContainer:
     {
         flex: 1,
         backgroundColor: '#fff',
         paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0,
 
+    },
+    mainContainer: {
+        marginHorizontal: 28,
     }
 
 })

@@ -2,15 +2,12 @@ import React from "react";
 import { Image, View, TouchableOpacity } from "react-native";
 import { useNavigation, useRoute } from '@react-navigation/native';
 import styles from "./Header.style";
-import { Text } from "react-native";
+
 const Header = ({ hasMenu, hasBack, hasIcon }) => {
     const menu = hasMenu;
     const back = hasBack;
     const icon = hasIcon;
     const navigation = useNavigation();
-    const route = useRoute();
-    console.log(route.name);
-
 
     return (
         <View style={styles.container}>

@@ -1,14 +1,11 @@
 import React from "react";
-import { useRef } from 'react';
-import { SafeAreaView, Text, Modal, ScrollView, Image, View, TouchableOpacity, FlatList } from "react-native";
+import { SafeAreaView, Image, View, TouchableOpacity, FlatList } from "react-native";
 import Header from "../../components/header/Header";
 import { useState } from "react";
 import styles from "./AllScreen.styles";
 import { useNavigation } from "@react-navigation/native";
-import { useEffect } from "react";
 
 const AllScreen = () => {
-    const scrollRef = useRef();
     const navigation = useNavigation()
     const navigateToDetail = (pic) => {
         console.log(pic)
@@ -31,7 +28,6 @@ const AllScreen = () => {
             <Header hasBack={true} hasIcon={true} hasMenu={false} />
             <View style={styles.container}>
                 <FlatList
-                    // contentContainerStyle={styles.pictureRow}
                     columnWrapperStyle={{justifyContent: 'space-between'}}
                     data={images}
                     renderItem={renderItem}

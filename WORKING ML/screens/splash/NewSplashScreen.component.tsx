@@ -52,8 +52,6 @@ const NewSplashScreen = () => {
         console.log("tensorflow loaded")
     }
 
-  
-
     return (
         <View style={styles.container}>
             <Video

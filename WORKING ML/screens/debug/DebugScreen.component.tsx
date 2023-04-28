@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, TextInput, TouchableOpacity, Text, SafeAreaView } from 'react-native'
+import {TextInput, TouchableOpacity, Text, SafeAreaView } from 'react-native'
 import { useState } from 'react';
 
 const DebugScreen = ({ navigation }) => {
@@ -11,15 +11,16 @@ const DebugScreen = ({ navigation }) => {
 
     return (
         <SafeAreaView style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+            <Text style={{marginTop:40}}></Text>
             <TextInput
-                style={{ backgroundColor: 'red', width: 100, height: 50 }}
+                style={{ backgroundColor: 'red', width: 200, height: 50 }}
                 onChangeText={(value) => { setDetail(value) }}
                 value={detail}
                 keyboardType="numeric"
             />
 
             <TouchableOpacity onPress={(moveOver)}>
-                <Text>Go</Text>
+                <Text style={{fontSize:50}}>Go</Text>
             </TouchableOpacity>
         </SafeAreaView>
     )
