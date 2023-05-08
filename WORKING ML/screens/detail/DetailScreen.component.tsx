@@ -3,7 +3,7 @@ import { View, Text, SafeAreaView, Platform, Animated, Image, TouchableOpacity }
 import { useEffect, useState } from "react";
 import Svg, { G, Circle, Rect } from 'react-native-svg';
 import { Audio } from 'expo-av';
-import { useIsFocused } from "@react-navigation/native";
+import { useIsFocused, useNavigation } from "@react-navigation/native";
 import Header from "../../components/header/Header";
 import styles from "./DetailScreen.styles";
 import data from './data.json'
@@ -16,13 +16,14 @@ const DetailScreenClean = ({ route, navigation }) => {
 
     const id = route.params.id
     const allData = data
-    const [sound, setSound] = useState();
     const [percetange, setPercentage] = useState(0)
     const [isPaused, setIsPaused] = useState(false);
     const text = allData[id].transcript
     const isFocused = useIsFocused()
     const win = Dimensions.get('window');
     const ratio = win.width / 1944;
+    const nav = useNavigation()
+    const soundRef = useRef();
 
     useEffect(() => {
         if (Platform.OS === 'ios') {
@@ -43,12 +44,13 @@ const DetailScreenClean = ({ route, navigation }) => {
     }, [isFocused]);
 
     useEffect(() => {
-        const unsubscribe = navigation.addListener('blur', () => {
-            console.log('blur');
+        const unsubscribe = nav.addListener('beforeRemove', () => {
+            console.log('backback')
             pauseSound();
         });
+
         return unsubscribe;
-    }, []);
+    }, [nav]);
 
     useEffect(() => {
         const timer = setInterval(() => {
@@ -59,51 +61,51 @@ const DetailScreenClean = ({ route, navigation }) => {
             clearInterval(timer)
         })
 
-    }, [sound])
+    }, [soundRef])
 
     const toggleSound = async () => {
-        if (sound) {
-            const status = await sound.getStatusAsync();
+        if (soundRef.current) {
+            const status = await soundRef.current.getStatusAsync();
             if (status.isPlaying === true) {
-                await sound.pauseAsync()
+                await soundRef.current.pauseAsync()
                 setIsPaused(true)
             }
             else {
-                await sound.playAsync()
+                await soundRef.current.playAsync()
                 setIsPaused(false)
             }
         }
     }
 
     const calculatePosition = async () => {
-        const status = await sound.getStatusAsync();
-        if (status.isPlaying) {
-            const progress = status.positionMillis / status.durationMillis;
-            const percentage = Math.floor(progress * 100);
-            setPercentage(percentage)
+        if (soundRef.current) {
+            const status = await soundRef.current.getStatusAsync();
+            if (status.isPlaying) {
+                const progress = status.positionMillis / status.durationMillis;
+                const percentage = Math.floor(progress * 100);
+                setPercentage(percentage);
+            }
         }
-    }
+    };
 
     const playSound = async () => {
-        if (sound) {
-            await sound.playAsync();
-        }
-        else {
+        if (soundRef.current) {
+            await soundRef.current.playAsync();
+        } else {
             console.log('Loading Sound');
             const { sound } = await Audio.Sound.createAsync(require('./../../assets/audio/001.ios.m4a'), { shouldPlay: true });
-            setSound(sound)
+            soundRef.current = sound;
             console.log('Playing Sound');
             await sound.playAsync();
         }
-
-    }
+    };
 
     const pauseSound = async () => {
-        if (sound) {
+        if (soundRef.current) {
             console.log('Pausing Sound');
-            await sound.pauseAsync();
+            await soundRef.current.pauseAsync();
         }
-    }
+    };
 
     const enableAudio = async () => {
         await Audio.setAudioModeAsync({
@@ -236,24 +238,36 @@ const DetailScreenClean = ({ route, navigation }) => {
                     </View>
                     {
                         isScrolled
-                            ? <RNFadedScrollView allowStartFade={true} fadeSize={40} allowEndFade={false}
+                            ? <>
+                            <RNFadedScrollView allowStartFade={true} fadeSize={40} allowEndFade={false}
+
                                 fadeColors={['rgba(255, 255, 255, 0.1)', 'rgba(255, 255, 255, 0.3)', 'rgba(255, 255, 255, 0.99)']}>
+
                                 <Text style={styles.smallText}>
                                     {text}
                                 </Text>
                             </RNFadedScrollView>
+                                <TouchableOpacity
+                                    onPress={scrollUp}
+                                    style={{ paddingBottom: 48 }}
+                                >
+                                    <Image source={require('./../../assets/icons/up_arrow.png')} style={{ height: 50, width: 50, alignSelf: 'center' }} />
+                                </TouchableOpacity>
+                            </>
 
                             : null
                     }
-                    {
+
+                    {/* {
                         isScrolled
                             ? <TouchableOpacity
                                 onPress={scrollUp}
+                                style={{paddingBottom: 48}}
                             >
                                 <Image source={require('./../../assets/icons/up_arrow.png')} style={{ height: 50, width: 50, alignSelf: 'center' }} />
                             </TouchableOpacity>
                             : null
-                    }
+                    } */}
                 </Animated.View>
             </View>
 
