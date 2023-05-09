@@ -15,6 +15,14 @@
           "audio"
         ]
       }
+    },
+    "extra": {
+      "eas": {
+        "projectId": "25044ba1-e385-40c7-bc6a-852e876919d5"
+      }
+    },
+    "android": {
+      "package": "com.emotionstudios.decoded"
     }
   }
 }
