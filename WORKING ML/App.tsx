@@ -25,6 +25,7 @@ navTheme.colors.background = '#FFFFFF';
 
 const App = () => {
   const [fontLoaded, setFontLoaded] = useState(false);
+  const [showSplash, setShowSplash] = useState(true);
 
   useEffect(() => {
     const loadFont = async () => {
@@ -34,20 +35,31 @@ const App = () => {
         'californian-italic': require('./assets/fonts/CALIFI.ttf')
       });
       setFontLoaded(true);
+
     }
+    setTimeout(() => {
+      loadFont()
+      setShowSplash(false)
+    }, 10000)
+  
+  }, [])
 
-    loadFont();
-  }, []);
-
-  if (fontLoaded) {
+  if (showSplash) {
+    return (
+      <Provider store={store}>
+        <NavigationContainer theme={navTheme}>
+          <NewSplashScreen />
+        </NavigationContainer>
+      </Provider>
+    )
+  }
+  else {
     return (
       <Provider store={store}>
         <NavigationContainer theme={navTheme}>
           <Stack.Navigator
             screenOptions={{ headerShown: false }}
           >
-            <Stack.Screen name="Splash" component={NewSplashScreen} />
-            <Stack.Screen name="Home" component={HomeScreen} />
             <Stack.Screen name="Scan" component={FinalScanScreen} />
             <Stack.Screen name="Debug" component={DebugScreen} />
             <Stack.Screen name="Detail" component={DetailScreenClean} />

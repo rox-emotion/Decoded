@@ -6,8 +6,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  cameraDev:{
+    height: '80%',
+    width: Dimensions.get('window').width,
+  },
   camera: {
-    height: 700,
+    height: '100%',
     width: Dimensions.get('window').width,
   },
   button: {
