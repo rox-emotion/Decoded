@@ -4,6 +4,7 @@ import Header from "../../components/header/Header";
 import { useState } from "react";
 import styles from "./AllScreen.styles";
 import { useNavigation } from "@react-navigation/native";
+import thumbs from "./thumbs";
 
 const AllScreen = () => {
     const navigation = useNavigation()
@@ -18,7 +19,7 @@ const AllScreen = () => {
         return (
             <View>
                 <TouchableOpacity onPress={() => { navigateToDetail(index) }}>
-                    <Image style={{ height: 99, width: 74, marginBottom: 10 }} source={images[index + 2]} />
+                    <Image style={{ height: 99, width: 74, marginBottom: 10 }} source={thumbs[index + 2]} />
                 </TouchableOpacity>
             </View>
         );

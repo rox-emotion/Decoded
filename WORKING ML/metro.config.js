@@ -19,7 +19,7 @@ const { getDefaultConfig } = require('expo/metro-config');
 const config = getDefaultConfig(__dirname);
 
 config.resolver.assetExts.push(
-  'bin', 'txt', 'jpg', 'ttf', 'png', 'm4a', 'mp4', 'otf'
+  'bin', 'txt', 'jpg', 'ttf', 'png', 'm4a', 'mp4', 'otf', 'mp3'
 );
 
 config.resolver.sourceExts.push(

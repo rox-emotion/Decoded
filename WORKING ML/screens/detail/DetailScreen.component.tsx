@@ -10,7 +10,7 @@ import data from './data.json'
 import images from "./images";
 import { Dimensions } from 'react-native';
 import RNFadedScrollView from 'expo-faded-scrollview';
-
+import sounds from "./sounds";
 
 const DetailScreenClean = ({ route, navigation }) => {
 
@@ -93,7 +93,7 @@ const DetailScreenClean = ({ route, navigation }) => {
             await soundRef.current.playAsync();
         } else {
             console.log('Loading Sound');
-            const { sound } = await Audio.Sound.createAsync(require('./../../assets/audio/001.ios.m4a'), { shouldPlay: true });
+            const { sound } = await Audio.Sound.createAsync(sounds[id], { shouldPlay: true });
             soundRef.current = sound;
             console.log('Playing Sound');
             await sound.playAsync();

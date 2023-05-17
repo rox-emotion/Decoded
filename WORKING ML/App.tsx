@@ -2,22 +2,16 @@
 import React, { useEffect, useState } from 'react';
 import { DefaultTheme, NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import HomeScreen from './screens/home/HomeScreen.component';
-import SplashScreen from './screens/splash/SplashScreen.component';
 import AllScreen from './screens/all/AllScreen.component';
 import AboutScreen from './screens/about/AboutScreen.component';
-import ScanScreen from './screens/scan/ScanScreen.component';
-import DetailScreen from './screens/detail/DetailScreen.component';
 import DebugScreen from './screens/debug/DebugScreen.component';
-import CorrectScanScreen from './screens/scan/NewScanScreen.component';
 import NewSplashScreen from './screens/splash/NewSplashScreen.component';
 import { Provider } from 'react-redux';
 import store from './store/store'
 import * as Font from 'expo-font';
-import { Text } from 'react-native';
-import FinalScanScreen from './screens/scan/FinalScanScreen.component';
 import DetailScreenClean from './screens/detail/DetailScreen.component';
-
+import SnapScanScreen from './screens/scan/SnapScanScreen.component';
+import FinalFinalScan from './screens/scan/FinalFinalScanScreen.component';
 const Stack = createNativeStackNavigator();
 
 const navTheme = DefaultTheme;
@@ -57,10 +51,8 @@ const App = () => {
     return (
       <Provider store={store}>
         <NavigationContainer theme={navTheme}>
-          <Stack.Navigator
-            screenOptions={{ headerShown: false }}
-          >
-            <Stack.Screen name="Scan" component={FinalScanScreen} />
+          <Stack.Navigator screenOptions={{ headerShown: false }}>
+            <Stack.Screen name="Scan" component={FinalFinalScan} />
             <Stack.Screen name="Debug" component={DebugScreen} />
             <Stack.Screen name="Detail" component={DetailScreenClean} />
             <Stack.Screen name="All" component={AllScreen} />
