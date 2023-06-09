@@ -54,7 +54,7 @@ const NewSplashScreen = () => {
     }
 
     return (
-        <View style={[styles.container, {height: Dimensions.get("window").height + notificationBarHeight}]}>
+        <View style={[styles.container, {height: Dimensions.get("screen").height}]}>
             <Video
                 ref={videoPlayer}
                 source={videoSource}
@@ -64,7 +64,7 @@ const NewSplashScreen = () => {
                         navigation.navigate('Scan');
                     }
                 }}
-                style={[styles.video, {height: Dimensions.get("window").height + notificationBarHeight}]}
+                style={[styles.video, {height: Dimensions.get("screen").height}]}
             />
         </View>
 

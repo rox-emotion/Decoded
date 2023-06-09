@@ -21,7 +21,7 @@ const styles = StyleSheet.create({
     borderRadius: 5,
   },
   mainContainer:{
-    height: '100%',
+    height: Dimensions.get('screen').height,
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
