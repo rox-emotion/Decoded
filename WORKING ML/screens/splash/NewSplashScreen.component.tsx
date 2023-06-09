@@ -1,7 +1,7 @@
 import React from "react";
 import { useNavigation } from '@react-navigation/native'
 import { Video } from 'expo-av';
-import { View } from "react-native";
+import { Dimensions, View } from "react-native";
 import { useEffect, useRef, useState } from "react";
 import styles from "./SplashScreen.styles";
 import { useDispatch } from 'react-redux';

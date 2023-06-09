@@ -4,8 +4,30 @@ import { ScrollView } from "react-native-gesture-handler";
 import Header from "../../components/header/Header";
 import styles from "./AboutScreen.styles";
 import { aboutDecoded, aboutHA, aboutMarcus } from "./texts";
+import { Linking } from 'react-native';
+
 
 const AboutScreen = () => {
+    const humanAtlasLink =  'https://www.ahumanatlas.com/'
+    const sutherlandLink = 'https://studio-sutherland.co.uk/'
+    const tenacityWorksLink = 'https://www.tenacityworks.com/'
+
+    const paragraphsDecoded = aboutDecoded.split('\n');
+    const paragraphsHA = aboutHA.split('\n');
+    const paragraphsMarcus = aboutMarcus.split('\n');
+
+    const handleLinkPress = async (url) => {
+
+        const supported = await Linking.canOpenURL(url);
+      
+        if (supported) {
+          await Linking.openURL(url);
+        } else {
+          console.log("Don't know how to open URL: " + url);
+        }
+      };
+      
+
     return (
         <SafeAreaView style={styles.mainContainer}>
             <Header hasBack={true} hasIcon={false} hasMenu={true} />
@@ -19,7 +41,9 @@ const AboutScreen = () => {
                     <Text style={styles.subtitle}>Silicon Valley</Text>
                     <Text style={[styles.name, { marginBottom: 25 }]}>Marcus Lyon</Text>
 
-                    <Text style={[styles.smallText, {marginBottom: 14}]}>{aboutDecoded}</Text>
+                    {paragraphsDecoded.map((paragraph, index) => (
+                    <Text style={[styles.smallText, {marginBottom: 14}]} key={index}>{paragraph}</Text>
+                    ))}
 
                     <TouchableOpacity style={{ marginTop: 13, marginBottom: 40 }}>
                         <Text style={styles.linkText}>Buy the Book → </Text>
@@ -27,9 +51,10 @@ const AboutScreen = () => {
 
                     <Text style={[styles.subtitle, { alignSelf: 'center', fontSize: 24, marginBottom: 21 }]}>Human Atlas Overview</Text>
 
-                    <Text style={[styles.smallText, {marginBottom:14}]}>{aboutHA}</Text>
-
-                    <TouchableOpacity style={{ marginTop: 13, marginBottom: 40 }}>
+                    {paragraphsHA.map((paragraph, index) => (
+                    <Text style={[styles.smallText, {marginBottom: 14}]} key={index}>{paragraph}</Text>
+                    ))}
+                    <TouchableOpacity style={{ marginTop: 13, marginBottom: 40 }} onPress={() => {handleLinkPress(humanAtlasLink)}}>
                         <Text style={styles.linkText}>Visit the Human Atlas Website → </Text>
                     </TouchableOpacity>
 
@@ -38,10 +63,22 @@ const AboutScreen = () => {
                     <Text style={styles.authorSubtitle}>Human Atlas Founder</Text>
                     <Text style={styles.authorSubtitle}>08_1965</Text>
 
-                    <Text style={[styles.smallText, {marginTop:25, marginBottom: 36}]}>{aboutMarcus}</Text>
-
+                    {paragraphsMarcus.map((paragraph, index) => (
+                    <Text style={[styles.smallText, {marginBottom: 14}]} key={index}>{paragraph}</Text>
+                    ))}
                     <Text style={styles.credits}>Version 0.01B-120223</Text>
-                    <Text style={styles.credits}>Studio Sutherl& and Tenacity Works</Text>
+                    <View style={{flexDirection:'row'}}>
+                        <TouchableOpacity onPress={() => {handleLinkPress(sutherlandLink)}}>
+                        <Text style={styles.credits}>Studio Sutherl&</Text>
+                        </TouchableOpacity>
+                        
+                        <Text style={styles.credits}> and </Text>
+                        
+                        <TouchableOpacity onPress={() => {handleLinkPress(tenacityWorksLink)}}>
+                        <Text style={styles.credits}>Tenacity Works</Text>
+                        </TouchableOpacity>
+                   
+                    </View>
                 </ScrollView>
             </View>
         </SafeAreaView>

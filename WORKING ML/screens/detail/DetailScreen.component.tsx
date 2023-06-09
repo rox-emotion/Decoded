@@ -18,7 +18,7 @@ const DetailScreenClean = ({ route, navigation }) => {
     const allData = data
     const [percetange, setPercentage] = useState(0)
     const [isPaused, setIsPaused] = useState(false);
-    const text = allData[id].transcript
+    const text = allData[id].transcript.split('\n')
     const isFocused = useIsFocused()
     const win = Dimensions.get('window');
     const ratio = win.width / 1944;
@@ -164,30 +164,30 @@ const DetailScreenClean = ({ route, navigation }) => {
         <SafeAreaView style={styles.pageContainer}>
             <View style={styles.mainContainer}>
                 <Header hasBack={true} hasIcon={true} hasMenu={false} />
-                <View style={{height: Dimensions.get("window").height - 346, overflow: 'hidden'}}>
-                <Animated.Image
-                    source={images[id]}
-                    style={{
-                        width: win.width - 56,
-                        height: 2598 * ratio,
-                        marginBottom: 16,
-                        opacity: scrollAnim.interpolate({
-                            inputRange: [0, 1],
-                            outputRange: [1, 0],
-                            extrapolate: 'clamp',
-                        }),
-                        transform: [
-                            {
-                                translateY: scrollAnim.interpolate({
-                                    inputRange: [0, 1],
-                                    outputRange: [0, -2598*ratio],
-                                    extrapolate: 'clamp',
-                                }),
-                            },
-                        ],
-                        marginTop: 24
-                    }}
-                />
+                <View style={{ height: Dimensions.get("window").height - 380, overflow: 'hidden' }}>
+                    <Animated.Image
+                        source={images[id]}
+                        style={{
+                            width: win.width - 56,
+                            height: 2598 * ratio - 100,
+                            marginBottom: 16,
+                            opacity: scrollAnim.interpolate({
+                                inputRange: [0, 1],
+                                outputRange: [1, 0],
+                                extrapolate: 'clamp',
+                            }),
+                            transform: [
+                                {
+                                    translateY: scrollAnim.interpolate({
+                                        inputRange: [0, 1],
+                                        outputRange: [0, -2598 * ratio],
+                                        extrapolate: 'clamp',
+                                    }),
+                                },
+                            ],
+                            marginTop: 24
+                        }}
+                    />
                 </View>
 
                 <Animated.View
@@ -196,7 +196,7 @@ const DetailScreenClean = ({ route, navigation }) => {
                             {
                                 translateY: scrollAnim.interpolate({
                                     inputRange: [0, 1],
-                                    outputRange: [0, -2598*ratio + 100],
+                                    outputRange: [0, -2598 * ratio + 100],
                                     extrapolate: 'clamp',
                                 }),
                             },
@@ -205,11 +205,16 @@ const DetailScreenClean = ({ route, navigation }) => {
                         marginTop: 16,
                     }}
                 >
-                    <View style={{ justifyContent: 'space-evenly'}}>
+                    <View style={{ justifyContent: 'space-evenly' }}>
 
-                        <Text style={[styles.name, { color: allData[id].color }]}>Alyssarhaye Graciano</Text>
-                        <Text style={[styles.title, { color: allData[id].color }]}>Artist and Writer</Text>
-                        <Text style={[styles.title, { color: allData[id].color, marginBottom: 20 }]}>02_1994</Text>
+                        <Text style={[styles.name, { color: allData[id].color }]}>{allData[id].name}</Text>
+                        <Text style={[styles.title, { color: allData[id].color }]}>{allData[id].title}</Text>
+                        {
+                            allData[id].DOB != 'NaN'
+                                ? <Text style={[styles.title, { color: allData[id].color, marginBottom: 20 }]}>{allData[id].DOB}</Text>
+
+                                : null
+                        }
                         {/* //PLAYER */}
                         <View style={[styles.player, { marginBottom: 24 }]}>
                             <TouchableOpacity
@@ -241,16 +246,16 @@ const DetailScreenClean = ({ route, navigation }) => {
                     {
                         isScrolled
                             ? <>
-                            <RNFadedScrollView allowStartFade={true} fadeSize={40} allowEndFade={false}
-                                fadeColors={['rgba(255, 255, 255, 0.1)', 'rgba(255, 255, 255, 0.3)', 'rgba(255, 255, 255, 0.99)']}>
+                                <RNFadedScrollView allowStartFade={true} fadeSize={40} allowEndFade={false}
+                                    fadeColors={['rgba(255, 255, 255, 0.1)', 'rgba(255, 255, 255, 0.3)', 'rgba(255, 255, 255, 0.99)']}>
 
-                                <Text style={styles.smallText}>
-                                    {text}
-                                </Text>
-                            </RNFadedScrollView>
+                                    {text.map((paragraph, index) => (
+                                        <Text style={[styles.smallText, { marginBottom: 14 }]} key={index}>{paragraph}</Text>
+                                    ))}
+                                </RNFadedScrollView>
                                 <TouchableOpacity
                                     onPress={scrollUp}
-                                 
+
                                 >
                                     <Image source={require('./../../assets/icons/up_arrow.png')} style={{ height: 50, width: 50, alignSelf: 'center' }} />
                                 </TouchableOpacity>
