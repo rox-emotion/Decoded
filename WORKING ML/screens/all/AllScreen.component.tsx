@@ -13,7 +13,7 @@ const AllScreen = () => {
         navigation.navigate("Detail", { id: pic })
     }
 
-    const [images, setImages] = useState(Array.from({ length: 100 }, (_, i) => `00${i + 1}`.slice(-3)));
+    const [images, setImages] = useState(Array.from({ length: 101 }, (_, i) => `00${i + 1}`.slice(-3)));
 
     const renderItem = ({ item, index }) => {
         return (

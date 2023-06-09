@@ -1,7 +1,7 @@
 import React from "react";
 import { useNavigation } from '@react-navigation/native'
 import { Video } from 'expo-av';
-import { Dimensions, View } from "react-native";
+import {  View, StatusBar, Dimensions } from "react-native";
 import { useEffect, useRef, useState } from "react";
 import styles from "./SplashScreen.styles";
 import { useDispatch } from 'react-redux';
@@ -15,6 +15,7 @@ const NewSplashScreen = () => {
     const videoSource = require('./../../assets/video/a.mp4');
     const dispatch = useDispatch();
     const [isTfReady, setIsTfReady] = useState(false);
+    const notificationBarHeight = StatusBar.currentHeight || 0;
 
     //WHEN TF READY AND MODEL READY WILL APPEAR THE BUTTON (NEEDS CHANGING ON THE VIDEO)
 
@@ -53,7 +54,7 @@ const NewSplashScreen = () => {
     }
 
     return (
-        <View style={styles.container}>
+        <View style={[styles.container, {height: Dimensions.get("window").height + notificationBarHeight}]}>
             <Video
                 ref={videoPlayer}
                 source={videoSource}
@@ -63,7 +64,7 @@ const NewSplashScreen = () => {
                         navigation.navigate('Scan');
                     }
                 }}
-                style={styles.video}
+                style={[styles.video, {height: Dimensions.get("window").height + notificationBarHeight}]}
             />
         </View>
 
