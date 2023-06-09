@@ -9,7 +9,8 @@
       "**/*"
     ],
     "ios": {
-      "bundleIdentifier": "org.name.posenet",
+      "bitcode": false,
+      "bundleIdentifier": "com.glassworks.decoded",
       "infoPlist": {
         "UIBackgroundModes": [
           "audio"
