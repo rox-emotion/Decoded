@@ -13,6 +13,7 @@ import { useSelector } from 'react-redux';
 import Header from '../../components/header/Header';
 import { DEV } from './../../config';
 import { captureRef } from 'react-native-view-shot';
+import * as MediaLibrary from 'expo-media-library';
 
 const FinalFinalScan = () => {
 
@@ -181,7 +182,7 @@ const FinalFinalScan = () => {
             }
         }
 
-        if (level1[index]?.confidenceLevel >= 30 || level2[index]?.confidenceLevel >= 40 || level3[index]?.confidenceLevel >= 45 || level4[index]?.confidenceLevel >= 55 || level5[index]?.confidenceLevel >= 60 || level6[index]?.confidenceLevel >= 75) {
+        if (level1[index]?.confidenceLevel >= 60 || level2[index]?.confidenceLevel >= 80 || level3[index]?.confidenceLevel >= 85 || level4[index]?.confidenceLevel >= 95 || level5[index]?.confidenceLevel >= 100 || level6[index]?.confidenceLevel >= 100) {
             navigation.navigate('Detail', { id: predictedClassIndex })
         }
         else {
@@ -249,7 +250,14 @@ const FinalFinalScan = () => {
                     format: 'jpg',
                     quality: 0.8,
                 });
-                processImage(uri);
+                // try {
+                //     const asset = await MediaLibrary.createAssetAsync(photo.uri);
+                //     console.log('Saved asset:', asset);
+                // } catch (error) {
+                //     console.log('An error occurred while saving the asset:', error);
+                // }
+                // setShowImage(uri)
+                // processImage(uri);
             } catch (error) {
                 console.error(error);
             }
@@ -289,6 +297,23 @@ const FinalFinalScan = () => {
     //     }
 
     // }
+
+    const CameraComponent = ({ cameraRef }) => {
+        return (
+          <Camera style={styles.camera} type={CameraType.back} ref={cameraRef} />
+        );
+      };
+      
+      const OtherUIComponent = () => {
+        return (
+          <View>
+            <Image
+              source={require('./../../assets/icons/target_icon.png')}
+              style={{ height: 157, width: 95, marginTop: Dimensions.get('window').height * 0.05, alignSelf: 'center' }}
+            />
+          </View>
+        );
+      };
 
     if (DEV) {
         return (
@@ -342,12 +367,17 @@ const FinalFinalScan = () => {
                             <Image
                                 source={require('./../../assets/icons/target_icon.png')}
                                 style={{ height: 157, width: 95, marginTop: Dimensions.get('window').height * 0.05, alignSelf: 'center' }}
-
                             />
 
                         </Camera>
                     )
                 }
+                <View>
+      {/* {isFocused && <CameraComponent cameraRef={cameraRef} />}
+      {isFocused && <OtherUIComponent />}
+    <Image  source={{ uri: showImage }} style={{height:150, width:150}} />  */}
+
+    </View>
             </View>
         )
     }

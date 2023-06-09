@@ -164,7 +164,7 @@ const DetailScreenClean = ({ route, navigation }) => {
         <SafeAreaView style={styles.pageContainer}>
             <View style={styles.mainContainer}>
                 <Header hasBack={true} hasIcon={true} hasMenu={false} />
-                <View style={{ height: Dimensions.get("window").height - 380, overflow: 'hidden' }}>
+                <View style={{ height: Dimensions.get("window").height - 400, overflow: 'hidden' }}>
                     <Animated.Image
                         source={images[id]}
                         style={{
@@ -201,7 +201,7 @@ const DetailScreenClean = ({ route, navigation }) => {
                                 }),
                             },
                         ],
-                        height: Dimensions.get('window').height - 80,
+                        height: Dimensions.get('window').height - 160,
                         marginTop: 16,
                     }}
                 >
@@ -247,6 +247,7 @@ const DetailScreenClean = ({ route, navigation }) => {
                         isScrolled
                             ? <>
                                 <RNFadedScrollView allowStartFade={true} fadeSize={40} allowEndFade={false}
+                                    // style={{marginBottom:20}}
                                     fadeColors={['rgba(255, 255, 255, 0.1)', 'rgba(255, 255, 255, 0.3)', 'rgba(255, 255, 255, 0.99)']}>
 
                                     {text.map((paragraph, index) => (

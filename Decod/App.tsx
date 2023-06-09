@@ -12,10 +12,14 @@ import * as Font from 'expo-font';
 import DetailScreenClean from './screens/detail/DetailScreen.component';
 import SnapScanScreen from './screens/scan/SnapScanScreen.component';
 import FinalFinalScan from './screens/scan/FinalFinalScanScreen.component';
+import { StatusBar } from 'react-native';
+
 const Stack = createNativeStackNavigator();
 
 const navTheme = DefaultTheme;
 navTheme.colors.background = '#FFFFFF';
+
+StatusBar.setHidden(true);
 
 const App = () => {
   const [fontLoaded, setFontLoaded] = useState(false);
