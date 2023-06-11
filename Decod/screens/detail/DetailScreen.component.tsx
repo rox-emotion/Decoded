@@ -201,7 +201,7 @@ const DetailScreenClean = ({ route, navigation }) => {
                                 }),
                             },
                         ],
-                        height: Dimensions.get('window').height - 160,
+                        height: Dimensions.get('window').height - 80,
                         marginTop: 16,
                     }}
                 >

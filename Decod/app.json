@@ -4,7 +4,7 @@
   "expo": {
     "name": "De.Coded - A Human Atlas",
     "slug": "image-classification-expo",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "icon": "./assets/icon-x2-120x120.png",
     "assetBundlePatterns": [
       "**/*"

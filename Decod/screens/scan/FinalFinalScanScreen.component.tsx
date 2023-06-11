@@ -182,7 +182,7 @@ const FinalFinalScan = () => {
             }
         }
 
-        if (level1[index]?.confidenceLevel >= 60 || level2[index]?.confidenceLevel >= 80 || level3[index]?.confidenceLevel >= 85 || level4[index]?.confidenceLevel >= 95 || level5[index]?.confidenceLevel >= 100 || level6[index]?.confidenceLevel >= 100) {
+        if (level1[index]?.confidenceLevel >= 20 || level2[index]?.confidenceLevel >= 40 || level3[index]?.confidenceLevel >= 45 || level4[index]?.confidenceLevel >= 55 || level5[index]?.confidenceLevel >= 70 || level6[index]?.confidenceLevel >= 80) {
             navigation.navigate('Detail', { id: predictedClassIndex })
         }
         else {
@@ -257,7 +257,7 @@ const FinalFinalScan = () => {
                 //     console.log('An error occurred while saving the asset:', error);
                 // }
                 // setShowImage(uri)
-                // processImage(uri);
+                processImage(uri);
             } catch (error) {
                 console.error(error);
             }
