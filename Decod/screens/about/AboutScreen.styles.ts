@@ -2,10 +2,6 @@ import { Platform, StatusBar, StyleSheet } from 'react-native';
 import { SECONDARY_COLOR_BLUE, SECONDARY_COLOR_GOLD, TEXT_COLOR } from '../../utils';
 
 const styles = StyleSheet.create({
-    container: {
-        margin: 28,
-        marginBottom: 0
-    },
     scrollContainer: {
         height: '90%'
     },
@@ -32,10 +28,17 @@ const styles = StyleSheet.create({
         fontFamily: 'californian-regular',
         color: TEXT_COLOR
     },
+    paragraphText:{
+        fontSize: 18,
+        fontFamily: 'californian-regular',
+        color: TEXT_COLOR,
+        marginBottom:10
+    },
     linkText: {
         fontSize: 18,
         fontFamily: 'californian-bold',
-        color: TEXT_COLOR
+        color: TEXT_COLOR,
+        marginTop: -20
     },
     authorName: {
         fontSize: 20,
@@ -57,9 +60,9 @@ const styles = StyleSheet.create({
     mainContainer:
     {
         flex: 1,
-        backgroundColor: '#fff',
-        paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0,
-
+        marginBottom:25,
+        marginTop:38,
+        marginHorizontal:28
     }
 })
 

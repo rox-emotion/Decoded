@@ -359,7 +359,7 @@ const FinalFinalScan = () => {
                             style={styles.camera}
                             type={CameraType.back} ref={cameraRef}
                         >
-                            <View style={{ paddingTop: 28 }}>
+                            <View style={{ paddingTop: 38 }}>
                                 <Header hasMenu={false} hasBack={false} hasIcon={true} />
                             </View>
 

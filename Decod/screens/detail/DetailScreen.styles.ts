@@ -21,16 +21,7 @@ const styles = StyleSheet.create({
         fontFamily: 'californian-regular',
         color: TEXT_COLOR,
     },
-    container: {
-        marginBottom: 160,
-        marginTop: 58,
-        // height:  Dimensions.get('window').height,
-        marginHorizontal: 28,
-        flexDirection: 'column',
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: 'yellow'
-    },
+   
     modal: {
         padding: 16,
         height: 150,
@@ -59,14 +50,24 @@ const styles = StyleSheet.create({
         width: Dimensions.get('window').width - 56,
         alignSelf: 'center',
     },
-    pageContainer:
-    {
-        flex: 1,
-        backgroundColor: '#fff',
-        paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0,
+    // pageContainer:
+    // {
+    //     // flex: 1,
+    //     height:'460',
+    //     backgroundColor: '#yellow',
+    //     paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0,
+    // },
+    pageContainer: {
+        flex:1,
     },
-    mainContainer: {
+    container: {
+        marginBottom:16,
+        marginTop: 16,
+        flex: 1,
         marginHorizontal: 28,
+        flexDirection: 'column',
+        justifyContent: 'flex-start',
+        alignItems: 'center',
     },
     
 

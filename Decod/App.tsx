@@ -13,6 +13,7 @@ import DetailScreenClean from './screens/detail/DetailScreen.component';
 import SnapScanScreen from './screens/scan/SnapScanScreen.component';
 import FinalFinalScan from './screens/scan/FinalFinalScanScreen.component';
 import { StatusBar } from 'react-native';
+import DetailScreenFinal from './screens/detail/DetailScreenFinal.component';
 
 const Stack = createNativeStackNavigator();
 
@@ -58,7 +59,7 @@ const App = () => {
           <Stack.Navigator screenOptions={{ headerShown: false }}>
             <Stack.Screen name="Scan" component={FinalFinalScan} />
             <Stack.Screen name="Debug" component={DebugScreen} />
-            <Stack.Screen name="Detail" component={DetailScreenClean} />
+            <Stack.Screen name="Detail" component={DetailScreenFinal} />
             <Stack.Screen name="All" component={AllScreen} />
             <Stack.Screen name="About" component={AboutScreen} />
           </Stack.Navigator>
