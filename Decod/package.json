@@ -39,6 +39,7 @@
   "devDependencies": {
     "@babel/core": "^7.19.3",
     "@expo/webpack-config": "^0.17.2",
+    "@types/lodash": "^4.14.195",
     "@types/react": "~18.0.24",
     "@types/react-native": "~0.70.6",
     "@types/text-encoding": "^0.0.36",
