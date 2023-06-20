@@ -18,13 +18,51 @@ const DetailScreenFinal = ({ route, navigation }) => {
     const id = route.params.id
     const allData = data
     const [percetange, setPercentage] = useState(0)
-    const [isPaused, setIsPaused] = useState(true);
+    const [isPaused, setIsPaused] = useState(false);
     const text = allData[id].transcript.split('\n')
     const isFocused = useIsFocused()
     const win = Dimensions.get('window');
-    const ratio = (win.width -56) / 1944;
+    const ratio = (win.width - 56) / 1944;
     const nav = useNavigation()
     const soundRef = useRef();
+    const [isSoundComplete, setIsSoundComplete] = useState(false)
+    let count = 1
+
+    useEffect(() => {
+        // const checkSoundStatus = async () => {
+        //     if (soundRef.current) {
+        //         const status = await soundRef.current.getStatusAsync();
+        //         if (status.isPlaying && status.positionMillis >= status.durationMillis - 5000) {
+        //             setIsSoundComplete(true);
+        //         }
+        //     }
+        // };
+    
+        // const timer = setInterval(checkSoundStatus, 1000);
+    
+        // return () => {
+        //     clearInterval(timer);
+        // };
+        if(percetange>=99){
+            moveTo(0,false)
+            setPercentage(0)
+            
+        }
+    }, [percetange]);
+    
+    useEffect(() => {
+        if (isSoundComplete) {
+            const timer = setTimeout(() => {
+                // Call your function here
+                console.log('5 seconds before sound completion');
+            }, 5000);
+    
+            return () => {
+                clearTimeout(timer);
+            };
+        }
+    }, [isSoundComplete]);
+    
 
     useEffect(() => {
         if (Platform.OS === 'ios') {
@@ -64,6 +102,7 @@ const DetailScreenFinal = ({ route, navigation }) => {
 
     }, [soundRef])
 
+
     const toggleSound = async () => {
         if (soundRef.current) {
             const status = await soundRef.current.getStatusAsync();
@@ -83,7 +122,7 @@ const DetailScreenFinal = ({ route, navigation }) => {
             const status = await soundRef.current.getStatusAsync();
             if (status.isPlaying) {
                 const progress = status.positionMillis / status.durationMillis;
-                const percentage = Math.floor(progress * 100);
+                const percentage = progress * 100 + 1;
                 setPercentage(percentage);
             }
         }
@@ -114,6 +153,32 @@ const DetailScreenFinal = ({ route, navigation }) => {
             staysActiveInBackground: false,
             // shouldDuckAndroid: false,
         })
+    }
+
+    const moveTo = async (per,start) => {
+        try {
+            const status = await soundRef.current.getStatusAsync();
+            console.log(status.durationMillis)
+            const desiredPositionMillis = per / 100 * status.durationMillis;
+            console.log(desiredPositionMillis)
+            soundRef.current.setPositionAsync(desiredPositionMillis)
+            if(start){
+                if(!status.isPlaying){
+                    soundRef.current.playAsync()
+                    setIsPaused(false)
+                }
+            }else {
+                if(status.isPlaying){
+                    soundRef.current.pauseAsync()
+                    setIsPaused(true)
+                }
+            }
+          
+        }
+        catch (e) {
+            console.log(e)
+        }
+
     }
 
 
@@ -161,56 +226,99 @@ const DetailScreenFinal = ({ route, navigation }) => {
         }).start()
     };
 
-    return (    
+    // const pauseCB = async () => {
+    //     console.log(count)
+    //     count++
+    //     if(soundRef.current){
+    //         console.log('e sunet')
+    //         if(5 > 6){
+    //             console.log('aici se reia')
+    //         }
+    //         else {
+    //             toggleSound();
+    //             setIsPaused(!isPaused)
+    //             console.log("yello")
+    //         }
+    //     }
+        // // if (soundRef.current && soundRef.current.getStatusAsync().isLoaded && !soundRef.current.getStatusAsync().isPlaying && soundRef.current.getStatusAsync().positionMillis ==  soundRef.current.getStatusAsync().durationMillis) {
+        // //             toggleSound()
+        // //             moveTo(0)
+        // //             setIsPaused(false)
+        // //         }
+        // //     else {
+        // //         toggleSound();
+        // //         setIsPaused(!isPaused)
+        // //     }
+
+        // if(soundRef.current){
+        //     console.log('okay')
+        //     if(soundRef.current.getStatusAsync().isLoaded && !soundRef.current.getStatusAsync().isPlaying && soundRef.current.getStatusAsync().positionMillis >=  soundRef.current.getStatusAsync().durationMillis - 200){
+        //         toggleSound()
+        //             moveTo(0)
+        //             setIsPaused(false)
+        //             console.log('gata')
+        //     }
+        //     else {
+        //         toggleSound();
+        //         setIsPaused(!isPaused)
+        //         console.log('nu i gata')
+        //     }
+        // }
+        // console.log('pressed')
+        // toggleSound();
+        // setIsPaused(!isPaused)
+    // }
+
+    return (
         <View style={styles.pageContainer}>
-            <View style={{marginTop:38}}>
-                <Header hasBack={true} hasIcon={true} hasMenu={false}/>
+            <View style={{ marginTop: 38 }}>
+                <Header hasBack={true} hasIcon={true} hasMenu={false} />
             </View>
             <View style={styles.container}>
                 {/* MAIN IMAGE */}
                 <Animated.Image
-                            source={images[id]}
-                            style={{
-                                width: win.width - 56,
-                                height: 2598 * ratio - 30,                            
-                                opacity: scrollAnim.interpolate({
+                    source={images[id]}
+                    style={{
+                        width: win.width - 56,
+                        height: 2598 * ratio - 30,
+                        opacity: scrollAnim.interpolate({
+                            inputRange: [0, 1],
+                            outputRange: [1, 0],
+                            extrapolate: 'clamp',
+                        }),
+                        transform: [
+                            {
+                                translateY: scrollAnim.interpolate({
                                     inputRange: [0, 1],
-                                    outputRange: [1, 0],
+                                    outputRange: [0, -2598 * ratio],
                                     extrapolate: 'clamp',
                                 }),
-                                transform: [
-                                    {
-                                        translateY: scrollAnim.interpolate({
-                                            inputRange: [0, 1],
-                                            outputRange: [0, -2598 * ratio],
-                                            extrapolate: 'clamp',
-                                        }),
-                                    },
-                                ],
-                            }}
+                            },
+                        ],
+                    }}
                 />
                 <Animated.View
-                        style={{
-                            transform: [
-                                {
-                                    translateY: scrollAnim.interpolate({
-                                        inputRange: [0, 1],
-                                        outputRange: [0, -2598 * ratio],
-                                        extrapolate: 'clamp',
-                                    }),
-                                },
-                            ],
-                            marginTop: 16,
-                        }}
+                    style={{
+                        transform: [
+                            {
+                                translateY: scrollAnim.interpolate({
+                                    inputRange: [0, 1],
+                                    outputRange: [0, -2598 * ratio],
+                                    extrapolate: 'clamp',
+                                }),
+                            },
+                        ],
+                        marginTop: 16,
+                    }}
                 >
                     {/* NAME TITLE AND DOB */}
                     <Text style={[styles.name, { color: allData[id].color }]}>{allData[id].name}</Text>
                     <Text style={[styles.title, { color: allData[id].color }]}>{allData[id].title}</Text>
-                        {
-                            allData[id].DOB != 'NaN'
-                                ? <Text style={[styles.title, { color: allData[id].color, marginBottom:16}]}>{allData[id].DOB}</Text>
-                                : null
-                        }
+                    {
+                        allData[id].DOB != 'NaN'
+                            ? <Text style={[styles.title, { color: allData[id].color, marginBottom: 16 }]}>{allData[id].DOB}</Text>
+                            : null
+                    }
                     {/* <TouchableOpacity style={{alignSelf:'center', marginBottom:16}} onPress={toggleSound} >
                             <Svg width={radius * 2} height={radius * 2} viewBox={`0 0 ${halfCircle * 2} ${halfCircle * 2}`}>
                                 <G rotation='-90' origin={`${halfCircle}, ${halfCircle}`}>
@@ -225,8 +333,8 @@ const DetailScreenFinal = ({ route, navigation }) => {
                             </Svg>
                     </TouchableOpacity> */}
 
-                    <View style={{marginTop:10, marginBottom:20}}>
-                        <CircularDraggableProgressBar progressColor={allData[id].color} onPause={() => {console.log('vedem noi')}} value={percetange} />
+                    <View style={{ marginTop: 10, marginBottom: 20 }}>
+                        <CircularDraggableProgressBar value={percetange} callBack={(val) => { moveTo(val, true) }} pauseCallBack={() => { toggleSound(); setIsPaused(!isPaused)}} isPaused={isPaused} percentage={percetange} color={allData[id].color} />
                         {/* {
                             isPaused
                             ? <Image source={require('./../../assets/icons/pause.png')} style={{ width: 25, height: 30, alignSelf: 'center', marginTop: '35%' }} />
@@ -235,17 +343,17 @@ const DetailScreenFinal = ({ route, navigation }) => {
                     </View>
                     {
                         isScrolled
-                        ? null
-                        : <TouchableOpacity onPress={() => { scrollDown() }}>
-                            <Image source={require('./../../assets/icons/down_arrow.png')} style={{ height: 19, width: 38, alignSelf: 'center' }} />
-                        </TouchableOpacity>
+                            ? null
+                            : <TouchableOpacity onPress={() => { scrollDown() }}>
+                                <Image source={require('./../../assets/icons/down_arrow.png')} style={{ height: 19, width: 38, alignSelf: 'center', marginTop:40 }} />
+                            </TouchableOpacity>
                     }
                     {/* AFTER SCROLL  */}
                     {
                         isScrolled
-                            ? <View style={{height:'70%'}}>
+                            ? <View style={{ height: '70%' }}>
                                 <RNFadedScrollView allowStartFade={true} fadeSize={40} allowEndFade={false}
-                                    
+
                                     fadeColors={['rgba(255, 255, 255, 0.1)', 'rgba(255, 255, 255, 0.3)', 'rgba(255, 255, 255, 0.99)']}>
 
                                     {text.map((paragraph, index) => (
@@ -253,7 +361,7 @@ const DetailScreenFinal = ({ route, navigation }) => {
                                     ))}
                                 </RNFadedScrollView>
                                 <TouchableOpacity onPress={scrollUp}>
-                                    <Image source={require('./../../assets/icons/up_arrow.png')} style={{ height: 19, width: 38, alignSelf: 'center', marginTop:18 }} />
+                                    <Image source={require('./../../assets/icons/up_arrow.png')} style={{ height: 19, width: 38, alignSelf: 'center', marginTop: 18 }} />
                                 </TouchableOpacity>
                             </View>
 

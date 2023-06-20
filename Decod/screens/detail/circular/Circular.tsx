@@ -1,3 +1,4 @@
+import { Square } from '@tensorflow/tfjs'
 import range from 'lodash/range'
 import React, { useEffect, useState } from 'react'
 import {
@@ -7,6 +8,7 @@ import {
   StyleSheet,
   Text,
   View,
+  Image
 } from 'react-native'
 import Svg, {
   Circle,
@@ -15,6 +17,7 @@ import Svg, {
   LinearGradient,
   Path,
   Stop,
+  Rect
 } from 'react-native-svg'
 
 import { ICircularDraggableProgressBar } from './types'
@@ -27,29 +30,47 @@ let _circle:
 let _iconPanResponder: PanResponderInstance
 
 export const CircularDraggableProgressBar = ({
-  strokeWidth = 16,
-  radius = 45,
-  iconOutSideColor = 'transparent',
-  progressColor = '#000000', 
-  gradientColorFrom = progressColor,
-  gradientColorTo = progressColor,
+  strokeWidth = 15,
+  radius = 44,
   bgCircleColor = 'transparent',
   draggable = true,
   max = 100,
-  value,
+  value = 1,
   displayNumber = 0,
+  callBack,
+  pauseCallBack,
+  isPaused,
+  percentage,
   onChange = (value) => {
-    console.log(value)
+    console.log(value);
+    callBack(value)
   },
   handlerPanResponder = (onMove) => {
     console.log(onMove)
+    pauseCallBack
   },
   symbol = '%',
   symbolPosition = 'right',
   icon: Icon,
   individualValue = 1000,
+  color
 }: ICircularDraggableProgressBar): JSX.Element => {
-  console.log(value)
+  // console.log(value)
+
+  // useEffect(() => {
+  //   const timer = setTimeout(() => {
+  //     setAngleLength(calculateAngleLengthFromValue(24))
+  //   },2000)
+  // })
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setAngleLength(calculateAngleLengthFromValue(percentage))
+    },500)
+
+    return () => {clearTimeout(timer)}
+  })
+
   const calculateArcCircle = (
     index0 = 0,
     segments = 2,
@@ -76,6 +97,10 @@ export const CircularDraggableProgressBar = ({
       realToX,
       realToY,
     }
+  }
+
+  if(percentage == 100){
+    console.log('e gata')
   }
 
   const getGradientId = (index = 0) => {
@@ -115,6 +140,8 @@ export const CircularDraggableProgressBar = ({
   }
 
   const [val, setVal] = useState(value)
+  // const val = value
+  // console.log("val " + val)
   const [startAngle, setStartAngle] = useState(0) //(Math.PI*2)/10
   const [angleLength, setAngleLength] = useState(
     calculateAngleLengthFromValue(val, max)
@@ -226,7 +253,6 @@ export const CircularDraggableProgressBar = ({
       justifyContent: 'center',
       alignItems: 'center',
       borderRadius: 300,
-      alignSelf: 'center'
     },
     bgView: {
       width: containerWidth,
@@ -239,8 +265,8 @@ export const CircularDraggableProgressBar = ({
       alignItems: 'center',
       position: 'absolute',
       backgroundColor: bgCircleColor,
-      width: containerWidth - 20,
-      height: containerWidth - 20,
+      width: containerWidth - 50,
+      height: containerWidth - 50,
       borderRadius: containerWidth / 2,
       zIndex: -1,
     },
@@ -258,12 +284,15 @@ export const CircularDraggableProgressBar = ({
   return (
     <View style={styles.mainView}>
       <View onTouchStart={onTouch} onLayout={onLayout} style={styles.bgView}>
-        {/* <View style={styles.textView}>
-          {Icon && Icon}
-          {/* <Text style={styles.textHead}>{text}</Text> */}
-          {/* <Text style={styles.textBig}>{centerText()}</Text>
-          <Text>{(displayProgress * individualValue).toLocaleString()}</Text> */}
-        {/* </View> */} 
+        <View style={[styles.textView]}>
+          {
+            isPaused
+            ? <Image source={require('./../../../assets/icons/pause.png')} style={{ width: 25, height: 30, alignSelf: 'center'}} />
+            : null
+          }
+
+        </View>
+
         <Svg
           strokeLinecap={'round'}
           height={containerWidth}
@@ -278,8 +307,8 @@ export const CircularDraggableProgressBar = ({
               x2='100%'
               y2='0'
             >
-              <Stop offset='1' stopColor={gradientColorFrom} />
-              <Stop offset='0' stopColor={gradientColorTo} />
+              <Stop offset='1' stopColor={color} />
+              <Stop offset='0' stopColor={color} />
             </LinearGradient>
             <LinearGradient
               id={getGradientId(1)}
@@ -288,8 +317,8 @@ export const CircularDraggableProgressBar = ({
               x2='0'
               y2='100%'
             >
-              <Stop offset='1' stopColor={gradientColorTo} />
-              <Stop offset='0' stopColor={gradientColorFrom} />
+              <Stop offset='1' stopColor={color} />
+              <Stop offset='0' stopColor={color} />
             </LinearGradient>
           </Defs>
 
@@ -302,17 +331,19 @@ export const CircularDraggableProgressBar = ({
           >
             <Circle
               r={radius}
-              strokeWidth={strokeWidth - 12}
+              strokeWidth={strokeWidth}
               fill='transparent'
-              stroke={bgCircleColor}
+              stroke={'transparent'}
+              onPress={pauseCallBack}
             />
-
             <Circle
-                r={radius}
-                fill={'transparent'}
-                stroke={'#EBE9E4'}
-                strokeWidth={strokeWidth}
-              />
+              r={radius}
+              strokeWidth={strokeWidth}
+              fill='transparent'
+              stroke={'#EBE9E4'}
+              onPress={pauseCallBack}
+
+            />
             {range(segments).map((i) => {
               const { fromX, fromY, toX, toY } = calculateArcCircle(
                 i,
@@ -340,17 +371,19 @@ export const CircularDraggableProgressBar = ({
             })}
 
             <G
-              fill={gradientColorTo}
+              fill={color}
               transform={{ translate: `${xy.toX}, ${xy.toY}` }}
               {..._iconPanResponder?.panHandlers}
               onPressIn={() => setAngleLength(angleLength + Math.PI / 2)}
             >
               <Circle
-                r={100}
+                r={30}
                 fill={'transparent'}
-                stroke={iconOutSideColor}
-                strokeWidth='3'
+                stroke={'transparent'}
               />
+              {/* <Rect width={15} height={15} transform={{rotateX: '65deg'}}/> */}
+
+             
             </G>
           </G>
         </Svg>

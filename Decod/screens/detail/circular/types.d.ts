@@ -20,6 +20,11 @@ export interface ICircularDraggableProgressBar {
   individualValue?: number,
   progressColor: any,
   onPause: any,
+  callBack: (val: number) => any,
+  pauseCallBack: () => void,
+  isPaused: boolean,
+  percentage: number,
+  color: any,
   // isPaused: boolean,
   // id: number,
   handlerPanResponder?: (onMove: boolean) => void
