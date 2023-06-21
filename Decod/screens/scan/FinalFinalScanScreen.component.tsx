@@ -14,6 +14,7 @@ import Header from '../../components/header/Header';
 import { DEV } from './../../config';
 import { captureRef } from 'react-native-view-shot';
 import * as MediaLibrary from 'expo-media-library';
+import * as Permissions from 'expo-permissions';
 
 const FinalFinalScan = () => {
 
@@ -32,6 +33,8 @@ const FinalFinalScan = () => {
     const [total4, setTotal4] = useState(0)
     const [total5, setTotal5] = useState(0)
     const [total6, setTotal6] = useState(0)
+
+    // const place = Image.resolveAssetSource(require('./../../assets/images/00.jpg'));
 
 
     // const [level1, setLevel1] = useState([])
@@ -89,6 +92,7 @@ const FinalFinalScan = () => {
 
     const askForPermissions = async () => {
         const { status } = await Camera.requestCameraPermissionsAsync()
+        const { status: mediaStatus } = await Permissions.askAsync(Permissions.MEDIA_LIBRARY);
         setHasCameraPermission(status === 'granted');
         console.log('CAMERA PERMISSION GRANTED');
     };
@@ -110,8 +114,8 @@ const FinalFinalScan = () => {
             });
             const imageBytes = new Uint8Array(Buffer.from(imageString, 'base64'));
             const imageTensor = decodeJpeg(imageBytes);
-            const normalizedImageTensor = imageTensor.div(255.0);
-            const reshapedImageTensor = tf.reshape(normalizedImageTensor, [1, 256, 256, 3])
+            // const normalizedImageTensor = imageTensor.div(255.0);
+            const reshapedImageTensor = tf.reshape(imageTensor, [1, 256, 256, 3])
             return reshapedImageTensor
         }
         else {
@@ -123,77 +127,81 @@ const FinalFinalScan = () => {
         const processedImg = await transformImageToTensor(uri);
         const prediction = await model.predict(processedImg);
         const predictedClassIndex = prediction.argMax(-1).dataSync()[0];
-        const confidenceLevel = parseFloat((prediction.dataSync()[predictedClassIndex] * 100).toFixed(2));
+        // const confidenceLevel = parseFloat((prediction.dataSync()[predictedClassIndex] * 100).toFixed(2));
+        const confidenceLevel = prediction.dataSync()[predictedClassIndex]
+
+        // console.log(confidenceLevel)
+
         console.log(predictedClassIndex + "   " + confidenceLevel)
 
-        let index;
-        if (confidenceLevel >= 20) {
-            index = level1.findIndex((item) => item.predictedClassIndex === predictedClassIndex);
-            if (index !== -1) {
-                level1[index].confidenceLevel += confidenceLevel;
-                setTotal1(level1[index].confidenceLevel)
-            } else {
-                level1.push({ predictedClassIndex, confidenceLevel });
-            }
-        }
-        else if (confidenceLevel >= 15 && confidenceLevel < 20) {
-            index = level2.findIndex((item) => item.predictedClassIndex === predictedClassIndex);
-            if (index !== -1) {
-                level2[index].confidenceLevel += confidenceLevel;
-                setTotal2(level2[index].confidenceLevel)
-            } else {
-                level2.push({ predictedClassIndex, confidenceLevel });
-            }
-        }
-        else if (confidenceLevel >= 10 && confidenceLevel < 15) {
-            index = level3.findIndex((item) => item.predictedClassIndex === predictedClassIndex);
-            if (index !== -1) {
-                level3[index].confidenceLevel += confidenceLevel;
-                setTotal3(level3[index].confidenceLevel)
-            } else {
-                level3.push({ predictedClassIndex, confidenceLevel });
-            }
-        }
-        else if (confidenceLevel >= 5 && confidenceLevel < 10) {
-            index = level4.findIndex((item) => item.predictedClassIndex === predictedClassIndex);
-            if (index !== -1) {
-                level4[index].confidenceLevel += confidenceLevel;
-                setTotal4(level4[index].confidenceLevel)
-            } else {
-                level4.push({ predictedClassIndex, confidenceLevel });
-            }
-        }
-        else if (confidenceLevel >= 3 < confidenceLevel < 5) {
-            index = level5.findIndex((item) => item.predictedClassIndex === predictedClassIndex);
-            if (index !== -1) {
-                level5[index].confidenceLevel += confidenceLevel;
-                setTotal5(level5[index].confidenceLevel)
-            } else {
-                level5.push({ predictedClassIndex, confidenceLevel });
-            }
-        }
-        else if (confidenceLevel < 3) {
-            index = level6.findIndex((item) => item.predictedClassIndex === predictedClassIndex);
-            if (index !== -1) {
-                level6[level6index].confidenceLevel += confidenceLevel;
-                setTotal6([index].confidenceLevel)
-            } else {
-                level6.push({ predictedClassIndex, confidenceLevel });
-            }
-        }
+        // let index;
+        // if (confidenceLevel >= 20) {
+        //     index = level1.findIndex((item) => item.predictedClassIndex === predictedClassIndex);
+        //     if (index !== -1) {
+        //         level1[index].confidenceLevel += confidenceLevel;
+        //         setTotal1(level1[index].confidenceLevel)
+        //     } else {
+        //         level1.push({ predictedClassIndex, confidenceLevel });
+        //     }
+        // }
+        // else if (confidenceLevel >= 15 && confidenceLevel < 20) {
+        //     index = level2.findIndex((item) => item.predictedClassIndex === predictedClassIndex);
+        //     if (index !== -1) {
+        //         level2[index].confidenceLevel += confidenceLevel;
+        //         setTotal2(level2[index].confidenceLevel)
+        //     } else {
+        //         level2.push({ predictedClassIndex, confidenceLevel });
+        //     }
+        // }
+        // else if (confidenceLevel >= 10 && confidenceLevel < 15) {
+        //     index = level3.findIndex((item) => item.predictedClassIndex === predictedClassIndex);
+        //     if (index !== -1) {
+        //         level3[index].confidenceLevel += confidenceLevel;
+        //         setTotal3(level3[index].confidenceLevel)
+        //     } else {
+        //         level3.push({ predictedClassIndex, confidenceLevel });
+        //     }
+        // }
+        // else if (confidenceLevel >= 5 && confidenceLevel < 10) {
+        //     index = level4.findIndex((item) => item.predictedClassIndex === predictedClassIndex);
+        //     if (index !== -1) {
+        //         level4[index].confidenceLevel += confidenceLevel;
+        //         setTotal4(level4[index].confidenceLevel)
+        //     } else {
+        //         level4.push({ predictedClassIndex, confidenceLevel });
+        //     }
+        // }
+        // else if (confidenceLevel >= 3 < confidenceLevel < 5) {
+        //     index = level5.findIndex((item) => item.predictedClassIndex === predictedClassIndex);
+        //     if (index !== -1) {
+        //         level5[index].confidenceLevel += confidenceLevel;
+        //         setTotal5(level5[index].confidenceLevel)
+        //     } else {
+        //         level5.push({ predictedClassIndex, confidenceLevel });
+        //     }
+        // }
+        // else if (confidenceLevel < 3) {
+        //     index = level6.findIndex((item) => item.predictedClassIndex === predictedClassIndex);
+        //     if (index !== -1) {
+        //         level6[level6index].confidenceLevel += confidenceLevel;
+        //         setTotal6([index].confidenceLevel)
+        //     } else {
+        //         level6.push({ predictedClassIndex, confidenceLevel });
+        //     }
+        // }
 
-        if (level1[index]?.confidenceLevel >= 20 || level2[index]?.confidenceLevel >= 40 || level3[index]?.confidenceLevel >= 45 || level4[index]?.confidenceLevel >= 55 || level5[index]?.confidenceLevel >= 70 || level6[index]?.confidenceLevel >= 80) {
-            navigation.navigate('Detail', { id: predictedClassIndex })
-        }
-        else {
-            if(reset){
-                level6 = []
-                level5 = []
-                level4 = []
-                setReset(false)
-            }
-            main()
-        }
+        // if (level1[index]?.confidenceLevel >= 20 || level2[index]?.confidenceLevel >= 40 || level3[index]?.confidenceLevel >= 45 || level4[index]?.confidenceLevel >= 55 || level5[index]?.confidenceLevel >= 70 || level6[index]?.confidenceLevel >= 80) {
+        //     navigation.navigate('Detail', { id: predictedClassIndex })
+        // }
+        // else {
+        //     if(reset){
+        //         level6 = []
+        //         level5 = []
+        //         level4 = []
+        //         setReset(false)
+        //     }
+        //     main()
+        // }
 
 
         // main();
@@ -251,7 +259,7 @@ const FinalFinalScan = () => {
                     quality: 0.8,
                 });
                 // try {
-                //     const asset = await MediaLibrary.createAssetAsync(photo.uri);
+                //     const asset = await MediaLibrary.createAssetAsync(uri);
                 //     console.log('Saved asset:', asset);
                 // } catch (error) {
                 //     console.log('An error occurred while saving the asset:', error);
