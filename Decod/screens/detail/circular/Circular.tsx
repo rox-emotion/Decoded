@@ -55,13 +55,6 @@ export const CircularDraggableProgressBar = ({
   individualValue = 1000,
   color
 }: ICircularDraggableProgressBar): JSX.Element => {
-  // console.log(value)
-
-  // useEffect(() => {
-  //   const timer = setTimeout(() => {
-  //     setAngleLength(calculateAngleLengthFromValue(24))
-  //   },2000)
-  // })
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -99,10 +92,6 @@ export const CircularDraggableProgressBar = ({
     }
   }
 
-  if(percentage == 100){
-    console.log('e gata')
-  }
-
   const getGradientId = (index = 0) => {
     return `gradient${index}`
   }
@@ -111,6 +100,7 @@ export const CircularDraggableProgressBar = ({
     const num = 1
     const hundred = max
     const percentage = Math.round((angleVal * hundred) / num)
+    console.log("in somponenta "  + percentage)
     return percentage
   }
 

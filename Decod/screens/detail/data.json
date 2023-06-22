@@ -1,8 +1,6 @@
 [
     {
         "id": 1,
-        "image": "require(./../../assets/images/001.png)",
-        "audio": "./../../assets/audio/001.ios.m4a",
         "color": "#26346D",
         "name": "Tan Le & Ai Le Hatala",
         "title": "Entrepreneur",
@@ -11,8 +9,6 @@
     },
     {
         "id": 2,
-        "image": "./../../assets/images/002.png",
-        "audio": "./../../assets/audio/002.ios.m4a",
         "color": "#BF9C5C",
         "name": "Sophia Kianni",
         "title": "Climate Activist",
@@ -21,8 +17,6 @@
     },
     {
         "id": 3,
-        "image": "./../../assets/images/003.png",
-        "audio": "./../../assets/audio/003.ios.m4a",
         "color": "#67523A",
         "name": "Hiwad M. Haider",
         "title": "Political Campaign Organizer",
@@ -31,8 +25,6 @@
     },
     {
         "id": 4,
-        "image": "./../../assets/images/004.png",
-        "audio": "./../../assets/audio/004.ios.m4a",
         "color": "#516498",
         "name": "Peter Phương Pham",
         "title": "Community Advocate",
@@ -41,8 +33,6 @@
     },
     {
         "id": 5,
-        "image": "./../../assets/images/005.png",
-        "audio": "./../../assets/audio/005.ios.m4a",
         "color": "#A28F7E",
         "name": "Helen Legesse Kassa",
         "title": "Activist",
@@ -51,8 +41,6 @@
     },
     {
         "id": 6,
-        "image": "./../../assets/images/006.png",
-        "audio": "./../../assets/audio/006.ios.m4a",
         "color": "#EA6A3C",
         "name": "Crystal (Crys) Cisneros-Villa",
         "DOB": "11_1996",
@@ -61,8 +49,6 @@
     },
     {
         "id": 7,
-        "image": "./../../assets/images/007.png",
-        "audio": "./../../assets/audio/007.ios.m4a",
         "color": "#758A32",
         "name": "Alyssarhaye Graciano",
         "title": "Artist & Writer",
@@ -71,8 +57,6 @@
     },
     {
         "id": 8,
-        "image": "./../../assets/images/008.png",
-        "audio": "./../../assets/audio/008.ios.m4a",
         "color": "#CC1420",
         "name": "Jorge Sanchez",
         "title": "Paralympic Gold Medalist and Cancer Survivor",
@@ -81,8 +65,6 @@
     },
     {
         "id": 9,
-        "image": "./../../assets/images/009.png",
-        "audio": "./../../assets/audio/009.ios.m4a",
         "color": "#7D7E8A",
         "name": "Yosimar Reyes",
         "title": "Author",
@@ -91,8 +73,6 @@
     },
     {
         "id": 10,
-        "image": "./../../assets/images/010.png",
-        "audio": "./../../assets/audio/010.ios.m4a",
         "color": "#2C4337",
         "name": "Adrienne Keel",
         "title": "Community Leader",
@@ -101,8 +81,6 @@
     },
     {
         "id": 11,
-        "image": "./../../assets/images/011.png",
-        "audio": "./../../assets/audio/011.ios.m4a",
         "color": "#087CC1",
         "name": "Sreeja Nag",
         "title": "Scientist & Systems Engineer",
@@ -111,8 +89,6 @@
     },
     {
         "id": 12,
-        "image": "./../../assets/images/012.png",
-        "audio": "./../../assets/audio/012.ios.m4a",
         "color": "#195089",
         "name": "Anand Varma",
         "title": "Science Photographer",
@@ -121,8 +97,6 @@
     },
     {
         "id": 13,
-        "image": "./../../assets/images/013.png",
-        "audio": "./../../assets/audio/013.ios.m4a",
         "color": "#A43C51",
         "name": "Luisa Fernanda Covaria Farfan",
         "title": "Creative",
@@ -131,8 +105,6 @@
     },
     {
         "id": 14,
-        "image": "./../../assets/images/014.png",
-        "audio": "./../../assets/audio/014.ios.m4a",
         "color": "#AB386D",
         "name": "Sara El-Amine",
         "title": "Bridge Builder",
@@ -141,8 +113,6 @@
     },
     {
         "id": 15,
-        "image": "./../../assets/images/015.png",
-        "audio": "./../../assets/audio/015.ios.m4a",
         "color": "#4E4D51",
         "name": "Ryan Panchadsaram",
         "title": "Problem Solver",
@@ -151,8 +121,6 @@
     },
     {
         "id": 16,
-        "image": "./../../assets/images/016.png",
-        "audio": "./../../assets/audio/016.ios.m4a",
         "color": "#4E4D51",
         "name": "Ramona Giwargis",
         "title": "Truth Teller",
@@ -161,8 +129,6 @@
     },
     {
         "id": 17,
-        "image": "./../../assets/images/017.png",
-        "audio": "./../../assets/audio/017.ios.m4a",
         "color": "#C17513",
         "name": "Jessica Paz-Cedillos",
         "title": "Social Impact Leader",
@@ -171,8 +137,6 @@
     },
     {
         "id": 18,
-        "image": "./../../assets/images/018.png",
-        "audio": "./../../assets/audio/018.ios.m4a",
         "color": "#1F1F27",
         "name": "Vishaal Hariprasad",
         "title": "Cyber Security Expert",
@@ -181,8 +145,6 @@
     },
     {
         "id": 19,
-        "image": "./../../assets/images/019.png",
-        "audio": "./../../assets/audio/019.ios.m4a",
         "color": "#2C3D74",
         "name": "Camille Erin Llanes-Fontanilla",
         "title": "Community Organizer",
@@ -191,8 +153,6 @@
     },
     {
         "id": 20,
-        "image": "./../../assets/images/020.png",
-        "audio": "./../../assets/audio/020.ios.m4a",
         "color": "#CB2C87",
         "name": "Zahra Billoo",
         "title": "Social Justice Warrior",
@@ -201,8 +161,6 @@
     },
     {
         "id": 21,
-        "image": "./../../assets/images/021.png",
-        "audio": "./../../assets/audio/021.ios.m4a",
         "color": "#6D6C74",
         "name": "Morgan Simon",
         "DOB": "NaN",
@@ -211,8 +169,6 @@
     },
     {
         "id": 22,
-        "image": "./../../assets/images/022.png",
-        "audio": "./../../assets/audio/022.ios.m4a",
         "color": "#641124",
         "name": "Raul Peralez",
         "title": "Public Server",
@@ -221,8 +177,6 @@
     },
     {
         "id": 23,
-        "image": "./../../assets/images/023.png",
-        "audio": "./../../assets/audio/023.ios.m4a",
         "color": "#353748",
         "name": "Milan Ray Balinton",
         "title": "Servant Leader",
@@ -231,8 +185,6 @@
     },
     {
         "id": 24,
-        "image": "./../../assets/images/024.png",
-        "audio": "./../../assets/audio/024.ios.m4a",
         "color": "#D41031",
         "name": "Jose Antonio Vargas",
         "title": "Journalist & Founder of Define American",
@@ -241,8 +193,6 @@
     },
     {
         "id": 25,
-        "image": "./../../assets/images/025.png",
-        "audio": "./../../assets/audio/025.ios.m4a",
         "color": "#4C4395",
         "name": "Jaqui Guzmán",
         "title": "Public Server",
@@ -251,8 +201,6 @@
     },
     {
         "id": 26,
-        "image": "./../../assets/images/026.png",
-        "audio": "./../../assets/audio/026.ios.m4a",
         "color": "#02A2A9",
         "name": "Maria Artunduaga",
         "title": "Physician & Medical Technologist",
@@ -261,8 +209,6 @@
     },
     {
         "id": 27,
-        "image": "./../../assets/images/027.png",
-        "audio": "./../../assets/audio/027.ios.m4a",
         "color": "#E94E51",
         "name": "Dinari L. Brown",
         "title": "Chef, Educator and Community Advocate",
@@ -271,8 +217,6 @@
     },
     {
         "id": 28,
-        "image": "./../../assets/images/028.png",
-        "audio": "./../../assets/audio/028.ios.m4a",
         "color": "#636062",
         "name": "Tyson Amir",
         "title": "Freedom Fighter",
@@ -281,8 +225,6 @@
     },
     {
         "id": 29,
-        "image": "./../../assets/images/029.png",
-        "audio": "./../../assets/audio/029.ios.m4a",
         "color": "#2C282F",
         "name": "Sera Fernando",
         "title": "Change Agent",
@@ -291,8 +233,6 @@
     },
     {
         "id": 30,
-        "image": "./../../assets/images/030.png",
-        "audio": "./../../assets/audio/030.ios.m4a",
         "color": "#CE6116",
         "name": "Preston Smith",
         "title": "Educator",
@@ -301,8 +241,6 @@
     },
     {
         "id": 31,
-        "image": "./../../assets/images/031.png",
-        "audio": "./../../assets/audio/031.ios.m4a",
         "color": "#DCAC09",
         "name": "Anthony Chang",
         "title": "Community Member",
@@ -311,8 +249,6 @@
     },
     {
         "id": 32,
-        "image": "./../../assets/images/032.png",
-        "audio": "./../../assets/audio/032.ios.m4a",
         "color": "#96737D",
         "name": "Christie George",
         "title": "Philanthropic Advisor & Political Activist",
@@ -321,8 +257,6 @@
     },
     {
         "id": 33,
-        "image": "./../../assets/images/033.png",
-        "audio": "./../../assets/audio/033.ios.m4a",
         "color": "#BD9F5F",
         "name": "Ebony Beckwith",
         "title": "Philanthropist",
@@ -331,8 +265,6 @@
     },
     {
         "id": 34,
-        "image": "./../../assets/images/034.png",
-        "audio": "./../../assets/audio/034.ios.m4a",
         "color": "#BD182E",
         "name": "Eduardo Briceño",
         "title": "Keynote Speaker & Facilitator",
@@ -341,8 +273,6 @@
     },
     {
         "id": 35,
-        "image": "./../../assets/images/035.png",
-        "audio": "./../../assets/audio/035.ios.m4a",
         "color": "#2D2F58",
         "name": "Carlos D. Bustamante",
         "title": "Population Geneticist",
@@ -351,8 +281,6 @@
     },
     {
         "id": 36,
-        "image": "./../../assets/images/036.png",
-        "audio": "./../../assets/audio/036.ios.m4a",
         "color": "#7BA1D3",
         "name": "DJ Patil",
         "title": "Data Scientist",
@@ -361,8 +289,6 @@
     },
     {
         "id": 37,
-        "image": "./../../assets/images/037.png",
-        "audio": "./../../assets/audio/037.ios.m4a",
         "color": "#262632",
         "name": "Akif Aydin",
         "title": "Restaurant Owner",
@@ -371,8 +297,6 @@
     },
     {
         "id": 38,
-        "image": "./../../assets/images/038.png",
-        "audio": "./../../assets/audio/038.ios.m4a",
         "color": "#606573",
         "name": "Bini Pradhan",
         "title": "Chef",
@@ -381,8 +305,6 @@
     },
     {
         "id": 39,
-        "image": "./../../assets/images/039.png",
-        "audio": "./../../assets/audio/039.ios.m4a",
         "color": "#593A32",
         "name": "Charlene Nijmeh",
         "title": "Muwekma Ohlone Tribe Chairwoman",
@@ -391,8 +313,6 @@
     },
     {
         "id": 40,
-        "image": "./../../assets/images/040.png",
-        "audio": "./../../assets/audio/040.ios.m4a",
         "color": "#5A5763",
         "name": "Adam Werbach",
         "title": "Planet Dweller",
@@ -401,8 +321,6 @@
     },
     {
         "id": 41,
-        "image": "./../../assets/images/041.png",
-        "audio": "./../../assets/audio/041.ios.m4a",
         "color": "#4C6C9D",
         "name": "James Ifeanyi Okafor",
         "title": "Catholic Priest",
@@ -411,8 +329,6 @@
     },
     {
         "id": 42,
-        "image": "./../../assets/images/042.png",
-        "audio": "./../../assets/audio/042.ios.m4a",
         "color": "#617227",
         "name": "DeAnna Pursai",
         "title": "Mountain Mover - College of Adaptive Arts",
@@ -421,8 +337,6 @@
     },
     {
         "id": 43,
-        "image": "./../../assets/images/043.png",
-        "audio": "./../../assets/audio/043.ios.m4a",
         "color": "#00A493",
         "name": "Shambhavi Dandekar",
         "title": "Indian Classical Kathak Dancer",
@@ -431,8 +345,6 @@
     },
     {
         "id": 44,
-        "image": "./../../assets/images/044.png",
-        "audio": "./../../assets/audio/044.ios.m4a",
         "color": "#981D77",
         "name": "Hector A. Garcia",
         "title": "Homeless Advocate",
@@ -441,8 +353,6 @@
     },
     {
         "id": 45,
-        "image": "./../../assets/images/045.png",
-        "audio": "./../../assets/audio/045.ios.m4a",
         "color": "#28884C",
         "name": "James Mendoza",
         "title": "Firefighter",
@@ -451,8 +361,6 @@
     },
     {
         "id": 46,
-        "image": "./../../assets/images/046.png",
-        "audio": "./../../assets/audio/046.ios.m4a",
         "color": "#E03020",
         "name": "Jennifer Loving",
         "title": "Human",
@@ -461,8 +369,6 @@
     },
     {
         "id": 47,
-        "image": "./../../assets/images/047.png",
-        "audio": "./../../assets/audio/047.ios.m4a",
         "color": "#58AE8D",
         "name": "Jennifer Pahlka",
         "title": "Bridge Builder",
@@ -471,8 +377,6 @@
     },
     {
         "id": 48,
-        "image": "./../../assets/images/048.png",
-        "audio": "./../../assets/audio/048.ios.m4a",
         "color": "#7B3524",
         "name": "James Rucker",
         "title": "Social Change Catalyst",
@@ -481,8 +385,6 @@
     },
     {
         "id": 49,
-        "image": "./../../assets/images/049.png",
-        "audio": "./../../assets/audio/049.ios.m4a",
         "color": "#E77E4A",
         "name": "Frank Carbajal",
         "title": "Entrepreneur / Author",
@@ -491,8 +393,6 @@
     },
     {
         "id": 50,
-        "image": "./../../assets/images/050.png",
-        "audio": "./../../assets/audio/050.ios.m4a",
         "color": "#AC7F6D",
         "name": "Paula Pérez García",
         "title": "Activista Comunitaria / Community Activist",
@@ -501,8 +401,6 @@
     },
     {
         "id": 51,
-        "image": "./../../assets/images/051.png",
-        "audio": "./../../assets/audio/051.ios.m4a",
         "color": "#974C98",
         "name": "Usha Srinivasan",
         "title": "Cultural Changemaker",
@@ -511,8 +409,6 @@
     },
     {
         "id": 52,
-        "image": "./../../assets/images/052.png",
-        "audio": "./../../assets/audio/052.ios.m4a",
         "color": "#CA3229",
         "name": "Aby Brayton Ryan",
         "title": "Sports Change Agent",
@@ -521,8 +417,6 @@
     },
     {
         "id": 53,
-        "image": "./../../assets/images/053.png",
-        "audio": "./../../assets/audio/053.ios.m4a",
         "color": "#1C3F88",
         "name": "Catherine Jane Mohr",
         "title": "Global Health Strategist",
@@ -531,8 +425,6 @@
     },
     {
         "id": 54,
-        "image": "./../../assets/images/054.png",
-        "audio": "./../../assets/audio/054.ios.m4a",
         "color": "#A2511D",
         "name": "Van Ton-Quinlivan",
         "title": "Thought Leader in Workforce Development",
@@ -541,8 +433,6 @@
     },
     {
         "id": 55,
-        "image": "./../../assets/images/055.png",
-        "audio": "./../../assets/audio/055.ios.m4a",
         "color": "#585447",
         "name": "Fantastic Negrito (Xavier Dphrepaulezz)",
         "title": "Artist",
@@ -551,8 +441,6 @@
     },
     {
         "id": 56,
-        "image": "./../../assets/images/056.png",
-        "audio": "./../../assets/audio/056.ios.m4a",
         "color": "#104796",
         "name": "Nancy Uyeda",
         "title": "Food Pantry Manager",
@@ -561,8 +449,6 @@
     },
     {
         "id": 57,
-        "image": "./../../assets/images/057.png",
-        "audio": "./../../assets/audio/057.ios.m4a",
         "color": "#A5541E",
         "name": "Olga Melo Guzmán",
         "title": "Community Activist",
@@ -571,8 +457,6 @@
     },
     {
         "id": 58,
-        "image": "./../../assets/images/058.png",
-        "audio": "./../../assets/audio/058.ios.m4a",
         "color": "#E72771",
         "name": "Leslie Harless Bacho",
         "title": "Food Security Advocate",
@@ -581,8 +465,6 @@
     },
     {
         "id": 59,
-        "image": "./../../assets/images/059.png",
-        "audio": "./../../assets/audio/059.ios.m4a",
         "color": "#AAAE19",
         "name": "Julie Hanna",
         "title": "Humanitarian Technologist",
@@ -591,8 +473,6 @@
     },
     {
         "id": 60,
-        "image": "./../../assets/images/060.png",
-        "audio": "./../../assets/audio/060.ios.m4a",
         "color": "#C69D3A",
         "name": "Quyen Ngoc Vuong",
         "title": "Community Advocate",
@@ -601,8 +481,6 @@
     },
     {
         "id": 61,
-        "image": "./../../assets/images/061.png",
-        "audio": "./../../assets/audio/061.ios.m4a",
         "color": "#642327",
         "name": "David Kunimitsu Mineta",
         "title": "Nonprofit CEO",
@@ -611,8 +489,6 @@
     },
     {
         "id": 62,
-        "image": "./../../assets/images/062.png",
-        "audio": "./../../assets/audio/062.ios.m4a",
         "color": "#00A385",
         "name": "Daniel Garcia",
         "title": "Photographer & The Cultivator of Content Magazine",
@@ -621,8 +497,6 @@
     },
     {
         "id": 63,
-        "image": "./../../assets/images/063.png",
-        "audio": "./../../assets/audio/063.ios.m4a",
         "color": "#688FBA",
         "name": "Almaz Negash",
         "title": "Convener",
@@ -631,8 +505,6 @@
     },
     {
         "id": 64,
-        "image": "./../../assets/images/064.png",
-        "audio": "./../../assets/audio/064.ios.m4a",
         "color": "#795E16",
         "name": "Pastor Paul Bains",
         "title": "Community Servant",
@@ -641,8 +513,6 @@
     },
     {
         "id": 65,
-        "image": "./../../assets/images/065.png",
-        "audio": "./../../assets/audio/065.ios.m4a",
         "color": "#2C3564",
         "name": "Brenda Darden Wilkerson",
         "title": "Social & Tech Justice CEO of a nonprofit",
@@ -651,8 +521,6 @@
     },
     {
         "id": 66,
-        "image": "./../../assets/images/066.png",
-        "audio": "./../../assets/audio/066.ios.m4a",
         "color": "#CE3455",
         "name": "Roberto Muñoz",
         "title": "First Generation USA Citizen",
@@ -661,8 +529,6 @@
     },
     {
         "id": 67,
-        "image": "./../../assets/images/067.png",
-        "audio": "./../../assets/audio/067.ios.m4a",
         "color": "#393741",
         "name": "Carol Abbot Thomsen",
         "title": "Early Childhood Care & Education",
@@ -671,8 +537,6 @@
     },
     {
         "id": 68,
-        "image": "./../../assets/images/068.png",
-        "audio": "./../../assets/audio/068.ios.m4a",
         "color": "#4A4852",
         "name": "William August Warrior",
         "title": "Retired Animal Control Officer",
@@ -681,8 +545,6 @@
     },
     {
         "id": 69,
-        "image": "./../../assets/images/069.png",
-        "audio": "./../../assets/audio/069.ios.m4a",
         "color": "#8E6B5A",
         "name": "Gio Rene Rodriguez",
         "title": "Story Scientist",
@@ -691,8 +553,6 @@
     },
     {
         "id": 70,
-        "image": "./../../assets/images/070.png",
-        "audio": "./../../assets/audio/070.ios.m4a",
         "color": "#4B508C",
         "name": "James Higa",
         "title": "Philanthropist & Technologist",
@@ -701,8 +561,6 @@
     },
     {
         "id": 71,
-        "image": "./../../assets/images/071.png",
-        "audio": "./../../assets/audio/071.ios.m4a",
         "color": "#DA663F",
         "name": "Viera Whye",
         "title": "Inclusion Artist",
@@ -711,8 +569,6 @@
     },
     {
         "id": 72,
-        "image": "./../../assets/images/072.png",
-        "audio": "./../../assets/audio/072.ios.m4a",
         "color": "#B9514D",
         "name": "Bonnie Lewkowicz",
         "title": "Explorer",
@@ -721,8 +577,6 @@
     },
     {
         "id": 73,
-        "image": "./../../assets/images/073.png",
-        "audio": "./../../assets/audio/073.ios.m4a",
         "color": "#7F2A47",
         "name": "Raul Lozano",
         "title": "Food Servant Warrior",
@@ -731,8 +585,6 @@
     },
     {
         "id": 74,
-        "image": "./../../assets/images/074.png",
-        "audio": "./../../assets/audio/074.ios.m4a",
         "color": "#4F4B80",
         "name": "Eva Margarida Terrazas",
         "title": "Systems Change Advocate",
@@ -741,8 +593,6 @@
     },
     {
         "id": 75,
-        "image": "./../../assets/images/075.png",
-        "audio": "./../../assets/audio/075.ios.m4a",
         "color": "#72472D",
         "name": "Marie T. Bernard",
         "title": "A Woman of Persistence",
@@ -751,8 +601,6 @@
     },
     {
         "id": 76,
-        "image": "./../../assets/images/076.png",
-        "audio": "./../../assets/audio/076.ios.m4a",
         "color": "#1F3D89",
         "name": "Luisa Buada",
         "title": "Community Health Center Entrepreneur",
@@ -761,8 +609,6 @@
     },
     {
         "id": 77,
-        "image": "./../../assets/images/077.png",
-        "audio": "./../../assets/audio/077.ios.m4a",
         "color": "#024660",
         "name": "Ken Yeager",
         "title": "LGBTQ+ Activist",
@@ -771,8 +617,6 @@
     },
     {
         "id": 78,
-        "image": "./../../assets/images/078.png",
-        "audio": "./../../assets/audio/078.ios.m4a",
         "color": "#613624",
         "name": "Dennis Eugene Billups",
         "title": "Light Worker Warrior",
@@ -781,8 +625,6 @@
     },
     {
         "id": 79,
-        "image": "./../../assets/images/079.png",
-        "audio": "./../../assets/audio/079.ios.m4a",
         "color": "#E83E68",
         "name": "Sparky Harlan",
         "title": "Youth Advocate",
@@ -791,8 +633,6 @@
     },
     {
         "id": 80,
-        "image": "./../../assets/images/080.png",
-        "audio": "./../../assets/audio/080.ios.m4a",
         "color": "#B51E27",
         "name": "Janet Delaney",
         "title": "Visual Artist",
@@ -801,8 +641,6 @@
     },
     {
         "id": 81,
-        "image": "./../../assets/images/081.png",
-        "audio": "./../../assets/audio/081.ios.m4a",
         "color": "#325C93",
         "name": "Jose Real Padilla",
         "title": "Poverty Law Attorney",
@@ -811,8 +649,6 @@
     },
     {
         "id": 82,
-        "image": "./../../assets/images/082.png",
-        "audio": "./../../assets/audio/082.ios.m4a",
         "color": "#6E443A",
         "name": "Chairman Valentin Lopez",
         "title": "Amah Mutsun Tribal Band Chairman",
@@ -821,8 +657,6 @@
     },
     {
         "id": 83,
-        "image": "./../../assets/images/083.png",
-        "audio": "./../../assets/audio/083.ios.m4a",
         "color": "#C66258",
         "name": "Ron Gonzales",
         "title": "Community Activist & Public Servant",
@@ -831,8 +665,6 @@
     },
     {
         "id": 84,
-        "image": "./../../assets/images/084.png",
-        "audio": "./../../assets/audio/084.ios.m4a",
         "color": "#7F615A",
         "name": "Reymundo Carmona Espinoza",
         "title": "Healthcare Provider",
@@ -841,8 +673,6 @@
     },
     {
         "id": 85,
-        "image": "./../../assets/images/085.png",
-        "audio": "./../../assets/audio/085.ios.m4a",
         "color": "#6994A5",
         "name": "PJ Hirabayashi",
         "title": "Taiko Artist & Creative Mentor",
@@ -851,8 +681,6 @@
     },
     {
         "id": 86,
-        "image": "./../../assets/images/086.png",
-        "audio": "./../../assets/audio/086.ios.m4a",
         "color": "#D51119",
         "name": "LaDoris Hazzard Cordell",
         "title": "Retired State Court Judge & Author",
@@ -861,8 +689,6 @@
     },
     {
         "id": 87,
-        "image": "./../../assets/images/087.png",
-        "audio": "./../../assets/audio/087.ios.m4a",
         "color": "#353B56",
         "name": "Alejandro Murguía",
         "title": "Poet and Professor",
@@ -871,8 +697,6 @@
     },
     {
         "id": 88,
-        "image": "./../../assets/images/088.png",
-        "audio": "./../../assets/audio/088.ios.m4a",
         "color": "#857577",
         "name": "Steven Chu",
         "title": "Professor",
@@ -881,8 +705,6 @@
     },
     {
         "id": 89,
-        "image": "./../../assets/images/089.png",
-        "audio": "./../../assets/audio/089.ios.m4a",
         "color": "#04839A",
         "name": "Margaret Levi",
         "title": "Social Scientist",
@@ -891,8 +713,6 @@
     },
     {
         "id": 90,
-        "image": "./../../assets/images/090.png",
-        "audio": "./../../assets/audio/090.ios.m4a",
         "color": "#901917",
         "name": "Kirk O. Hanson",
         "title": "Professor of Business Ethics",
@@ -901,8 +721,6 @@
     },
     {
         "id": 91,
-        "image": "./../../assets/images/091.png",
-        "audio": "./../../assets/audio/091.ios.m4a",
         "color": "#6F2B18",
         "name": "Taj Noori",
         "title": "Community Server",
@@ -911,8 +729,6 @@
     },
     {
         "id": 92,
-        "image": "./../../assets/images/092.png",
-        "audio": "./../../assets/audio/092.ios.m4a",
         "color": "#CC6E2D",
         "name": "Mildred Shrock Howard",
         "title": "Artist",
@@ -921,8 +737,6 @@
     },
     {
         "id": 93,
-        "image": "./../../assets/images/093.png",
-        "audio": "./../../assets/audio/093.ios.m4a",
         "color": "#91AD3C",
         "name": "Barry Lawson Williams",
         "title": "Community Builder",
@@ -931,8 +745,6 @@
     },
     {
         "id": 94,
-        "image": "./../../assets/images/094.png",
-        "audio": "./../../assets/audio/094.ios.m4a",
         "color": "#7F5137",
         "name": "Augustina (Sally) Armendariz",
         "title": "Proud Brown Person of the Mother Earth",
@@ -941,8 +753,6 @@
     },
     {
         "id": 95,
-        "image": "./../../assets/images/095.png",
-        "audio": "./../../assets/audio/095.ios.m4a",
         "color": "#E45815",
         "name": "Stephen Scott Gill",
         "title": "Singer",
@@ -951,8 +761,6 @@
     },
     {
         "id": 96,
-        "image": "./../../assets/images/096.png",
-        "audio": "./../../assets/audio/096.ios.m4a",
         "color": "#535045",
         "name": "Nevida Preston-Butler",
         "title": "Community Outreach Coordinator",
@@ -961,8 +769,6 @@
     },
     {
         "id": 97,
-        "image": "./../../assets/images/097.png",
-        "audio": "./../../assets/audio/097.ios.m4a",
         "color": "#353237",
         "name": "Luis Valdez",
         "title": "Director & Playwright",
@@ -971,8 +777,6 @@
     },
     {
         "id": 98,
-        "image": "./../../assets/images/098.png",
-        "audio": "./../../assets/audio/098.ios.m4a",
         "color": "#9A6F42",
         "name": "John A. Sobrato",
         "title": "Real Estate Developer & Philanthropist",
@@ -981,8 +785,6 @@
     },
     {
         "id": 99,
-        "image": "./../../assets/images/099.png",
-        "audio": "./../../assets/audio/099.ios.m4a",
         "color": "#2C3352",
         "name": "Robert Hoover Sr.",
         "title": "Community Mentor",
@@ -991,8 +793,6 @@
     },
     {
         "id": 100,
-        "image": "./../../assets/images/100.png",
-        "audio": "./../../assets/audio/100.ios.m4a",
         "color": "#A73223",
         "name": "Blanca Alvarado",
         "title": "Social/Political Activist",
@@ -1001,8 +801,6 @@
     },
     {
         "id": 101,
-        "image": "./../../assets/images/101.png",
-        "audio": "./../../assets/audio/101.ios.m4a",
         "color": "#785C9D",
         "name": "Mary Silveira Ristroph",
         "title": "Housewife",

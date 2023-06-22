@@ -18,8 +18,6 @@ export interface ICircularDraggableProgressBar {
   coins?: number
   isOverBudget?: boolean
   individualValue?: number,
-  progressColor: any,
-  onPause: any,
   callBack: (val: number) => any,
   pauseCallBack: () => void,
   isPaused: boolean,

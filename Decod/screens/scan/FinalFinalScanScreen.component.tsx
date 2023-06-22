@@ -100,7 +100,7 @@ const FinalFinalScan = () => {
     const resizeImage = async (photoUri: string) => {
         const resizedImage = await ImageManipulator.manipulateAsync(
             photoUri,
-            [{ resize: { width: 256, height: 256 } }],
+            [{ resize: { width: 224, height: 224 } }],
             { format: ImageManipulator.SaveFormat.JPEG }
         );
         return resizedImage;
@@ -115,7 +115,7 @@ const FinalFinalScan = () => {
             const imageBytes = new Uint8Array(Buffer.from(imageString, 'base64'));
             const imageTensor = decodeJpeg(imageBytes);
             // const normalizedImageTensor = imageTensor.div(255.0);
-            const reshapedImageTensor = tf.reshape(imageTensor, [1, 256, 256, 3])
+            const reshapedImageTensor = tf.reshape(imageTensor, [1, 224, 224, 3])
             return reshapedImageTensor
         }
         else {
@@ -127,12 +127,12 @@ const FinalFinalScan = () => {
         const processedImg = await transformImageToTensor(uri);
         const prediction = await model.predict(processedImg);
         const predictedClassIndex = prediction.argMax(-1).dataSync()[0];
-        // const confidenceLevel = parseFloat((prediction.dataSync()[predictedClassIndex] * 100).toFixed(2));
-        const confidenceLevel = prediction.dataSync()[predictedClassIndex]
+        const confidenceLevel = parseFloat((prediction.dataSync()[predictedClassIndex] * 100).toFixed(2));
+        // const confidenceLevel = prediction.dataSync()[predictedClassIndex]
 
         // console.log(confidenceLevel)
 
-        console.log(predictedClassIndex + "   " + confidenceLevel)
+        console.log("prediction:  " + predictedClassIndex + "   " + confidenceLevel)
 
         // let index;
         // if (confidenceLevel >= 20) {
@@ -204,7 +204,7 @@ const FinalFinalScan = () => {
         // }
 
 
-        // main();
+        main();
 
         // if (confidenceLevel >= 15) {  //BEST CASE SCENARIO - IMAGE IS RECOGNIZED ON FIRST TRY
         //     navigation.navigate('Detail', { id: predictedClassIndex });

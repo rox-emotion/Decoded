@@ -32,8 +32,8 @@ const NewSplashScreen = () => {
 
     const prepareModel = async () => {
         console.log("prepareModel")
-        const modelJson = require('./../../assets/fresh/model.json')
-        const modelWeights = require('./../../assets/fresh/weights.bin')
+        const modelJson = require('./../../assets/onlinemodel/model.json')
+        const modelWeights = require('./../../assets/onlinemodel/weights.bin')
         tf.ENV.set("WEBGL_PACK", false);
         const model = await tf.loadLayersModel(
             bundleResourceIO(modelJson, modelWeights)
