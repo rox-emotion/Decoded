@@ -31,7 +31,7 @@ let _iconPanResponder: PanResponderInstance
 
 export const CircularDraggableProgressBar = ({
   strokeWidth = 15,
-  radius = 44,
+  radius = 50,
   bgCircleColor = 'transparent',
   draggable = true,
   max = 100,
@@ -100,7 +100,7 @@ export const CircularDraggableProgressBar = ({
     const num = 1
     const hundred = max
     const percentage = Math.round((angleVal * hundred) / num)
-    console.log("in somponenta "  + percentage)
+    // console.log("in somponenta "  + percentage)
     return percentage
   }
 

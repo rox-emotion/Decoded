@@ -25,8 +25,11 @@ const DetailScreenFinal = ({ route, navigation }) => {
     const ratio = (win.width - 56) / 1944;
     const nav = useNavigation()
     const soundRef = useRef();
-    // console.log(percetange)
+   
+    const spaceBetween = Dimensions.get("window").height > 700 ? 32 : 16
+    const picHeight = Dimensions.get("window").height > 700 ? Dimensions.get("window").height - 370 : Dimensions.get("window").height - 322
 
+    console.log(Dimensions.get("window").height)
     useEffect(() => {
         if(percetange>=99){
             moveTo(0,false)
@@ -188,7 +191,7 @@ const DetailScreenFinal = ({ route, navigation }) => {
 
     return (
         <View style={styles.pageContainer}>
-            <View style={{ marginTop: 38 }}>
+            <View style={{marginTop:19}}>
                 <Header hasBack={true} hasIcon={true} hasMenu={false} />
             </View>
             <View style={styles.container}>
@@ -197,7 +200,7 @@ const DetailScreenFinal = ({ route, navigation }) => {
                     source={images[id]}
                     style={{
                         width: win.width - 56,
-                        height: 2598 * ratio - 30,
+                        height: picHeight,
                         opacity: scrollAnim.interpolate({
                             inputRange: [0, 1],
                             outputRange: [1, 0],
@@ -207,11 +210,12 @@ const DetailScreenFinal = ({ route, navigation }) => {
                             {
                                 translateY: scrollAnim.interpolate({
                                     inputRange: [0, 1],
-                                    outputRange: [0, -2598 * ratio],
+                                    outputRange: [0, -picHeight],
                                     extrapolate: 'clamp',
                                 }),
                             },
                         ],
+                        marginBottom:12
                     }}
                 />
                 <Animated.View
@@ -220,38 +224,36 @@ const DetailScreenFinal = ({ route, navigation }) => {
                             {
                                 translateY: scrollAnim.interpolate({
                                     inputRange: [0, 1],
-                                    outputRange: [0, -2598 * ratio],
+                                    outputRange: [0, -picHeight - 12],
                                     extrapolate: 'clamp',
                                 }),
                             },
                         ],
-                        marginTop: 16,
                     }}
                 >
-                    {/* NAME TITLE AND DOB */}
+
+
                     <Text style={[styles.name, { color: allData[id].color }]}>{allData[id].name}</Text>
                     <Text style={[styles.title, { color: allData[id].color }]}>{allData[id].title}</Text>
                     {
                         allData[id].DOB != 'NaN'
-                            ? <Text style={[styles.title, { color: allData[id].color, marginBottom: 16 }]}>{allData[id].DOB}</Text>
+                            ? <Text style={[styles.title, { color: allData[id].color, marginBottom: spaceBetween }]}>{allData[id].DOB}</Text>
                             : null
                     }
-                    <View style={{ marginTop: 10, marginBottom: 20 }}>
+                    <View>
                         <CircularDraggableProgressBar value={percetange} callBack={(val) => { moveTo(val, true) }} pauseCallBack={() => { toggleSound(); setIsPaused(!isPaused)}} isPaused={isPaused} percentage={percetange} color={allData[id].color} />
-                       
                     </View>
                     {
                         isScrolled
                             ? null
                             : <TouchableOpacity onPress={() => { scrollDown() }}>
-                                <Image source={require('./../../assets/icons/down_arrow.png')} style={{ height: 19, width: 38, alignSelf: 'center', marginTop:40 }} />
+                                <Image source={require('./../../assets/icons/down_arrow.png')} style={{ height: 19, width: 38, alignSelf: 'center', marginTop:spaceBetween }} />
                             </TouchableOpacity>
                     }
 
-                    {/* AFTER SCROLL  */}
                     {
                         isScrolled
-                            ? <View style={{ height: '70%' }}>
+                            ? <View style={{ height: Dimensions.get("window").height - 322, marginTop:spaceBetween}}>
                                 <RNFadedScrollView allowStartFade={true} fadeSize={40} allowEndFade={false}
 
                                     fadeColors={['rgba(255, 255, 255, 0.1)', 'rgba(255, 255, 255, 0.3)', 'rgba(255, 255, 255, 0.99)']}>

@@ -3,14 +3,16 @@ const styles = StyleSheet.create({
     container: {
         flexDirection: 'row',
         justifyContent: 'space-between',
-        width: Dimensions.get('window').width - 58,
+        width: Dimensions.get('window').width - 56,
         alignSelf: 'center',
         alignItems: 'center',
+        // backgroundColor: 'yellow'
     },
     singleContainer: {
         flexDirection: 'row',
-        width: Dimensions.get('window').width - 58,
-        justifyContent: 'flex-end'
+        width: Dimensions.get('window').width - 56,
+        justifyContent: 'flex-end',
+        // backgroundColor:'red'
     }
 })
 

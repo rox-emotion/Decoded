@@ -12,7 +12,8 @@ import * as Font from 'expo-font';
 import DetailScreenClean from './screens/detail/DetailScreen.component';
 import SnapScanScreen from './screens/scan/SnapScanScreen.component';
 import { StatusBar } from 'react-native';
-import DetailScreenFinal from './screens/detail/ADetailScreenFinal.component';
+import DetailScreenFinal from './screens/detail/AADetailScreenFinal.component';
+
 import FinalFinalScan from './screens/scan/AHopefullyFinalScanScreen.component';
 
 const Stack = createNativeStackNavigator();

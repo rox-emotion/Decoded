@@ -61,13 +61,17 @@ const styles = StyleSheet.create({
         flex:1,
     },
     container: {
-        marginBottom:16,
-        marginTop: 16,
+        // marginBottom:16,
+        // marginTop: 16,
+        marginBottom:6,
+        marginTop:12,
+        paddingTop:0,
         flex: 1,
         marginHorizontal: 28,
         flexDirection: 'column',
         justifyContent: 'flex-start',
         alignItems: 'center',
+        backgroundColor:'red'
     },
     
 
