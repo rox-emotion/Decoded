@@ -15,7 +15,7 @@ import { CircularDraggableProgressBar } from "./circular/Circular";
 
 const DetailScreenFinal = ({ route, navigation }) => {
 
-    const id = route.params.id
+    const id = route.params.id - 1
     const allData = data
     const [percetange, setPercentage] = useState(0)
     const [isPaused, setIsPaused] = useState(false);

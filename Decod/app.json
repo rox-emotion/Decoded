@@ -26,6 +26,9 @@
     },
     "android": {
       "package": "com.emotionstudios.decoded"
-    }
+    },
+    "plugins": [
+      "react-native-vision-camera"
+    ]
   }
 }
