@@ -53,7 +53,7 @@ const styles = StyleSheet.create({
         color: SECONDARY_COLOR_BLUE
     },
     credits: {
-        fontSize: 20,
+        fontSize: 16,
         fontFamily: "californian-regular",
         color: SECONDARY_COLOR_GOLD
     },

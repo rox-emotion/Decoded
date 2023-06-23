@@ -7,7 +7,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   cameraDev:{
-    height: '80%',
+    height: '100%',
     width: Dimensions.get('window').width,
   },
   camera: {
@@ -26,6 +26,7 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'center',
+    backgroundColor: 'transparent'
   }
 });
 

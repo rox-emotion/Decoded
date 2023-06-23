@@ -84,7 +84,10 @@ const AboutScreen = () => {
         // </SafeAreaView>
         <View style={styles.mainContainer}>
             <Header hasBack={true} hasIcon={false} hasMenu={true} />
-            <ScrollView>
+            <ScrollView
+            showsVerticalScrollIndicator={false}
+            showsHorizontalScrollIndicator={false}
+            >
                 <Image source={require('./../../assets/icons/decoded_logo.png')} style={{ height: 232, width: 158, alignSelf: 'center', marginBottom: 38 }}/>
                 <Text style={styles.title}>De.Coded</Text>
                 <Text style={styles.subtitle}>A Human Atlas of</Text>

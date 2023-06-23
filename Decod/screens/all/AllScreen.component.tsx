@@ -18,7 +18,7 @@ const AllScreen = () => {
     const renderItem = ({ item, index }) => {
         return (
             <View>
-                <TouchableOpacity onPress={() => { navigateToDetail(index) }}>
+                <TouchableOpacity onPress={() => { navigateToDetail(index+1) }}>
                     <Image style={{ height: 99, width: 74, marginBottom: 10 }} source={thumbs[index]} />
                 </TouchableOpacity>
             </View>
