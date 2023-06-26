@@ -1,7 +1,7 @@
 import React from "react";
 import { useNavigation } from '@react-navigation/native'
 import { Video } from 'expo-av';
-import {  View, StatusBar, Dimensions } from "react-native";
+import { View, StatusBar, Dimensions } from "react-native";
 import { useEffect, useRef, useState } from "react";
 import styles from "./SplashScreen.styles";
 import { useDispatch } from 'react-redux';
@@ -28,7 +28,7 @@ const NewSplashScreen = () => {
     useEffect(() => {
         loadTensorFlow();
         prepareModel();
-      }, []);
+    }, []);
 
     const prepareModel = async () => {
         console.log("prepareModel")
@@ -55,18 +55,20 @@ const NewSplashScreen = () => {
     }
 
     return (
-        <View style={[styles.container, {height: Dimensions.get("screen").height}]}>
-            <Video
-                ref={videoPlayer}
-                source={videoSource}
-                resizeMode="cover"
-                onPlaybackStatusUpdate={(status) => {
-                    if (status.didJustFinish) {
-                        navigation.navigate('Scan');
-                    }
-                }}
-                style={[styles.video, {height: Dimensions.get("screen").height}]}
-            />
+        <View style={styles.mainContainer}>
+            <View style={[styles.container]}>
+                <Video
+                    ref={videoPlayer}
+                    source={videoSource}
+                    resizeMode="cover"
+                    // onPlaybackStatusUpdate={(status) => {
+                    //     if (status.didJustFinish) {
+                    //         navigation.navigate('Scan');
+                    //     }
+                    // }}
+                    style={[styles.video]}
+                />
+            </View>
         </View>
 
     );

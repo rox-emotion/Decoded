@@ -25,19 +25,20 @@ const DetailScreenFinal = ({ route, navigation }) => {
     const ratio = (win.width - 56) / 1944;
     const nav = useNavigation()
     const soundRef = useRef();
-   
-    const spaceBetween = Dimensions.get("window").height > 700 ? 32 : 16
-    const picHeight = Dimensions.get("window").height > 700 ? Dimensions.get("window").height - 370 : Dimensions.get("window").height - 322
 
     console.log(Dimensions.get("window").height)
+    const spaceBetween = Dimensions.get("window").height > 700 ? 32 : 16
+    const picHeight = Dimensions.get("window").height > 700 ? Dimensions.get("window").height - 384 : Dimensions.get("window").height - 330
+    const radius = Dimensions.get("window").height > 700 ? 50 : 40
+    const textContainerHeight = Dimensions.get("window").height > 700 ? 336 : 270
     useEffect(() => {
-        if(percetange>=99){
-            moveTo(0,false)
+        if (percetange >= 99) {
+            moveTo(0, false)
             setPercentage(0)
-            
+
         }
     }, [percetange]);
-    
+
     useEffect(() => {
         if (Platform.OS === 'ios') {
             enableAudio();
@@ -129,25 +130,25 @@ const DetailScreenFinal = ({ route, navigation }) => {
         })
     }
 
-    const moveTo = async (per,start) => {
+    const moveTo = async (per, start) => {
         try {
             const status = await soundRef.current.getStatusAsync();
             console.log(status.durationMillis)
             const desiredPositionMillis = per / 100 * status.durationMillis;
             console.log(desiredPositionMillis)
             soundRef.current.setPositionAsync(desiredPositionMillis)
-            if(start){
-                if(!status.isPlaying){
+            if (start) {
+                if (!status.isPlaying) {
                     soundRef.current.playAsync()
                     setIsPaused(false)
                 }
-            }else {
-                if(status.isPlaying){
+            } else {
+                if (status.isPlaying) {
                     soundRef.current.pauseAsync()
                     setIsPaused(true)
                 }
             }
-          
+
         }
         catch (e) {
             console.log(e)
@@ -191,10 +192,18 @@ const DetailScreenFinal = ({ route, navigation }) => {
 
     return (
         <View style={styles.pageContainer}>
-            <View style={{marginTop:19}}>
-                <Header hasBack={true} hasIcon={true} hasMenu={false} />
-            </View>
+            {isScrolled
+                ? null
+                : <Header hasBack={true} hasIcon={true} hasMenu={false} />}
+
+
             <View style={styles.container}>
+                {/* {
+                isScrolled
+                ? null
+                : <Header hasBack={true} hasIcon={true} hasMenu={false} />
+
+            } */}
                 {/* MAIN IMAGE */}
                 <Animated.Image
                     source={images[id]}
@@ -215,7 +224,7 @@ const DetailScreenFinal = ({ route, navigation }) => {
                                 }),
                             },
                         ],
-                        marginBottom:12
+                        marginBottom: 12
                     }}
                 />
                 <Animated.View
@@ -224,13 +233,19 @@ const DetailScreenFinal = ({ route, navigation }) => {
                             {
                                 translateY: scrollAnim.interpolate({
                                     inputRange: [0, 1],
-                                    outputRange: [0, -picHeight - 12],
+                                    outputRange: [0, -picHeight - 36],
                                     extrapolate: 'clamp',
                                 }),
                             },
                         ],
                     }}
                 >
+                    {
+                        isScrolled
+                        ? <Header hasBack={true} hasIcon={true} hasMenu={false} />
+                        : null
+
+                    }
 
 
                     <Text style={[styles.name, { color: allData[id].color }]}>{allData[id].name}</Text>
@@ -238,24 +253,25 @@ const DetailScreenFinal = ({ route, navigation }) => {
                     {
                         allData[id].DOB != 'NaN'
                             ? <Text style={[styles.title, { color: allData[id].color, marginBottom: spaceBetween }]}>{allData[id].DOB}</Text>
-                            : null
+                            : <View style={{ height: 36 }}></View>
                     }
                     <View>
-                        <CircularDraggableProgressBar value={percetange} callBack={(val) => { moveTo(val, true) }} pauseCallBack={() => { toggleSound(); setIsPaused(!isPaused)}} isPaused={isPaused} percentage={percetange} color={allData[id].color} />
+                        <CircularDraggableProgressBar value={percetange} callBack={(val) => { moveTo(val, true) }} pauseCallBack={() => { toggleSound(); setIsPaused(!isPaused) }} isPaused={isPaused} percentage={percetange} color={allData[id].color} radius={radius} />
                     </View>
                     {
                         isScrolled
                             ? null
                             : <TouchableOpacity onPress={() => { scrollDown() }}>
-                                <Image source={require('./../../assets/icons/down_arrow.png')} style={{ height: 19, width: 38, alignSelf: 'center', marginTop:spaceBetween }} />
+                                <Image source={require('./../../assets/icons/down_arrow.png')} style={{ height: 19, width: 38, alignSelf: 'center', marginTop: spaceBetween }} />
                             </TouchableOpacity>
                     }
 
                     {
                         isScrolled
-                            ? <View style={{ height: Dimensions.get("window").height - 322, marginTop:spaceBetween}}>
+                            ? <View style={{ height: Dimensions.get("window").height - textContainerHeight, marginTop: spaceBetween }}>
                                 <RNFadedScrollView allowStartFade={true} fadeSize={40} allowEndFade={false}
-
+                                     showsVerticalScrollIndicator={false}
+                                     showsHorizontalScrollIndicator={false}
                                     fadeColors={['rgba(255, 255, 255, 0.1)', 'rgba(255, 255, 255, 0.3)', 'rgba(255, 255, 255, 0.99)']}>
 
                                     {text.map((paragraph, index) => (

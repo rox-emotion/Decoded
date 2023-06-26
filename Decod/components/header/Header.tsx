@@ -53,7 +53,7 @@ const Header = ({ hasMenu, hasBack, hasIcon }) => {
                                     <TouchableOpacity onPress={() => { navigation.navigate('All') }}>
                                         <Image
                                             source={require('../../assets/icons/menu.png')}
-                                            style={{ height: 45, width: 40 }}
+                                            style={{ height: 38, width: 34 }}
 
                                         />
                                     </TouchableOpacity>

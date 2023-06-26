@@ -32,7 +32,7 @@ const styles = StyleSheet.create({
         fontSize: 18,
         fontFamily: 'californian-regular',
         color: TEXT_COLOR,
-        marginBottom:10
+        marginBottom:15
     },
     linkText: {
         fontSize: 18,
@@ -61,8 +61,7 @@ const styles = StyleSheet.create({
     {
         flex: 1,
         marginBottom:25,
-        marginTop:38,
-        marginHorizontal:28
+        marginHorizontal:28,
     }
 })
 

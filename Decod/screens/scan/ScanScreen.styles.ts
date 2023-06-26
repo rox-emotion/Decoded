@@ -27,7 +27,14 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: 'transparent'
-  }
+  },
+  imageContainer: {
+    position: 'absolute',
+    top: Dimensions.get('window').height * 0.23,
+    alignSelf: 'center',
+    height: 157, 
+    width: 95,
+  },
 });
 
 

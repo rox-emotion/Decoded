@@ -6,7 +6,6 @@ const styles = StyleSheet.create({
         alignSelf: 'center',
         height: '90%',
         marginTop:24
-
     },
     image: {
         height: 99,
@@ -14,10 +13,9 @@ const styles = StyleSheet.create({
     },
     mainContainer:
     {
-        flex: 1,
+        // flex: 1,
         backgroundColor: '#fff',
-        paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0,
-
+        // paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0,
     }
 })
 

@@ -20,6 +20,7 @@ const styles = StyleSheet.create({
         fontSize: 18,
         fontFamily: 'californian-regular',
         color: TEXT_COLOR,
+        marginBottom:15
     },
    
     modal: {

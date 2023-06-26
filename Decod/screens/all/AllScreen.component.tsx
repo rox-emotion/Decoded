@@ -25,7 +25,7 @@ const AllScreen = () => {
         );
     };
     return (
-        <SafeAreaView style={styles.mainContainer}>
+        <View style={styles.mainContainer}>
             <Header hasBack={true} hasIcon={true} hasMenu={false} />
             <View style={styles.container}>
                 <FlatList
@@ -36,7 +36,7 @@ const AllScreen = () => {
                     numColumns={4}
                 />
             </View>
-        </SafeAreaView>
+        </View>
     )
 }
 
