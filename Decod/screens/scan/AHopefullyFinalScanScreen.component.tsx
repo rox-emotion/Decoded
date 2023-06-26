@@ -150,7 +150,6 @@ const FinalFinalScan = () => {
                                 />
                             </>
 
-
                         )
                     }
                 </View>
