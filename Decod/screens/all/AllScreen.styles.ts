@@ -13,9 +13,9 @@ const styles = StyleSheet.create({
     },
     mainContainer:
     {
-        // flex: 1,
+        flex: 1,
         backgroundColor: '#fff',
-        // paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0,
+        paddingBottom:20
     }
 })
 

@@ -1,51 +1,63 @@
 import React, { useRef } from "react";
-import { View, Text, SafeAreaView, Platform, Animated, Image, TouchableOpacity } from 'react-native';
+import { View, Text, Platform, Animated, Image, TouchableOpacity, StyleSheet, ImageBackground } from 'react-native';
 import { useEffect, useState } from "react";
-import Svg, { G, Circle, Rect } from 'react-native-svg';
 import { Audio } from 'expo-av';
 import { useIsFocused, useNavigation } from "@react-navigation/native";
 import Header from "../../components/header/Header";
-import styles from "./DetailScreen.styles";
 import data from './data.json'
 import images from "./images";
 import { Dimensions } from 'react-native';
 import RNFadedScrollView from 'expo-faded-scrollview';
 import sounds from "./sounds";
+import { CircularDraggableProgressBar } from "./circular/Circular";
+import { TEXT_COLOR } from '../../utils';
+import styles from "./DetailScreen.styles";
+import { AppState } from 'react-native';
 
-const DetailScreenClean = ({ route, navigation }) => {
+const DetailScreen = ({ route, navigation }) => {
 
-    const id = route.params.id
+    const id = route.params.id - 1
     const allData = data
     const [percetange, setPercentage] = useState(0)
     const [isPaused, setIsPaused] = useState(false);
     const text = allData[id].transcript.split('\n')
     const isFocused = useIsFocused()
     const win = Dimensions.get('window');
-    const ratio = win.width / 1944;
+    const ratio = (win.width - 56) / 1944;
     const nav = useNavigation()
     const soundRef = useRef();
 
+    const spaceBetween = Dimensions.get("window").height > 700 ? 32 : 24
+    const picHeight = Dimensions.get("window").height > 700 ? Dimensions.get("window").height - 384 : Dimensions.get("window").height - 330
+    const radius = Dimensions.get("window").height > 700 ? 50 : 40
+    const textContainerHeight = Dimensions.get("window").height > 700 ? 336 : 270
     useEffect(() => {
+        if (percetange >= 99) {
+            moveTo(0, false)
+            setPercentage(0)
+
+        }
+    }, [percetange]);
+
+    useEffect(() => {
+        setIsScrolled(false)
         if (Platform.OS === 'ios') {
             enableAudio();
         }
 
         if (isFocused === true) {
-            console.log('play')
             playSound();
         } else if (isFocused === false) {
-            console.log('stop')
-            pauseSound();
+            stopSound();
         }
 
         return () => {
-            pauseSound()
+            stopSound()
         }
     }, [isFocused]);
 
     useEffect(() => {
         const unsubscribe = nav.addListener('beforeRemove', () => {
-            console.log('backback')
             pauseSound();
         });
 
@@ -55,7 +67,7 @@ const DetailScreenClean = ({ route, navigation }) => {
     useEffect(() => {
         const timer = setInterval(() => {
             calculatePosition()
-        }, 1000)
+        }, 50)
 
         return (() => {
             clearInterval(timer)
@@ -63,69 +75,111 @@ const DetailScreenClean = ({ route, navigation }) => {
 
     }, [soundRef])
 
+
     const toggleSound = async () => {
         if (soundRef.current) {
-            const status = await soundRef.current.getStatusAsync();
-            if (status.isPlaying === true) {
-                await soundRef.current.pauseAsync()
-                setIsPaused(true)
-            }
-            else {
-                await soundRef.current.playAsync()
-                setIsPaused(false)
+            try {
+                const status = await soundRef.current.getStatusAsync();
+                if (status.isPlaying === true) {
+                    await soundRef.current.pauseAsync()
+                    setIsPaused(true)
+                }
+                else {
+                    await soundRef.current.playAsync()
+                    setIsPaused(false)
+                }
+            } catch (e) {
+                console.log('toggleSound' + e)
             }
         }
     }
 
     const calculatePosition = async () => {
         if (soundRef.current) {
-            const status = await soundRef.current.getStatusAsync();
-            if (status.isPlaying) {
-                const progress = status.positionMillis / status.durationMillis;
-                const percentage = Math.floor(progress * 100);
-                setPercentage(percentage);
+            try {
+                const status = await soundRef.current.getStatusAsync();
+                if (status.isPlaying) {
+                    const progress = status.positionMillis / status.durationMillis;
+                    const percentage = progress * 100 + 1;
+                    setPercentage(percentage);
+                }
+            } catch (e) {
+                console.log('calculatePosition ' + e)
             }
         }
     };
 
     const playSound = async () => {
-        if (soundRef.current) {
-            await soundRef.current.playAsync();
-        } else {
-            console.log('Loading Sound');
+        try {
             const { sound } = await Audio.Sound.createAsync(sounds[id], { shouldPlay: true });
             soundRef.current = sound;
-            console.log('Playing Sound');
             await sound.playAsync();
+        } catch (e) {
+            console.log('playSound ' + e)
         }
     };
 
     const pauseSound = async () => {
-        if (soundRef.current) {
-            console.log('Pausing Sound');
-            await soundRef.current.pauseAsync();
+        try {
+            if (soundRef.current) {
+                await soundRef.current.pauseAsync();
+            }
+        } catch (e) {
+            console.log('pauseSound ' + e)
         }
     };
 
-    const enableAudio = async () => {
-        await Audio.setAudioModeAsync({
-            playsInSilentModeIOS: true,
-            staysActiveInBackground: false,
-            // shouldDuckAndroid: false,
-        })
+    const stopSound = async () => {
+        try {
+            if (soundRef.current) {
+                await soundRef.current.stopAsync();
+            }
+        }
+        catch (e) {
+            console.log("stopSound " + e)
+        }
     }
 
+    const enableAudio = async () => {
+        try {
+            await Audio.setAudioModeAsync({
+                playsInSilentModeIOS: true,
+                staysActiveInBackground: false,
+                // shouldDuckAndroid: false,
+            })
+        } catch (e) {
+            console.log("enableAudio " + e)
+        }
+    }
 
-    const AnimatedCircle = Animated.createAnimatedComponent(Circle);
-    const radius = 55;
-    const strokeWidth = 20;
-    const color = allData[id].color;
-    const inactiveColor = '#EBE9E4'
-    const halfCircle = radius + strokeWidth;
-    const circleCircumference = 2 * Math.PI * radius;
-    const circleRef = React.useRef();
-    const strokeDashoffset = circleCircumference - (circleCircumference * percetange) / 100;
-
+    const moveTo = async (per, start) => {
+        try {
+          console.log('in moveTo')
+          const status = await soundRef.current.getStatusAsync();
+          const desiredPositionMillis = per / 100 * status.durationMillis;
+          soundRef.current.setPositionAsync(desiredPositionMillis)
+          try {
+            if (start) {
+              console.log('tot in moveto')
+              if (!status.isPlaying) {
+                soundRef.current.playAsync()
+                setIsPaused(false)
+              }
+            } else {
+              if (status.isPlaying) {
+                soundRef.current.pauseAsync()
+                setIsPaused(true)
+              }
+            }
+          } catch (e) {
+            console.log('inauntru')
+          }
+        }
+        catch (e) {
+          console.error("Moving Seek Error" + e)
+        }
+      };
+      
 
     //ANIMATIONS
     const scrollAnim = useRef(new Animated.Value(0)).current;
@@ -160,17 +214,22 @@ const DetailScreenClean = ({ route, navigation }) => {
         }).start()
     };
 
+
     return (
-        <SafeAreaView style={styles.pageContainer}>
-            <View style={styles.mainContainer}>
-                <Header hasBack={true} hasIcon={true} hasMenu={false} />
-                <View style={{ height: Dimensions.get("window").height - 400, overflow: 'hidden' }}>
+        <View style={styles.pageContainer}>
+            {isScrolled
+                ? null
+                : <Header hasBack={true} hasIcon={true} hasMenu={false} />}
+
+            <View style={styles.container}>
+
+                {/* MAIN IMAGE */}
+                <View style={{ height: picHeight, overflow: 'hidden' }}>
                     <Animated.Image
                         source={images[id]}
                         style={{
                             width: win.width - 56,
-                            height: 2598 * ratio - 100,
-                            marginBottom: 16,
+                            height: (win.width - 56) * 4 / 3,
                             opacity: scrollAnim.interpolate({
                                 inputRange: [0, 1],
                                 outputRange: [1, 0],
@@ -180,96 +239,81 @@ const DetailScreenClean = ({ route, navigation }) => {
                                 {
                                     translateY: scrollAnim.interpolate({
                                         inputRange: [0, 1],
-                                        outputRange: [0, -2598 * ratio],
+                                        outputRange: [0, - ((win.width - 56) * 4 / 3)],
                                         extrapolate: 'clamp',
                                     }),
                                 },
+                                {
+                                    translateY: -16
+                                },
                             ],
-                            marginTop: 24
+                            marginBottom: 12
                         }}
                     />
                 </View>
-
                 <Animated.View
                     style={{
                         transform: [
                             {
                                 translateY: scrollAnim.interpolate({
                                     inputRange: [0, 1],
-                                    outputRange: [0, -2598 * ratio + 100],
+                                    outputRange: [0, -picHeight - 24],
                                     extrapolate: 'clamp',
                                 }),
                             },
                         ],
-                        height: Dimensions.get('window').height - 80,
-                        marginTop: 16,
+                        width: Dimensions.get("window").width,
                     }}
                 >
-                    <View style={{ justifyContent: 'space-evenly' }}>
+                    {
+                        isScrolled
+                            ? <Header hasBack={true} hasIcon={true} hasMenu={false} />
+                            : null
 
-                        <Text style={[styles.name, { color: allData[id].color }]}>{allData[id].name}</Text>
-                        <Text style={[styles.title, { color: allData[id].color }]}>{allData[id].title}</Text>
-                        {
-                            allData[id].DOB != 'NaN'
-                                ? <Text style={[styles.title, { color: allData[id].color, marginBottom: 20 }]}>{allData[id].DOB}</Text>
+                    }
 
-                                : null
-                        }
-                        {/* //PLAYER */}
-                        <View style={[styles.player, { marginBottom: 24 }]}>
-                            <TouchableOpacity
-                                onPress={toggleSound}
-                            >
-                                <Svg width={radius * 2} height={radius * 2} viewBox={`0 0 ${halfCircle * 2} ${halfCircle * 2}`}>
-                                    <G rotation='-90' origin={`${halfCircle}, ${halfCircle}`}>
-                                        <Circle cy='50%' cx='50%' stroke={inactiveColor} strokeWidth={strokeWidth} r={radius} fill='transparent' />
-                                        {
-                                            isPaused
-                                                ? <Image source={require('./../../assets/icons/pause.png')} style={{ width: 25, height: 30, alignSelf: 'center', marginTop: '35%' }} />
-
-                                                : null
-                                        }
-                                        <AnimatedCircle ref={circleRef} cy='50%' cx='50%' stroke={color} strokeWidth={strokeWidth} r={radius} fill='transparent' strokeDasharray={circleCircumference} strokeDashoffset={strokeDashoffset} />
-
-                                    </G>
-                                </Svg>
-                            </TouchableOpacity>
-                        </View>
-                        {
-                            isScrolled
-                                ? null
-                                : <TouchableOpacity onPress={() => { scrollDown() }}>
-                                    <Image source={require('./../../assets/icons/down_arrow.png')} style={{ height: 50, width: 50, alignSelf: 'center' }} />
-                                </TouchableOpacity>
-                        }
+                    <Text style={[styles.name, { color: allData[id].color }]}>{allData[id].name}</Text>
+                    <Text style={[styles.title, { color: allData[id].color }]}>{allData[id].title}</Text>
+                    {
+                        allData[id].DOB != 'NaN'
+                            ? <Text style={[styles.title, { color: allData[id].color, marginBottom: spaceBetween }]}>{allData[id].DOB}</Text>
+                            : <View style={{ height: 36 }}></View>
+                    }
+                    <View>
+                        <CircularDraggableProgressBar value={percetange} callBack={(val) => { moveTo(val, true) }} pauseCallBack={() => { toggleSound(); setIsPaused(!isPaused) }} isPaused={isPaused} percentage={percetange} color={allData[id].color} radius={radius} />
                     </View>
                     {
                         isScrolled
-                            ? <>
+                            ? null
+                            : <TouchableOpacity onPress={() => { scrollDown() }}>
+                                <Image source={require('./../../assets/icons/down_arrow.png')} style={{ height: 19, width: 38, alignSelf: 'center', marginTop: spaceBetween }} />
+                            </TouchableOpacity>
+                    }
+
+                    {
+                        isScrolled
+                            ? <View style={{ height: Dimensions.get("window").height - textContainerHeight, marginHorizontal: 28, marginTop: spaceBetween }}>
                                 <RNFadedScrollView allowStartFade={true} fadeSize={40} allowEndFade={false}
-                                    // style={{marginBottom:20}}
+                                    showsVerticalScrollIndicator={false}
+                                    showsHorizontalScrollIndicator={false}
                                     fadeColors={['rgba(255, 255, 255, 0.1)', 'rgba(255, 255, 255, 0.3)', 'rgba(255, 255, 255, 0.99)']}>
 
                                     {text.map((paragraph, index) => (
-                                        <Text style={[styles.smallText, { marginBottom: 14 }]} key={index}>{paragraph}</Text>
+                                        <Text style={[styles.smallText]} key={index}>{paragraph}</Text>
                                     ))}
                                 </RNFadedScrollView>
-                                <TouchableOpacity
-                                    onPress={scrollUp}
-
-                                >
-                                    <Image source={require('./../../assets/icons/up_arrow.png')} style={{ height: 50, width: 50, alignSelf: 'center' }} />
+                                <TouchableOpacity onPress={scrollUp}>
+                                    <Image source={require('./../../assets/icons/up_arrow.png')} style={{ height: 19, width: 38, alignSelf: 'center', marginTop: 18 }} />
                                 </TouchableOpacity>
-                            </>
+                            </View>
 
                             : null
                     }
-
                 </Animated.View>
             </View>
+        </View>
 
-        </SafeAreaView >
     )
 }
 
-export default DetailScreenClean;
+export default DetailScreen;

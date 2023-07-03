@@ -6,6 +6,9 @@
     "slug": "image-classification-expo",
     "version": "2.0.2",
     "icon": "./assets/icon-x2-120x120.png",
+    "splash": {
+      "backgroundColor": "#26170D"
+    },
     "assetBundlePatterns": [
       "**/*"
     ],

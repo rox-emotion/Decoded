@@ -4,17 +4,17 @@ import { DefaultTheme, NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import AllScreen from './screens/all/AllScreen.component';
 import AboutScreen from './screens/about/AboutScreen.component';
-import DebugScreen from './screens/debug/DebugScreen.component';
-import NewSplashScreen from './screens/splash/NewSplashScreen.component';
-import { Provider } from 'react-redux';
-import store from './store/store'
 import * as Font from 'expo-font';
-import DetailScreenClean from './screens/detail/DetailScreen.component';
-import SnapScanScreen from './screens/scan/SnapScanScreen.component';
 import { StatusBar } from 'react-native';
-import DetailScreenFinal from './screens/detail/AADetailScreenFinal.component';
-
+import DetailScreenFinal from './screens/detail/DetailScreen.component';
 import FinalFinalScan from './screens/scan/AHopefullyFinalScanScreen.component';
+import { Camera } from 'expo-camera';
+import * as ScreenOrientation from 'expo-screen-orientation';
+import SplashScreen from './screens/splash/SplashScreen.component';
+import DetailScreen from './screens/detail/DetailScreen.component';
+import { bundleResourceIO } from '@tensorflow/tfjs-react-native';
+import { LayersModel } from '@tensorflow/tfjs';
+import * as tf from '@tensorflow/tfjs';
 
 const Stack = createNativeStackNavigator();
 
@@ -26,6 +26,44 @@ StatusBar.setHidden(true);
 const App = () => {
   const [fontLoaded, setFontLoaded] = useState(false);
   const [showSplash, setShowSplash] = useState(true);
+  const [hasCameraPermission, setHasCameraPermission] = useState(false);
+  const [waitingForPermission, setWaitingForPermission] = useState(false);
+  const [startVideo, setStartVideo] = useState(false);
+
+  useEffect(() => {
+    const lockOrientation = async () => {
+      await ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.PORTRAIT);
+    };
+
+    lockOrientation(); // Lock the orientation when the component mounts
+
+    return () => {
+      // Unlock the orientation when the component unmounts
+      ScreenOrientation.unlockAsync();
+    };
+  }, []);
+
+
+  useEffect(() => {
+    console.log('asking')
+    askForPermissions()
+  }, [])
+  const askForPermissions = async () => {
+    const permissions = await Camera.requestCameraPermissionsAsync()
+    console.log(permissions)
+    setHasCameraPermission(permissions.status === 'granted')
+    setWaitingForPermission(permissions.status === 'undetermined')
+    if (!waitingForPermission) {
+      setStartVideo(true)
+    }
+    setTimeout(() => {
+      if (waitingForPermission) {
+
+      } else {
+        setShowSplash(false)
+      }
+    }, 13000)
+  };
 
   useEffect(() => {
     const loadFont = async () => {
@@ -37,39 +75,59 @@ const App = () => {
       setFontLoaded(true);
 
     }
-    setTimeout(() => {
-      loadFont()
-      setShowSplash(false)
-    }, 10000)
-  
+    loadFont()
+    getModel()
+
   }, [])
+
+  const modelJson = require('./assets/model/model.json')
+  const modelWeights = require('./assets/model/weights.bin')
+  const [loadedModel, setLoadedModel] = useState<LayersModel>();
+
+  const getModel = async () => {
+    const model = await tf.loadLayersModel(bundleResourceIO(modelJson,
+      modelWeights));
+    console.log('model loaded')
+    setLoadedModel(model)
+  }
+
+  const permissionStackScreen = (
+    <Stack.Navigator screenOptions={{ headerShown: false }}>
+      <Stack.Screen name="Scan">
+        {(props) => <FinalFinalScan {...props} model={loadedModel} />}
+      </Stack.Screen>
+      <Stack.Screen name="Detail" component={DetailScreen} />
+      <Stack.Screen name="All" component={AllScreen} />
+      <Stack.Screen name="About" component={AboutScreen} />
+    </Stack.Navigator>
+  )
+
+  const noPermissionStackScreen = (
+    <Stack.Navigator screenOptions={{ headerShown: false }}>
+      <Stack.Screen name="All" component={AllScreen} />
+      <Stack.Screen name="Detail" component={DetailScreenFinal} />
+      <Stack.Screen name="About" component={AboutScreen} />
+    </Stack.Navigator>
+  )
 
   if (showSplash) {
     return (
-      <Provider store={store}>
-        <NavigationContainer theme={navTheme}>
-          <NewSplashScreen />
-        </NavigationContainer>
-      </Provider>
+      <NavigationContainer theme={navTheme}>
+        <SplashScreen start={startVideo} />
+      </NavigationContainer>
     )
   }
   else {
     return (
-      <Provider store={store}>
-        <NavigationContainer theme={navTheme}>
-          <Stack.Navigator screenOptions={{ headerShown: false }}>
-            <Stack.Screen name="Scan" component={FinalFinalScan} />
-            <Stack.Screen name="Debug" component={DebugScreen} />
-            <Stack.Screen name="Detail" component={DetailScreenFinal} />
-            <Stack.Screen name="All" component={AllScreen} />
-            <Stack.Screen name="About" component={AboutScreen} />
-          </Stack.Navigator>
-        </NavigationContainer>
-      </Provider>
+      <NavigationContainer theme={navTheme}>
+        {
+          hasCameraPermission
+            ? permissionStackScreen
+            : noPermissionStackScreen
+        }
+      </NavigationContainer>
     )
   }
 }
-
-
 
 export default App;

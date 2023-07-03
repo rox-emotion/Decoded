@@ -11,8 +11,8 @@ const styles = StyleSheet.create({
     width: Dimensions.get('window').width,
   },
   camera: {
-    height: '100%',
-    width: Dimensions.get('window').width,
+    height: Dimensions.get('window').height,
+    width: Dimensions.get('window').height * 3/4
   },
   button: {
     backgroundColor: '#333',
@@ -21,7 +21,7 @@ const styles = StyleSheet.create({
     borderRadius: 5,
   },
   mainContainer:{
-    height: Dimensions.get('screen').height,
+    height: Dimensions.get('window').height,
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',

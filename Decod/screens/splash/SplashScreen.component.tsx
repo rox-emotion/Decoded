@@ -1,37 +1,44 @@
-import { SafeAreaView, View, Text, Button, Image } from 'react-native'
-import React, { useState, useEffect } from 'react'
-import styles from './SplashScreen.styles'
-import { useRef } from 'react'
-import { CurrentRenderContext, useNavigation } from '@react-navigation/native'
+import React from "react";
 import { Video } from 'expo-av';
+import { View } from "react-native";
+import { useEffect, useRef, useState } from "react";
+import styles from "./SplashScreen.styles";
+import * as tf from '@tensorflow/tfjs';
 
-const SplashScreen = () => {
+const SplashScreen = ({ start }) => {
     const videoPlayer = useRef(null);
-    const navigation = useNavigation();
     const videoSource = require('./../../assets/video/a.mp4');
+    const [isTfReady, setIsTfReady] = useState(false);
 
     useEffect(() => {
-        if (videoPlayer.current) {
+        if (videoPlayer.current && start) {
             videoPlayer.current.playAsync();
         }
+    }, [start]);
+
+    useEffect(() => {
+        loadTensorFlow();
     }, []);
 
+    const loadTensorFlow = async () => {
+        await tf.ready();
+        setIsTfReady(true)
+    }
+
     return (
-        <View style={styles.container}>
-            <Video
-                ref={videoPlayer}
-                source={videoSource}
-                resizeMode="cover"
-                onPlaybackStatusUpdate={(status) => {
-                    if (status.didJustFinish) {
-                        navigation.navigate('Scan');
-                    }
-                }}
-                style={styles.video}
-            />
+        <View style={styles.mainContainer}>
+            <View style={[styles.container]}>
+                <Video
+                    ref={videoPlayer}
+                    source={videoSource}
+                    resizeMode="cover"
+                    style={[styles.video]}
+                />
+            </View>
         </View>
 
     );
+
 }
 
 export default SplashScreen;

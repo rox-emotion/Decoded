@@ -17,7 +17,6 @@ import Svg, {
   LinearGradient,
   Path,
   Stop,
-  Rect
 } from 'react-native-svg'
 
 import { ICircularDraggableProgressBar } from './types'
@@ -42,11 +41,9 @@ export const CircularDraggableProgressBar = ({
   isPaused,
   percentage,
   onChange = (value) => {
-    console.log(value);
     callBack(value)
   },
   handlerPanResponder = (onMove) => {
-    console.log(onMove)
     pauseCallBack
   },
   symbol = '%',
@@ -59,9 +56,9 @@ export const CircularDraggableProgressBar = ({
   useEffect(() => {
     const timer = setTimeout(() => {
       setAngleLength(calculateAngleLengthFromValue(percentage))
-    },500)
+    }, 50)
 
-    return () => {clearTimeout(timer)}
+    return () => { clearTimeout(timer) }
   })
 
   const calculateArcCircle = (
@@ -99,8 +96,7 @@ export const CircularDraggableProgressBar = ({
     const angleVal = angle / (2 * Math.PI)
     const num = 1
     const hundred = max
-    const percentage = Math.round((angleVal * hundred) / num)
-    // console.log("in somponenta "  + percentage)
+    const percentage = (angleVal * hundred) / num
     return percentage
   }
 
@@ -130,9 +126,8 @@ export const CircularDraggableProgressBar = ({
   }
 
   const [val, setVal] = useState(value)
-  // const val = value
-  // console.log("val " + val)
-  const [startAngle, setStartAngle] = useState(0) //(Math.PI*2)/10
+
+  const [startAngle, setStartAngle] = useState(0)
   const [angleLength, setAngleLength] = useState(
     calculateAngleLengthFromValue(val, max)
   )
@@ -170,7 +165,7 @@ export const CircularDraggableProgressBar = ({
         center.y -
         Math.sqrt(
           Math.abs(p1.x - center.x) * Math.abs(p1.x - center.x) +
-            Math.abs(p1.y - center.y) * Math.abs(p1.y - center.y)
+          Math.abs(p1.y - center.y) * Math.abs(p1.y - center.y)
         ),
     }
     return (2 * Math.atan2(p1.y - p0.y, p1.x - p0.x) * 180) / Math.PI
@@ -275,14 +270,12 @@ export const CircularDraggableProgressBar = ({
     <View style={styles.mainView}>
       <View onTouchStart={onTouch} onLayout={onLayout} style={styles.bgView}>
         <View style={[styles.textView]}>
-          {
-            isPaused
-            ? <Image source={require('./../../../assets/icons/pause.png')} style={{ width: 25, height: 30, alignSelf: 'center'}} />
-            : null
+          {isPaused
+            ? <Image source={require('./../../../assets/icons/play.png')} style={{ width: 30, height: 37, marginLeft: 11 }} />
+            : <Image source={require('./../../../assets/icons/pause.png')} style={{ width: 25, height: 30, alignSelf: 'center' }} />
           }
-
         </View>
-
+        
         <Svg
           strokeLinecap={'round'}
           height={containerWidth}
@@ -314,9 +307,8 @@ export const CircularDraggableProgressBar = ({
 
           <G
             transform={{
-              translate: `${strokeWidth / 2 + radius + 1}, ${
-                strokeWidth / 2 + radius + 1
-              }`,
+              translate: `${strokeWidth / 2 + radius + 1}, ${strokeWidth / 2 + radius + 1
+                }`,
             }}
           >
             <Circle
@@ -371,9 +363,6 @@ export const CircularDraggableProgressBar = ({
                 fill={'transparent'}
                 stroke={'transparent'}
               />
-              {/* <Rect width={15} height={15} transform={{rotateX: '65deg'}}/> */}
-
-             
             </G>
           </G>
         </Svg>

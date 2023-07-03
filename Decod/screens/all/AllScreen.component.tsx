@@ -1,5 +1,5 @@
 import React from "react";
-import { SafeAreaView, Image, View, TouchableOpacity, FlatList } from "react-native";
+import { Image, View, TouchableOpacity, FlatList } from "react-native";
 import Header from "../../components/header/Header";
 import { useState } from "react";
 import styles from "./AllScreen.styles";
@@ -18,7 +18,7 @@ const AllScreen = () => {
     const renderItem = ({ item, index }) => {
         return (
             <View>
-                <TouchableOpacity onPress={() => { navigateToDetail(index+1) }}>
+                <TouchableOpacity onPress={() => { navigateToDetail(index + 1) }}>
                     <Image style={{ height: 99, width: 74, marginBottom: 10 }} source={thumbs[index]} />
                 </TouchableOpacity>
             </View>
@@ -29,7 +29,9 @@ const AllScreen = () => {
             <Header hasBack={true} hasIcon={true} hasMenu={false} />
             <View style={styles.container}>
                 <FlatList
-                    columnWrapperStyle={{justifyContent: 'space-between'}}
+                    showsVerticalScrollIndicator={false}
+                    showsHorizontalScrollIndicator={false}
+                    columnWrapperStyle={{ justifyContent: 'space-between' }}
                     data={images}
                     renderItem={renderItem}
                     keyExtractor={item => item}

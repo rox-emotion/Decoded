@@ -14,7 +14,6 @@ const styles = StyleSheet.create({
         fontSize: 20,
         textAlign: 'center',
         fontFamily: 'californian-bold',
-        fontWeight: "700",
     },
     smallText: {
         fontSize: 18,
@@ -51,19 +50,10 @@ const styles = StyleSheet.create({
         width: Dimensions.get('window').width - 56,
         alignSelf: 'center',
     },
-    // pageContainer:
-    // {
-    //     // flex: 1,
-    //     height:'460',
-    //     backgroundColor: '#yellow',
-    //     paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0,
-    // },
     pageContainer: {
         flex:1,
     },
     container: {
-        // marginBottom:16,
-        // marginTop: 16,
         marginBottom:6,
         marginTop:12,
         paddingTop:0,

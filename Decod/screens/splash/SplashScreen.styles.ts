@@ -6,25 +6,21 @@ const styles = StyleSheet.create({
     container: {
         width: Dimensions.get("window").width,
         height: Dimensions.get("window").width * ratio,
-        border:'none'
+        border: 'none',
+        backgroundColor: '#26170D'
     },
     video: {
         flex: 1,
-        border:'none'
-        // marginTop: 0,
-        // paddingTop: 0,
-        // border: 'none'
-
+        border: 'none'
     },
 
     mainContainer: {
         width: Dimensions.get("window").width,
         height: Dimensions.get("window").height,
-        // backgroundColor: 'maroon',
-        border:'none',
+        border: 'none',
         backgroundColor: '#26170D',
         justifyContent: 'center',
-        alignItems:'center'
+        alignItems: 'center'
     }
 });
 
