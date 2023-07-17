@@ -30,19 +30,18 @@ const App = () => {
   const [waitingForPermission, setWaitingForPermission] = useState(false);
   const [startVideo, setStartVideo] = useState(false);
 
+
   useEffect(() => {
-    const lockOrientation = async () => {
-      await ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.PORTRAIT);
-    };
-
-    lockOrientation(); // Lock the orientation when the component mounts
-
+    changeScreenOrientation()
+    // Optionally, you can unlock the orientation when the component unmounts
     return () => {
-      // Unlock the orientation when the component unmounts
       ScreenOrientation.unlockAsync();
     };
   }, []);
 
+  async function changeScreenOrientation() {
+    await ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.PORTRAIT_UP);
+  }
 
   useEffect(() => {
     console.log('asking')

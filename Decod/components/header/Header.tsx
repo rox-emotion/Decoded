@@ -9,12 +9,13 @@ const Header = ({ hasMenu, hasBack, hasIcon }) => {
     const icon = hasIcon;
     const navigation = useNavigation();
 
+   
     return (
         <View style={styles.container}>
             {
                 !menu && !back && icon
                     ? <View style={styles.singleContainer}>
-                        <TouchableOpacity onPress={() => { navigation.navigate('About') }}>
+                        <TouchableOpacity onPress={() => {  navigation.push('About') }}>
                             <Image
                                 source={require('../../assets/icons/icon.png')}
                                 style={{ height: 38, width: 40 }}
@@ -23,14 +24,14 @@ const Header = ({ hasMenu, hasBack, hasIcon }) => {
                     </View>
                     : !menu && back && icon
                         ? <View style={styles.container}>
-                            <TouchableOpacity onPress={() => { navigation.goBack() }}>
+                            <TouchableOpacity onPress={() => {  navigation.goBack() }}>
                                 <Image
                                     source={require('../../assets/icons/back_arrow.png')}
                                     style={{ height: 38, width: 19 }}
 
                                 />
                             </TouchableOpacity>
-                            <TouchableOpacity onPress={() => { navigation.navigate('About') }}>
+                            <TouchableOpacity onPress={() => {  navigation.push('About') }}>
                                 <Image
                                     source={require('../../assets/icons/icon.png')}
                                     style={{ height: 38, width: 40 }}
@@ -41,7 +42,7 @@ const Header = ({ hasMenu, hasBack, hasIcon }) => {
                             ? <View style={styles.container}>
                                 
                                 <View>
-                                    <TouchableOpacity onPress={() => { navigation.goBack() }}>
+                                    <TouchableOpacity onPress={() => {  navigation.goBack() }}>
                                         <Image
                                             source={require('../../assets/icons/back_arrow.png')}
                                             style={{ height: 38, width: 19 }}
@@ -50,7 +51,7 @@ const Header = ({ hasMenu, hasBack, hasIcon }) => {
                                     </TouchableOpacity>
                                 </View>
                                 <View>
-                                    <TouchableOpacity onPress={() => { navigation.navigate('All') }}>
+                                    <TouchableOpacity onPress={() => { navigation.push('All') }}>
                                         <Image
                                             source={require('../../assets/icons/menu.png')}
                                             style={{ height: 38, width: 34 }}

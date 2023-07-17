@@ -87,7 +87,7 @@ const FinalFinalScan = ({ model }) => {
             console.log(results[0].score)
 
             if (results[0].label != 0 && results[0].label != 103 && results[0].score > 0.98) {
-                navigation.navigate("Detail", { id: results[0].label })
+                navigation.push("Detail", { id: results[0].label })
 
             } else {
                 main()

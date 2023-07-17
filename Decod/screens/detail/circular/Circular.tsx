@@ -359,7 +359,7 @@ export const CircularDraggableProgressBar = ({
               onPressIn={() => setAngleLength(angleLength + Math.PI / 2)}
             >
               <Circle
-                r={30}
+                r={10}
                 fill={'transparent'}
                 stroke={'transparent'}
               />

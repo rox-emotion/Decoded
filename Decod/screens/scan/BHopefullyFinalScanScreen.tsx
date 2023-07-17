@@ -55,7 +55,7 @@ const BFinalFinalScan = () => {
             results.sort((curr, prev) => prev.score - curr.score);
 
 
-            if (results[0].label != 0 && results[0].label != 103 && results[0].score > 0.9) { navigation.navigate("Detail", { id: results[0].label }) }
+            if (results[0].label != 0 && results[0].label != 103 && results[0].score > 0.9) { navigation.push("Detail", { id: results[0].label }) }
 
 
         } catch (error) {

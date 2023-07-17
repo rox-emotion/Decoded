@@ -26,11 +26,17 @@ const DetailScreen = ({ route, navigation }) => {
     const ratio = (win.width - 56) / 1944;
     const nav = useNavigation()
     const soundRef = useRef();
+    const profession = allData[id].title.split('\n')
 
     const spaceBetween = Dimensions.get("window").height > 700 ? 32 : 24
     const picHeight = Dimensions.get("window").height > 700 ? Dimensions.get("window").height - 384 : Dimensions.get("window").height - 330
     const radius = Dimensions.get("window").height > 700 ? 50 : 40
     const textContainerHeight = Dimensions.get("window").height > 700 ? 336 : 270
+
+    //ANIMATIONS
+    const scrollAnim = useRef(new Animated.Value(0)).current;
+    const [isScrolled, setIsScrolled] = useState(false)
+    const fadeAnim = useRef(new Animated.Value(0)).current;
     useEffect(() => {
         if (percetange >= 99) {
             moveTo(0, false)
@@ -40,7 +46,8 @@ const DetailScreen = ({ route, navigation }) => {
     }, [percetange]);
 
     useEffect(() => {
-        setIsScrolled(false)
+        // console.log('ei')
+        // setIsScrolled(false)
         if (Platform.OS === 'ios') {
             enableAudio();
         }
@@ -154,13 +161,13 @@ const DetailScreen = ({ route, navigation }) => {
 
     const moveTo = async (per, start) => {
         try {
-          console.log('in moveTo')
+        //   console.log('in moveTo')
           const status = await soundRef.current.getStatusAsync();
           const desiredPositionMillis = per / 100 * status.durationMillis;
           soundRef.current.setPositionAsync(desiredPositionMillis)
           try {
             if (start) {
-              console.log('tot in moveto')
+            //   console.log('tot in moveto')
               if (!status.isPlaying) {
                 soundRef.current.playAsync()
                 setIsPaused(false)
@@ -172,7 +179,7 @@ const DetailScreen = ({ route, navigation }) => {
               }
             }
           } catch (e) {
-            console.log('inauntru')
+            // console.log('inauntru')
           }
         }
         catch (e) {
@@ -180,12 +187,6 @@ const DetailScreen = ({ route, navigation }) => {
         }
       };
       
-
-    //ANIMATIONS
-    const scrollAnim = useRef(new Animated.Value(0)).current;
-    const [isScrolled, setIsScrolled] = useState(false)
-    const fadeAnim = useRef(new Animated.Value(0)).current;
-
 
     const scrollDown = () => {
         Animated.parallel([
@@ -273,7 +274,9 @@ const DetailScreen = ({ route, navigation }) => {
                     }
 
                     <Text style={[styles.name, { color: allData[id].color }]}>{allData[id].name}</Text>
-                    <Text style={[styles.title, { color: allData[id].color }]}>{allData[id].title}</Text>
+                    {profession.map((paragraph, index) => (
+                                        <Text style={[styles.title, { color: allData[id].color } ]} key={index}>{paragraph}</Text>
+                                    ))}
                     {
                         allData[id].DOB != 'NaN'
                             ? <Text style={[styles.title, { color: allData[id].color, marginBottom: spaceBetween }]}>{allData[id].DOB}</Text>
