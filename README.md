@@ -3,8 +3,8 @@
 ### To Run:
 
 - clone git
-- npm install in WORKING_ML folder
-- expo install in WORKING_ML folder
+- npm install in Decod folder
+- expo install in Decod folder
 - expo start
 
 #### on iOS/Android:
