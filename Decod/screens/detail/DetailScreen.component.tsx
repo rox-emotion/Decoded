@@ -230,8 +230,6 @@ const DetailScreen = ({ route, navigation }) => {
                         source={images[id]}
                         style={{
                             width: 'auto',
-                            // height: (win.width - 56) * 4 / 3,
-                            // height:200,
                             height: Dimensions.get("window").height - picHeight + 30,
                             aspectRatio: 3 / 4,
                             opacity: scrollAnim.interpolate({

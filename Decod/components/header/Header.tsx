@@ -8,8 +8,8 @@ const Header = ({ hasMenu, hasBack, hasIcon }) => {
     const back = hasBack;
     const icon = hasIcon;
     const navigation = useNavigation();
+    const route = useRoute();
 
-   
     return (
         <View style={styles.container}>
             {
@@ -24,7 +24,7 @@ const Header = ({ hasMenu, hasBack, hasIcon }) => {
                     </View>
                     : !menu && back && icon
                         ? <View style={styles.container}>
-                            <TouchableOpacity onPress={() => {  navigation.goBack() }}>
+                            <TouchableOpacity onPress={() => { if(route.name === "About") {navigation.navigate('Scan')} else {navigation.goBack()}}}>
                                 <Image
                                     source={require('../../assets/icons/back_arrow.png')}
                                     style={{ height: 38, width: 19 }}
@@ -42,7 +42,7 @@ const Header = ({ hasMenu, hasBack, hasIcon }) => {
                             ? <View style={styles.container}>
                                 
                                 <View>
-                                    <TouchableOpacity onPress={() => {  navigation.goBack() }}>
+                                    <TouchableOpacity onPress={() => {  if(route.name === "About") {navigation.navigate('Scan')} else {navigation.goBack()}}}>
                                         <Image
                                             source={require('../../assets/icons/back_arrow.png')}
                                             style={{ height: 38, width: 19 }}

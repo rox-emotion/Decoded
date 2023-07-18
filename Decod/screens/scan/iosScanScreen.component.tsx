@@ -18,20 +18,15 @@ import * as Permissions from 'expo-permissions';
 import * as FaceDetector from 'expo-face-detector';
 import { Video } from 'expo-av';
 
-const IOSScanScreen = () => {
-    const modelJson = require('./../../assets/model/model.json')
-    const modelWeights = require('./../../assets/model/weights.bin')
+const IOSScanScreen =  ({ model }) => {
     const [hasCameraPermission, setHasCameraPermission] = useState(false);
     const TensorCamera = cameraWithTensors(Camera);
 
     const cameraRef = useRef<Camera>(null);
     const navigation = useNavigation();
     const isFocused = useIsFocused()
-    const model = useSelector(state => state.model.model);
-    const viewShotRef = useRef();
-    const [sursa, setSursa] = useState('');
-    const imageRef = useRef(null);
     const videoRef = useRef<Video>(null);
+
     useEffect(() => {
         askForPermissions()
     }, [])
@@ -63,8 +58,6 @@ const IOSScanScreen = () => {
     };
     const handleFacesDetected = ({ faces }) => { face = 1; };
     const handleCameraStream = async (images: IterableIterator<tf.Tensor3D>, updatePreview, gl) => {
-        const model = await tf.loadLayersModel(bundleResourceIO(modelJson,
-            modelWeights));
         const loop = async () => {
             if (frame % computeRecognitionEveryNFrames === 0 && face === 1) {
 
