@@ -15,7 +15,9 @@ import React from 'react';
 import { Dimensions } from 'react-native';
 import { LayersModel } from '@tensorflow/tfjs';
 
-const FinalFinalScan = ({ model }) => {
+const AndroidScanScreen = ({ model }) => {
+    console.log('Android')
+
     const cameraRef = useRef<Camera>(null)
     const isFocused = useIsFocused()
     const navigation = useNavigation()
@@ -122,4 +124,4 @@ const FinalFinalScan = ({ model }) => {
     )
 }
 
-export default FinalFinalScan;
+export default AndroidScanScreen;

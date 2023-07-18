@@ -17,15 +17,8 @@ import * as MediaLibrary from 'expo-media-library';
 import * as Permissions from 'expo-permissions';
 import * as FaceDetector from 'expo-face-detector';
 import { Video } from 'expo-av';
-import * as VideoThumbnails from 'expo-video-thumbnails';
-import DetailScreenFinal from '../detail/DetailScreen.component';
-import AllScreen from '../all/AllScreen.component';
-import AboutScreen from '../about/AboutScreen.component';
-import BDetailScreenFinal from '../detail/BDetailScreenFinal.component';
-import CScan from './CScan';
-import DScan from './DScan';
 
-const BFinalFinalScan = () => {
+const IOSScanScreen = () => {
     const modelJson = require('./../../assets/model/model.json')
     const modelWeights = require('./../../assets/model/weights.bin')
     const [hasCameraPermission, setHasCameraPermission] = useState(false);
@@ -39,7 +32,13 @@ const BFinalFinalScan = () => {
     const [sursa, setSursa] = useState('');
     const imageRef = useRef(null);
     const videoRef = useRef<Video>(null);
-
+    useEffect(() => {
+        askForPermissions()
+    }, [])
+    const askForPermissions = async () => {
+        const { status } = await Camera.requestCameraPermissionsAsync()
+        setHasCameraPermission(status === 'granted');
+    };
     let frame = 0;
     let face = 0;
     const computeRecognitionEveryNFrames = 10;
@@ -55,7 +54,7 @@ const BFinalFinalScan = () => {
             results.sort((curr, prev) => prev.score - curr.score);
 
 
-            if (results[0].label != 0 && results[0].label != 103 && results[0].score > 0.9) { navigation.push("Detail", { id: results[0].label }) }
+            if (results[0].label != 0 && results[0].label != 103 && results[0].score > 0.98) { navigation.navigate("Detail", { id: results[0].label }) }
 
 
         } catch (error) {
@@ -71,7 +70,6 @@ const BFinalFinalScan = () => {
 
                 const nextImageTensor = images.next().value;
                 if (nextImageTensor) {
-                    console.log("cevaceva")
                     const resizedImage = tf.image.resizeBilinear(nextImageTensor, [224, 224]);
                     const normalized = tf.expandDims(tf.sub(tf.div(tf.cast(resizedImage, 'float32'), 127.5), 1), 0);
                     const prediction = startPrediction(model, normalized);
@@ -87,19 +85,36 @@ const BFinalFinalScan = () => {
         loop();
     }
 
-    let textureDims;
-    textureDims = {
-        height: 1920,
-        width: 1080
+    if (DEV) {
+        return (
+            <View style={styles.mainContainer}>
+                <Header hasMenu={false} hasBack={false} hasIcon={true} />
+                <TouchableOpacity style={{ zIndex: 1 }} onPress={() => { navigation.navigate('Debug') }}>
+                    <Text style={{ fontSize: 28, color: 'red' }}>Debug</Text>
+                </TouchableOpacity>
+                {
+                    isFocused && (
+                        <Camera
+                            style={styles.cameraDev}
+                            type={CameraType.back} ref={cameraRef}
+
+                        >
+                            <Image
+                                source={require('./../../assets/icons/target_icon.png')}
+                                style={{ height: 157, width: 95, marginTop: Dimensions.get('window').height * 0.23, alignSelf: 'center' }}
+                            />
+                        </Camera>
+                    )
+                }
+            </View>
+        );
     }
-
-    const [showScan, setShowScan] = useState(true);
-    const [showDetails, setShowDetails] = useState(false);
-    const [showAbout, setShowAbout] = useState(false);
-    const [showAll, setShowAll] = useState(false);
-
-
-    const scanScreenReturn = () => {
+    else {
+        let textureDims;
+        textureDims = {
+            height: 1920,
+            width: 1080,
+        };
         return (
             <>
                 <View ref={videoRef} style={styles.mainContainer}>
@@ -115,6 +130,14 @@ const BFinalFinalScan = () => {
                                         // Tensor related props
                                         // cameraTextureHeight={textureDims.height}
                                         // cameraTextureWidth={textureDims.width}
+                                        onFacesDetected={handleFacesDetected}
+                                        faceDetectorSettings={{
+                                        mode: FaceDetector.FaceDetectorMode.fast,
+                                        detectLandmarks: FaceDetector.FaceDetectorLandmarks.none,
+                                        runClassifications: FaceDetector.FaceDetectorClassifications.none,
+                                        minDetectionInterval: 100,
+                                        tracking: true,
+                                        }}
                                         resizeHeight={224}
                                         resizeWidth={224}
                                         resizeDepth={3}
@@ -137,39 +160,8 @@ const BFinalFinalScan = () => {
                         )
                     }
                 </View>
-                <BDetailScreenFinal id={5} />
             </>
         )
-    }
-
-    let screenContent: JSX.Element;
-
-
-    //   } else if (showDetails) {
-    //     console.log('details')
-    //     screenContent = <BDetailScreenFinal id={5} />;
-    //   } else if (showAll) {
-    //     console.log('all')
-    //     screenContent = <AllScreen />;
-    //   } else if (showAbout) {
-    //     console.log('about')
-    //     screenContent = <AboutScreen />;
-    //   } else {
-    //     screenContent = <Text>Ceva nu o mers</Text>;
-    //   }
-
-    return (
-        <>
-            <CScan />
-            {
-                showDetails
-                    ? <DScan />
-                    : null
-            }
-        </>
-    )
-
-
+    };
 };
-
-export default BFinalFinalScan;
+export default IOSScanScreen;

@@ -29,7 +29,7 @@ const DetailScreen = ({ route, navigation }) => {
     const profession = allData[id].title.split('\n')
 
     const spaceBetween = Dimensions.get("window").height > 700 ? 32 : 24
-    const picHeight = Dimensions.get("window").height > 700 ? Dimensions.get("window").height - 384 : Dimensions.get("window").height - 330
+    const picHeight = Dimensions.get("window").height > 700 ? Dimensions.get("window").height - 410 : Dimensions.get("window").height - 330
     const radius = Dimensions.get("window").height > 700 ? 50 : 40
     const textContainerHeight = Dimensions.get("window").height > 700 ? 336 : 270
 
@@ -229,8 +229,11 @@ const DetailScreen = ({ route, navigation }) => {
                     <Animated.Image
                         source={images[id]}
                         style={{
-                            width: win.width - 56,
-                            height: (win.width - 56) * 4 / 3,
+                            width: 'auto',
+                            // height: (win.width - 56) * 4 / 3,
+                            // height:200,
+                            height: Dimensions.get("window").height - picHeight + 30,
+                            aspectRatio: 3 / 4,
                             opacity: scrollAnim.interpolate({
                                 inputRange: [0, 1],
                                 outputRange: [1, 0],

@@ -15,6 +15,9 @@ import DetailScreen from './screens/detail/DetailScreen.component';
 import { bundleResourceIO } from '@tensorflow/tfjs-react-native';
 import { LayersModel } from '@tensorflow/tfjs';
 import * as tf from '@tensorflow/tfjs';
+import IOSScanScreen from './screens/scan/iosScanScreen.component';
+import AndroidScanScreen from './screens/scan/AndroidScanScreen.component';
+import { Platform } from 'react-native';
 
 const Stack = createNativeStackNavigator();
 
@@ -29,24 +32,13 @@ const App = () => {
   const [hasCameraPermission, setHasCameraPermission] = useState(false);
   const [waitingForPermission, setWaitingForPermission] = useState(false);
   const [startVideo, setStartVideo] = useState(false);
+  const device = Platform.OS == 'ios'
 
-
+  console.log(device)
   useEffect(() => {
-    changeScreenOrientation()
-    // Optionally, you can unlock the orientation when the component unmounts
-    return () => {
-      ScreenOrientation.unlockAsync();
-    };
-  }, []);
-
-  async function changeScreenOrientation() {
-    await ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.PORTRAIT_UP);
-  }
-
-  useEffect(() => {
-    console.log('asking')
     askForPermissions()
   }, [])
+
   const askForPermissions = async () => {
     const permissions = await Camera.requestCameraPermissionsAsync()
     console.log(permissions)
@@ -90,10 +82,21 @@ const App = () => {
     setLoadedModel(model)
   }
 
-  const permissionStackScreen = (
+  const iosPermissionStackScreen = (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
       <Stack.Screen name="Scan">
-        {(props) => <FinalFinalScan {...props} model={loadedModel} />}
+        {(props) => <IOSScanScreen {...props} model={loadedModel} />}
+      </Stack.Screen>
+      <Stack.Screen name="Detail" component={DetailScreen} />
+      <Stack.Screen name="All" component={AllScreen} />
+      <Stack.Screen name="About" component={AboutScreen} />
+    </Stack.Navigator>
+  )
+
+  const androidpermissionStackScreen = (
+    <Stack.Navigator screenOptions={{ headerShown: false }}>
+      <Stack.Screen name="Scan">
+        {(props) => <AndroidScanScreen {...props} model={loadedModel} />}
       </Stack.Screen>
       <Stack.Screen name="Detail" component={DetailScreen} />
       <Stack.Screen name="All" component={AllScreen} />
@@ -121,7 +124,9 @@ const App = () => {
       <NavigationContainer theme={navTheme}>
         {
           hasCameraPermission
-            ? permissionStackScreen
+            ? device 
+              ? iosPermissionStackScreen
+              : androidpermissionStackScreen
             : noPermissionStackScreen
         }
       </NavigationContainer>
