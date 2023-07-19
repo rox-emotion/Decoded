@@ -135,7 +135,7 @@ const IOSScanScreen =  ({ model }) => {
                                         resizeWidth={224}
                                         resizeDepth={3}
                                         onReady={handleCameraStream}
-                                        autorender={true}>
+                                        autorender={false}>
 
                                     </TensorCamera>
                                 </View>

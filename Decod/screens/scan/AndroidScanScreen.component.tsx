@@ -16,8 +16,6 @@ import { Dimensions } from 'react-native';
 import { LayersModel } from '@tensorflow/tfjs';
 
 const AndroidScanScreen = ({ model }) => {
-    console.log('Android')
-
     const cameraRef = useRef<Camera>(null)
     const isFocused = useIsFocused()
     const navigation = useNavigation()
@@ -89,7 +87,7 @@ const AndroidScanScreen = ({ model }) => {
             console.log(results[0].score)
 
             if (results[0].label != 0 && results[0].label != 103 && results[0].score > 0.98) {
-                navigation.push("Detail", { id: results[0].label })
+                navigation.navigate("Detail", { id: results[0].label })
 
             } else {
                 main()

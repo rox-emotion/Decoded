@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import { Image, View, TouchableOpacity, FlatList } from "react-native";
 import Header from "../../components/header/Header";
 import { useState } from "react";
@@ -8,12 +8,23 @@ import thumbs from "./thumbs";
 
 const AllScreen = () => {
     const navigation = useNavigation()
+    
     const navigateToDetail = (pic) => {
-        console.log(pic)
-        navigation.push("Detail", { id: pic })
-    }
+        if (!isNavigatingRef.current) {
+          isNavigatingRef.current = true;
+    
+          console.log(pic);
+          navigation.push("Detail", { id: pic });
+    
+          // Set a small timeout to reset the flag, preventing fast tapping
+          setTimeout(() => {
+            isNavigatingRef.current = false;
+          }, 500); // Adjust the timeout duration as needed
+        }
+      };
 
     const [images, setImages] = useState(Array.from({ length: 101 }, (_, i) => `00${i + 1}`.slice(-3)));
+    const isNavigatingRef = useRef(false);
 
     const renderItem = ({ item, index }) => {
         return (

@@ -31,7 +31,7 @@ const DetailScreen = ({ route, navigation }) => {
     const spaceBetween = Dimensions.get("window").height > 700 ? 32 : 24
     const picHeight = Dimensions.get("window").height > 700 ? Dimensions.get("window").height - 410 : Dimensions.get("window").height - 330
     const radius = Dimensions.get("window").height > 700 ? 50 : 40
-    const textContainerHeight = Dimensions.get("window").height > 700 ? 336 : 270
+    const textContainerHeight = Dimensions.get("window").height > 700 ? 346 : 280
 
     //ANIMATIONS
     const scrollAnim = useRef(new Animated.Value(0)).current;
