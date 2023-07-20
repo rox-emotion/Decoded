@@ -35,6 +35,7 @@ const DetailScreen = ({ route, navigation }) => {
     const scrollAnim = useRef(new Animated.Value(0)).current;
     const [isScrolled, setIsScrolled] = useState(false)
     const fadeAnim = useRef(new Animated.Value(0)).current;
+
     useEffect(() => {
         if (percetange >= 99) {
             moveTo(0, false)
@@ -225,7 +226,7 @@ const DetailScreen = ({ route, navigation }) => {
                         source={images[id]}
                         style={{
                             width: 'auto',
-                            height: Dimensions.get("window").height - picHeight + 30,
+                            height: picHeight,
                             aspectRatio: 3 / 4,
                             opacity: scrollAnim.interpolate({
                                 inputRange: [0, 1],

@@ -53,23 +53,23 @@ export const CircularDraggableProgressBar = ({
   color
 }: ICircularDraggableProgressBar): JSX.Element => {
 
-  useEffect(() => {
-    if (Platform.OS === 'ios') {
-      const timer = setTimeout(() => {
-        setAngleLength(calculateAngleLengthFromValue(percentage));
-      }, 50);
+  // useEffect(() => {
+  //   if (Platform.OS === 'ios') {
+  //     const timer = setTimeout(() => {
+  //       setAngleLength(calculateAngleLengthFromValue(percentage));
+  //     }, 50);
 
-      return () => {
-        clearTimeout(timer);
-      };
-    }
-  }, [percentage]);
+  //     return () => {
+  //       clearTimeout(timer);
+  //     };
+  //   }
+  // }, [percentage]);
 
   // Effect for Android
   useEffect(() => {
-    if (Platform.OS === 'android') {
+    // if (Platform.OS === 'android') {
       setAngleLength(calculateAngleLengthFromValue(percentage));
-    }
+    // }
   }, [percentage]);
 
 
