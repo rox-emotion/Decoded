@@ -7,9 +7,7 @@ import AboutScreen from './screens/about/AboutScreen.component';
 import * as Font from 'expo-font';
 import { StatusBar } from 'react-native';
 import DetailScreenFinal from './screens/detail/DetailScreen.component';
-import FinalFinalScan from './screens/scan/AHopefullyFinalScanScreen.component';
 import { Camera } from 'expo-camera';
-import * as ScreenOrientation from 'expo-screen-orientation';
 import SplashScreen from './screens/splash/SplashScreen.component';
 import DetailScreen from './screens/detail/DetailScreen.component';
 import { bundleResourceIO } from '@tensorflow/tfjs-react-native';
@@ -76,10 +74,15 @@ const App = () => {
   const [loadedModel, setLoadedModel] = useState<LayersModel>();
 
   const getModel = async () => {
-    const model = await tf.loadLayersModel(bundleResourceIO(modelJson,
-      modelWeights));
-    console.log('model loaded')
-    setLoadedModel(model)
+    await tf.ready(); 
+    tf.loadLayersModel(bundleResourceIO(modelJson, modelWeights))
+    .then((model) => {
+      console.log('model loaded');
+      setLoadedModel(model);
+    })
+    .catch((error) => {
+      console.error('Error loading the model:', error);
+    });
   }
 
   const iosPermissionStackScreen = (

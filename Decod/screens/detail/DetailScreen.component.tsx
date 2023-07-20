@@ -10,9 +10,7 @@ import { Dimensions } from 'react-native';
 import RNFadedScrollView from 'expo-faded-scrollview';
 import sounds from "./sounds";
 import { CircularDraggableProgressBar } from "./circular/Circular";
-import { TEXT_COLOR } from '../../utils';
 import styles from "./DetailScreen.styles";
-import { AppState } from 'react-native';
 
 const DetailScreen = ({ route, navigation }) => {
 
@@ -46,8 +44,6 @@ const DetailScreen = ({ route, navigation }) => {
     }, [percetange]);
 
     useEffect(() => {
-        // console.log('ei')
-        // setIsScrolled(false)
         if (Platform.OS === 'ios') {
             enableAudio();
         }
@@ -72,6 +68,7 @@ const DetailScreen = ({ route, navigation }) => {
     }, [nav]);
 
     useEffect(() => {
+        
         const timer = setInterval(() => {
             calculatePosition()
         }, 50)
@@ -161,13 +158,11 @@ const DetailScreen = ({ route, navigation }) => {
 
     const moveTo = async (per, start) => {
         try {
-        //   console.log('in moveTo')
           const status = await soundRef.current.getStatusAsync();
           const desiredPositionMillis = per / 100 * status.durationMillis;
           soundRef.current.setPositionAsync(desiredPositionMillis)
           try {
             if (start) {
-            //   console.log('tot in moveto')
               if (!status.isPlaying) {
                 soundRef.current.playAsync()
                 setIsPaused(false)
@@ -179,13 +174,13 @@ const DetailScreen = ({ route, navigation }) => {
               }
             }
           } catch (e) {
-            // console.log('inauntru')
+            console.log('moving error ' + e)
           }
         }
         catch (e) {
           console.error("Moving Seek Error" + e)
         }
-      };
+    };
       
 
     const scrollDown = () => {

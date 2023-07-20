@@ -16,10 +16,9 @@ const AllScreen = () => {
           console.log(pic);
           navigation.push("Detail", { id: pic });
     
-          // Set a small timeout to reset the flag, preventing fast tapping
           setTimeout(() => {
             isNavigatingRef.current = false;
-          }, 500); // Adjust the timeout duration as needed
+          }, 500);
         }
       };
 

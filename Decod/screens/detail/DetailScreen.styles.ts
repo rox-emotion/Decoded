@@ -14,7 +14,6 @@ const styles = StyleSheet.create({
         fontSize: 20,
         textAlign: 'center',
         fontFamily: 'californian-bold',
-        paddingTop: 10
     },
     smallText: {
         fontSize: 18,

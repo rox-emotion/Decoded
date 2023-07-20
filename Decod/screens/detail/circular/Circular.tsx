@@ -6,9 +6,9 @@ import {
   PanResponder,
   PanResponderInstance,
   StyleSheet,
-  Text,
   View,
-  Image
+  Image,
+  Platform
 } from 'react-native'
 import Svg, {
   Circle,
@@ -54,12 +54,24 @@ export const CircularDraggableProgressBar = ({
 }: ICircularDraggableProgressBar): JSX.Element => {
 
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setAngleLength(calculateAngleLengthFromValue(percentage))
-    }, 50)
+    if (Platform.OS === 'ios') {
+      const timer = setTimeout(() => {
+        setAngleLength(calculateAngleLengthFromValue(percentage));
+      }, 50);
 
-    return () => { clearTimeout(timer) }
-  })
+      return () => {
+        clearTimeout(timer);
+      };
+    }
+  }, [percentage]);
+
+  // Effect for Android
+  useEffect(() => {
+    if (Platform.OS === 'android') {
+      setAngleLength(calculateAngleLengthFromValue(percentage));
+    }
+  }, [percentage]);
+
 
   const calculateArcCircle = (
     index0 = 0,
