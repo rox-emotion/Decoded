@@ -6,14 +6,11 @@ const styles = StyleSheet.create({
         width: Dimensions.get('screen').width - 56,
         alignSelf: 'center',
         alignItems: 'center',
-        paddingTop:19,
-        // backgroundColor:'green'
     },
     singleContainer: {
         flexDirection: 'row',
         width: Dimensions.get('window').width - 56,
         justifyContent: 'flex-end',
-        marginTop:19,
     }
 })
 

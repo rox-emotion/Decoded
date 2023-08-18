@@ -24,7 +24,7 @@ const Header = ({ hasMenu, hasBack, hasIcon }) => {
                     </View>
                     : !menu && back && icon
                         ? <View style={styles.container}>
-                            <TouchableOpacity onPress={() => { if(route.name === "About") {navigation.navigate('Scan')} else {navigation.goBack()}}}>
+                            <TouchableOpacity style={{height:45}} onPress={() => { if(route.name === "About") {navigation.navigate('Scan')} else {navigation.goBack()}}}>
                                 <Image
                                     source={require('../../assets/icons/back_arrow.png')}
                                     style={{ height: 38, width: 19 }}

@@ -1,4 +1,4 @@
-import { Platform, StatusBar, StyleSheet } from 'react-native';
+import { Dimensions, Platform, StatusBar, StyleSheet } from 'react-native';
 import { SECONDARY_COLOR_BLUE, SECONDARY_COLOR_GOLD, TEXT_COLOR } from '../../utils';
 
 const styles = StyleSheet.create({
@@ -6,19 +6,19 @@ const styles = StyleSheet.create({
         height: '90%'
     },
     title: {
-        fontSize: 30,
+        fontSize: 28,
         alignSelf: 'center',
         fontFamily: 'californian-bold',
         color: TEXT_COLOR
     },
     subtitle: {
-        fontSize: 30,
+        fontSize: 28,
         alignSelf: 'center',
         fontFamily: 'californian-regular',
         color: SECONDARY_COLOR_GOLD
     },
     name: {
-        fontSize: 30,
+        fontSize: 28,
         alignSelf: 'center',
         fontFamily: 'californian-italic',
         color: TEXT_COLOR
@@ -60,8 +60,8 @@ const styles = StyleSheet.create({
     mainContainer:
     {
         flex: 1,
-        marginBottom:25,
         marginHorizontal:28,
+        marginTop:52
     }
 })
 

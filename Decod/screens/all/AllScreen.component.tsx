@@ -1,13 +1,19 @@
 import React, { useRef } from "react";
-import { Image, View, TouchableOpacity, FlatList } from "react-native";
+import { Image, View, TouchableOpacity, FlatList, Text, StatusBar } from "react-native";
 import Header from "../../components/header/Header";
 import { useState } from "react";
 import styles from "./AllScreen.styles";
 import { useNavigation } from "@react-navigation/native";
 import thumbs from "./thumbs";
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 const AllScreen = () => {
+    StatusBar.setBackgroundColor('white');
+
     const navigation = useNavigation()
+
+    const insets = useSafeAreaInsets();
+    const bottomNavBarHeight = insets.bottom;
     
     const navigateToDetail = (pic) => {
         if (!isNavigatingRef.current) {
@@ -29,14 +35,17 @@ const AllScreen = () => {
         return (
             <View>
                 <TouchableOpacity onPress={() => { navigateToDetail(index + 1) }}>
-                    <Image style={{ height: 99, width: 74, marginBottom: 10 }} source={thumbs[index]} />
+                    <Image style={{ height: 99, width: 74, marginBottom: 20 }} source={thumbs[index]} />
                 </TouchableOpacity>
             </View>
         );
     };
     return (
-        <View style={styles.mainContainer}>
+        <View style={[styles.mainContainer, {marginBottom: bottomNavBarHeight }]}>
             <Header hasBack={true} hasIcon={true} hasMenu={false} />
+            {/* <TouchableOpacity onPress={() => {navigation.navigate('Poetry')}}>
+                <Text>POEM TO TEST</Text>
+            </TouchableOpacity> */}
             <View style={styles.container}>
                 <FlatList
                     showsVerticalScrollIndicator={false}
@@ -48,6 +57,7 @@ const AllScreen = () => {
                     numColumns={4}
                 />
             </View>
+            
         </View>
     )
 }

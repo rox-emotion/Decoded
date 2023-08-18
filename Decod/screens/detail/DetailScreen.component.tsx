@@ -1,7 +1,7 @@
 import React, { useRef } from "react";
-import { View, Text, Platform, Animated, Image, TouchableOpacity, StyleSheet, ImageBackground } from 'react-native';
+import { View, Text, Platform, Animated, Image, TouchableOpacity, StyleSheet, ImageBackground, StatusBar } from 'react-native';
 import { useEffect, useState } from "react";
-import { Audio } from 'expo-av';
+import { Audio, InterruptionModeAndroid, InterruptionModeIOS } from 'expo-av';
 import { useIsFocused, useNavigation } from "@react-navigation/native";
 import Header from "../../components/header/Header";
 import data from './data.json'
@@ -11,8 +11,12 @@ import RNFadedScrollView from 'expo-faded-scrollview';
 import sounds from "./sounds";
 import { CircularDraggableProgressBar } from "./circular/Circular";
 import styles from "./DetailScreen.styles";
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 const DetailScreen = ({ route, navigation }) => {
+    if(Platform.OS == 'android'){
+        StatusBar.setBackgroundColor('white');
+    }
 
     const id = route.params.id - 1
     const allData = data
@@ -26,34 +30,64 @@ const DetailScreen = ({ route, navigation }) => {
     const soundRef = useRef();
     const profession = allData[id].title.split('\n')
 
-    const spaceBetween = Dimensions.get("window").height > 700 ? 32 : 24
-    const picHeight = Dimensions.get("window").height > 700 ? Dimensions.get("window").height - 410 : Dimensions.get("window").height - 330
-    const radius = Dimensions.get("window").height > 700 ? 50 : 40
-    const textContainerHeight = Dimensions.get("window").height > 700 ? 346 : 280
+    const insets = useSafeAreaInsets();
+    const bottomNavBarHeight = insets.bottom;
+
+    const [textHeight, setTextHeight] = useState(118)
+
+    // const picHeight =  Dimensions.get("window").height - 38 - 118 - 110 - 19 - 42 - bottomNavBarHeight
+    // const textContainerHeight = Dimensions.get("window").height - 118 - 110 - 38 - 52 - bottomNavBarHeight
+
+    // console.log('TOTAL ' + Dimensions.get("window").height )
+    // console.log('JOS ' + bottomNavBarHeight)
+
+
+    let picHeight =  Dimensions.get("window").height > 700 ?  Dimensions.get("window").height - 170 - bottomNavBarHeight - textHeight : Dimensions.get("window").height  - 210 - bottomNavBarHeight - textHeight
+
+    let textContainerHeight = Dimensions.get("window").height > 700 ?  Dimensions.get("window").height - 162 - bottomNavBarHeight - textHeight : Dimensions.get("window").height - 200 - bottomNavBarHeight - textHeight
+
+    if(Platform.OS == 'ios'){
+        picHeight -= 100
+        textContainerHeight -=100
+    }
+    // const picHeight =  Dimensions.get("window").height > 700 ?  Dimensions.get("window").height - 270 - bottomNavBarHeight - textHeight : Dimensions.get("window").height  - 210 - bottomNavBarHeight - textHeight
+
+    // const textContainerHeight = Dimensions.get("window").height > 700 ?  Dimensions.get("window").height - 162 - bottomNavBarHeight - textHeight : Dimensions.get("window").height - 200 - bottomNavBarHeight - textHeight
+
 
     //ANIMATIONS
     const scrollAnim = useRef(new Animated.Value(0)).current;
     const [isScrolled, setIsScrolled] = useState(false)
     const fadeAnim = useRef(new Animated.Value(0)).current;
 
+    const containerRef = useRef(null);
+
+    const handleLayout = () => {
+        if (containerRef.current) {
+          containerRef.current.measure((x, y, width, height) => {
+            setTextHeight(height)
+          });
+        }
+      };
+
     useEffect(() => {
-        if (percetange >= 99) {
+        if (percetange >= 99.9) {
             moveTo(0, false)
             setPercentage(0)
-
         }
     }, [percetange]);
 
+
+
     useEffect(() => {
-        if (Platform.OS === 'ios') {
-            enableAudio();
-        }
+        enableAudio();
 
         if (isFocused === true) {
             playSound();
         } else if (isFocused === false) {
             stopSound();
         }
+
 
         return () => {
             stopSound()
@@ -69,7 +103,7 @@ const DetailScreen = ({ route, navigation }) => {
     }, [nav]);
 
     useEffect(() => {
-        
+
         const timer = setInterval(() => {
             calculatePosition()
         }, 50)
@@ -124,6 +158,7 @@ const DetailScreen = ({ route, navigation }) => {
         }
     };
 
+
     const pauseSound = async () => {
         try {
             if (soundRef.current) {
@@ -148,9 +183,15 @@ const DetailScreen = ({ route, navigation }) => {
     const enableAudio = async () => {
         try {
             await Audio.setAudioModeAsync({
+                allowsRecordingIOS: false,
+                staysActiveInBackground: true,
+                interruptionModeIOS: InterruptionModeIOS.DuckOthers,
                 playsInSilentModeIOS: true,
-                staysActiveInBackground: false,
-                // shouldDuckAndroid: false,
+                shouldDuckAndroid: true,
+                interruptionModeAndroid: InterruptionModeAndroid.DuckOthers,
+                playThroughEarpieceAndroid: false
+
+
             })
         } catch (e) {
             console.log("enableAudio " + e)
@@ -159,30 +200,30 @@ const DetailScreen = ({ route, navigation }) => {
 
     const moveTo = async (per, start) => {
         try {
-          const status = await soundRef.current.getStatusAsync();
-          const desiredPositionMillis = per / 100 * status.durationMillis;
-          soundRef.current.setPositionAsync(desiredPositionMillis)
-          try {
-            if (start) {
-              if (!status.isPlaying) {
-                soundRef.current.playAsync()
-                setIsPaused(false)
-              }
-            } else {
-              if (status.isPlaying) {
-                soundRef.current.pauseAsync()
-                setIsPaused(true)
-              }
+            const status = await soundRef.current.getStatusAsync();
+            const desiredPositionMillis = per / 100 * status.durationMillis;
+            soundRef.current.setPositionAsync(desiredPositionMillis)
+            try {
+                if (start) {
+                    if (!status.isPlaying) {
+                        soundRef.current.playAsync()
+                        setIsPaused(false)
+                    }
+                } else {
+                    if (status.isPlaying) {
+                        soundRef.current.pauseAsync()
+                        setIsPaused(true)
+                    }
+                }
+            } catch (e) {
+                console.log('moving error ' + e)
             }
-          } catch (e) {
-            console.log('moving error ' + e)
-          }
         }
         catch (e) {
-          console.error("Moving Seek Error" + e)
+            console.error("Moving Seek Error" + e)
         }
     };
-      
+
 
     const scrollDown = () => {
         Animated.parallel([
@@ -212,16 +253,15 @@ const DetailScreen = ({ route, navigation }) => {
     };
 
 
+
+
     return (
-        <View style={styles.pageContainer}>
-            {isScrolled
-                ? null
-                : <Header hasBack={true} hasIcon={true} hasMenu={false} />}
+        <View style={[styles.pageContainer, { marginBottom: bottomNavBarHeight }]}>
 
             <View style={styles.container}>
-
+                <Header hasBack={true} hasIcon={true} hasMenu={false} />
                 {/* MAIN IMAGE */}
-                <View style={{ height: picHeight, overflow: 'hidden' }}>
+                <View style={{ height: picHeight, overflow: 'hidden', marginTop:12 }}>
                     <Animated.Image
                         source={images[id]}
                         style={{
@@ -245,7 +285,6 @@ const DetailScreen = ({ route, navigation }) => {
                                     translateY: -16
                                 },
                             ],
-                            marginBottom: 12
                         }}
                     />
                 </View>
@@ -255,44 +294,46 @@ const DetailScreen = ({ route, navigation }) => {
                             {
                                 translateY: scrollAnim.interpolate({
                                     inputRange: [0, 1],
-                                    outputRange: [0, -picHeight - 24],
+                                    outputRange: [0, -picHeight],
                                     extrapolate: 'clamp',
                                 }),
                             },
                         ],
                         width: Dimensions.get("window").width,
+
                     }}
                 >
-                    {
-                        isScrolled
-                            ? <Header hasBack={true} hasIcon={true} hasMenu={false} />
-                            : null
-
-                    }
-
-                    <Text style={[styles.name, { color: allData[id].color }]}>{allData[id].name}</Text>
-                    {profession.map((paragraph, index) => (
-                                        <Text style={[styles.title, { color: allData[id].color } ]} key={index}>{paragraph}</Text>
-                                    ))}
-                    {
-                        allData[id].DOB != 'NaN'
-                            ? <Text style={[styles.title, { color: allData[id].color, marginBottom: spaceBetween }]}>{allData[id].DOB}</Text>
-                            : <View style={{ height: 36 }}></View>
-                    }
+                    <View ref={containerRef}
+                      onLayout={handleLayout}
+                    >
+                        <Text style={[styles.name, { color: allData[id].color, marginTop: 16 }]}>{allData[id].name}</Text>
+                        {profession.map((paragraph, index) => (
+                            <Text style={[styles.title, { color: allData[id].color }]} key={index}>{paragraph}</Text>
+                        ))}
+                        {
+                            allData[id].DOB != 'NaN'
+                                ? <Text style={[styles.title, { color: allData[id].color, marginBottom: 32 }]}>{allData[id].DOB}</Text>
+                                : <View style={{ height: 36 }}></View>
+                        }
+                    </View>
                     <View>
-                        <CircularDraggableProgressBar value={percetange} callBack={(val) => { moveTo(val, true) }} pauseCallBack={() => { toggleSound(); setIsPaused(!isPaused) }} isPaused={isPaused} percentage={percetange} color={allData[id].color} radius={radius} />
+                        <CircularDraggableProgressBar value={percetange} callBack={(val) => { moveTo(val, true) }} pauseCallBack={() => {  toggleSound(); setIsPaused(!isPaused) }} isPaused={isPaused} percentage={percetange} color={allData[id].color} />
                     </View>
                     {
                         isScrolled
                             ? null
                             : <TouchableOpacity onPress={() => { scrollDown() }}>
-                                <Image source={require('./../../assets/icons/down_arrow.png')} style={{ height: 19, width: 38, alignSelf: 'center', marginTop: spaceBetween }} />
+                                <Image source={require('./../../assets/icons/down_arrow.png')} style={{
+                                    height: 19, width: 38, alignSelf: 'center',
+                                    marginTop: 32
+                                }} />
                             </TouchableOpacity>
                     }
 
                     {
                         isScrolled
-                            ? <View style={{ height: Dimensions.get("window").height - textContainerHeight, marginHorizontal: 28, marginTop: spaceBetween }}>
+                            ? <View style={{ height: textContainerHeight, marginHorizontal: 28, marginTop: 40 }}>
+
                                 <RNFadedScrollView allowStartFade={true} fadeSize={40} allowEndFade={false}
                                     showsVerticalScrollIndicator={false}
                                     showsHorizontalScrollIndicator={false}

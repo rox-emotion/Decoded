@@ -1,18 +1,23 @@
 import React from "react";
-import { SafeAreaView, Text, View, Image, TouchableOpacity } from "react-native";
+import { SafeAreaView, Text, View, Image, TouchableOpacity, StatusBar } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import Header from "../../components/header/Header";
 import styles from "./AboutScreen.styles";
 import { aboutDecoded, aboutHA, aboutMarcus } from "./texts";
 import { Linking } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 const AboutScreen = () => {
+    StatusBar.setBackgroundColor('white');
+
     const humanAtlasLink = 'https://www.ahumanatlas.com/'
     const sutherlandLink = 'https://studio-sutherland.co.uk/'
     const tenacityWorksLink = 'https://www.tenacityworks.com/'
     const paragraphsDecoded = aboutDecoded.split('\n');
     const paragraphsHA = aboutHA.split('\n');
     const paragraphsMarcus = aboutMarcus.split('\n');
+    const insets = useSafeAreaInsets();
+    const bottomNavBarHeight = insets.bottom;
 
     const handleLinkPress = async (url) => {
 
@@ -26,18 +31,18 @@ const AboutScreen = () => {
     };
 
     return (
-        <View style={styles.mainContainer}>
+        <View style={[styles.mainContainer, {marginBottom: bottomNavBarHeight + 8}]}>
             <Header hasBack={true} hasIcon={false} hasMenu={true} />
             <ScrollView
                 showsVerticalScrollIndicator={false}
                 showsHorizontalScrollIndicator={false}
                 style={{ marginTop: 15 }}
             >
-                <Image source={require('./../../assets/icons/decoded_logo.png')} style={{ height: 232, width: 158, alignSelf: 'center', marginBottom: 38 }} />
+                <Image source={require('./../../assets/icons/decoded_logo.png')} style={{ height: 232, width: 158, alignSelf: 'center', marginBottom: 26, marginTop:16 }} />
                 <Text style={styles.title}>De.Coded</Text>
                 <Text style={styles.subtitle}>A Human Atlas of</Text>
                 <Text style={styles.subtitle}>Silicon Valley</Text>
-                <Text style={[styles.name, { marginBottom: 25 }]}>Marcus Lyon</Text>
+                <Text style={[styles.name, { marginBottom: 20 }]}>Marcus Lyon</Text>
 
                 {paragraphsDecoded.map((paragraph, index) => (
                     <Text style={[styles.paragraphText]} key={index}>{paragraph}</Text>

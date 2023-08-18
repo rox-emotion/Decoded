@@ -9,14 +9,20 @@ import * as ImageManipulator from 'expo-image-manipulator';
 import { captureRef } from 'react-native-view-shot';
 import { useEffect, useRef } from 'react';
 import { useIsFocused, useNavigation } from '@react-navigation/native';
-import { View, Image } from 'react-native';
+import { View, Image, StatusBar } from 'react-native';
 import React from 'react';
 import { Dimensions } from 'react-native';
 
+
+
 const AndroidScanScreen = ({ model }) => {
+
+    StatusBar.setBackgroundColor('transparent');
+
     const cameraRef = useRef<Camera>(null)
     const isFocused = useIsFocused()
     const navigation = useNavigation()
+
 
     useEffect(() => {
         const timer = setTimeout(() => {
@@ -76,20 +82,23 @@ const AndroidScanScreen = ({ model }) => {
                 results.push({ score: resultData[i], label: i });
             }
             results.sort((curr, prev) => prev.score - curr.score);
-            
+
             console.log(results[0].label)
             console.log(results[0].score)
 
             tf.dispose([tensor, output, resultData]);
 
-            if (results[0].label != 0 && results[0].label != 103 && results[0].score > 0.98) {
+            if(results[0].label == 102){
+                navigation.navigate('Poetry')
+            }
+            else if (results[0].label != 0 && results[0].label != 103 && results[0].score > 0.98) {
                 navigation.navigate("Detail", { id: results[0].label })
 
             } else {
                 setTimeout(() => {
                     main()
-                },100)
-                
+                }, 100)
+
             }
         } catch (error) {
             console.error('Error predicting from tesor image', error);
@@ -97,21 +106,33 @@ const AndroidScanScreen = ({ model }) => {
 
     };
 
+    const containerHeight = Dimensions.get("window").width * 1080 / 608
+    const screenHeight = Dimensions.get("window").height
+    const extraSpace = screenHeight < containerHeight ? (containerHeight - screenHeight) / 2 : 0
+
     return (
         <View style={styles.mainContainer}>
             {isFocused && (
                 <Camera
                     style={styles.camera}
                     type={CameraType.back} ref={cameraRef}
+               
                 >
-                    <View style={{ paddingTop: 28 }}>
+                    <View style={{ marginTop: 52 }}>
                         <Header hasMenu={false} hasBack={false} hasIcon={true} />
                     </View>
 
-                    <Image
-                        source={require('./../../assets/icons/target_icon.png')}
-                        style={{ height: 157, width: 95, marginTop: Dimensions.get('window').height * 0.05, alignSelf: 'center' }}
-                    />
+                    <View
+                        style={{ marginTop: (Dimensions.get('window').height - containerHeight) / 2 - 40 }}
+                    >
+                        <View style={{ height: containerHeight, width: '100%'}}>
+                            <Image
+                                source={require('./../../assets/icons/target_icon.png')}
+                                style={{ height: 160, width: 95, marginTop: 199 - extraSpace, alignSelf: 'center' }}
+
+                            />
+                        </View>
+                    </View>
 
                 </Camera>
             )

@@ -1,13 +1,11 @@
 import { Dimensions, StyleSheet } from 'react-native'
 
-const ratio = 1920 / 1080
 
 const styles = StyleSheet.create({
     container: {
         width: Dimensions.get("window").width,
-        height: Dimensions.get("window").width * ratio,
+        height: Dimensions.get("window").width * 1080 / 608,
         border: 'none',
-        backgroundColor: '#26170D'
     },
     video: {
         flex: 1,
@@ -15,8 +13,8 @@ const styles = StyleSheet.create({
     },
 
     mainContainer: {
-        width: Dimensions.get("window").width,
-        height: Dimensions.get("window").height,
+        width: Dimensions.get("screen").width,
+        height: Dimensions.get("screen").height,
         border: 'none',
         backgroundColor: '#26170D',
         justifyContent: 'center',

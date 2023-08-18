@@ -8,12 +8,16 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         fontFamily: 'californian-regular',
         fontWeight: "400",
+        marginTop:0,
+        paddingTop:0
     },
     name:
     {
+        marginTop:6,
         fontSize: 20,
         textAlign: 'center',
         fontFamily: 'californian-bold',
+        
     },
     smallText: {
         fontSize: 18,
@@ -52,16 +56,15 @@ const styles = StyleSheet.create({
     },
     pageContainer: {
         flex:1,
+        marginTop:50
     },
     container: {
-        marginBottom:6,
-        marginTop:12,
-        paddingTop:0,
         flex: 1,
         marginHorizontal: 28,
         flexDirection: 'column',
         justifyContent: 'flex-start',
         alignItems: 'center',
+        // paddingTop:50
     },
     
 

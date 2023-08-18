@@ -53,22 +53,18 @@ export const CircularDraggableProgressBar = ({
   color
 }: ICircularDraggableProgressBar): JSX.Element => {
 
+  //FOR IOS
   // useEffect(() => {
-  //   if (Platform.OS === 'ios') {
-  //     const timer = setTimeout(() => {
-  //       setAngleLength(calculateAngleLengthFromValue(percentage));
-  //     }, 50);
+  //   const timer = setTimeout(() => {
+  //     setAngleLength(calculateAngleLengthFromValue(percentage))
+  //   }, 50)
+  //   return () => { clearTimeout(timer) }
+  // })
 
-  //     return () => {
-  //       clearTimeout(timer);
-  //     };
-  //   }
-  // }, [percentage]);
-
-  // Effect for Android
+  // FOR ANDROID
   useEffect(() => {
     // if (Platform.OS === 'android') {
-      setAngleLength(calculateAngleLengthFromValue(percentage));
+    setAngleLength(calculateAngleLengthFromValue(percentage));
     // }
   }, [percentage]);
 
@@ -283,11 +279,11 @@ export const CircularDraggableProgressBar = ({
       <View onTouchStart={onTouch} onLayout={onLayout} style={styles.bgView}>
         <View style={[styles.textView]}>
           {isPaused
-            ? <Image source={require('./../../../assets/icons/play.png')} style={{ width: 30, height: 37, marginLeft: 11 }} />
-            : <Image source={require('./../../../assets/icons/pause.png')} style={{ width: 25, height: 30, alignSelf: 'center' }} />
+            ? <Image source={require('./../../../assets/icons/pause.png')} style={{ width: 25, height: 30, alignSelf: 'center' }} />
+            : null
           }
         </View>
-        
+
         <Svg
           strokeLinecap={'round'}
           height={containerWidth}
@@ -323,21 +319,24 @@ export const CircularDraggableProgressBar = ({
                 }`,
             }}
           >
-            <Circle
-              r={radius}
-              strokeWidth={strokeWidth}
-              fill='transparent'
-              stroke={'transparent'}
-              onPress={pauseCallBack}
-            />
+
             <Circle
               r={radius}
               strokeWidth={strokeWidth}
               fill='transparent'
               stroke={'#EBE9E4'}
-              onPress={pauseCallBack}
+            // onPress={pauseCallBack}
 
             />
+
+            <Circle
+              r={radius - 10}
+              strokeWidth={strokeWidth}
+              fill='transparent'
+              stroke={'transparent'}
+              onPress={pauseCallBack}
+            />
+
             {range(segments).map((i) => {
               const { fromX, fromY, toX, toY } = calculateArcCircle(
                 i,
@@ -371,7 +370,7 @@ export const CircularDraggableProgressBar = ({
               onPressIn={() => setAngleLength(angleLength + Math.PI / 2)}
             >
               <Circle
-                r={10}
+                r={7}
                 fill={'transparent'}
                 stroke={'transparent'}
               />

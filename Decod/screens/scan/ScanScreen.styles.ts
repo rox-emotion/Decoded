@@ -1,4 +1,4 @@
-import { Dimensions, StyleSheet } from "react-native";
+import { Dimensions, StatusBar, StyleSheet } from "react-native";
 
 const styles = StyleSheet.create({
   center: {
@@ -8,11 +8,11 @@ const styles = StyleSheet.create({
   },
   cameraDev:{
     height: '100%',
-    width: Dimensions.get('window').width,
+    width: Dimensions.get('screen').width,
   },
   camera: {
-    height: Dimensions.get('window').height,
-    width: Dimensions.get('window').height * 3/4
+    height: Dimensions.get('screen').height,
+    width: Dimensions.get('screen').height * 3/4
   },
   button: {
     backgroundColor: '#333',
@@ -21,18 +21,15 @@ const styles = StyleSheet.create({
     borderRadius: 5,
   },
   mainContainer:{
-    height: Dimensions.get('window').height,
+    height: Dimensions.get('screen').height,
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: 'transparent'
   },
   imageContainer: {
-    position: 'absolute',
-    top: Dimensions.get('window').height * 0.23,
-    alignSelf: 'center',
-    height: 157, 
+    top: 194,
+    height: 160, 
     width: 95,
   },
 });
