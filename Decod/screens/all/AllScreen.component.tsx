@@ -1,5 +1,5 @@
 import React, { useRef } from "react";
-import { Image, View, TouchableOpacity, FlatList, Text, StatusBar } from "react-native";
+import { Image, View, TouchableOpacity, FlatList, Text, StatusBar, Platform } from "react-native";
 import Header from "../../components/header/Header";
 import { useState } from "react";
 import styles from "./AllScreen.styles";
@@ -8,7 +8,9 @@ import thumbs from "./thumbs";
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 const AllScreen = () => {
-    StatusBar.setBackgroundColor('white');
+    if(Platform.OS == 'android'){
+        StatusBar.setBackgroundColor('white');
+    }
 
     const navigation = useNavigation()
 

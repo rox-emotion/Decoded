@@ -1,5 +1,5 @@
 import React from "react";
-import { SafeAreaView, Text, View, Image, TouchableOpacity, StatusBar } from "react-native";
+import { SafeAreaView, Text, View, Image, TouchableOpacity, StatusBar, Platform } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import Header from "../../components/header/Header";
 import styles from "./AboutScreen.styles";
@@ -8,7 +8,9 @@ import { Linking } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 const AboutScreen = () => {
-    StatusBar.setBackgroundColor('white');
+    if(Platform.OS == 'android'){
+        StatusBar.setBackgroundColor('white');
+    }
 
     const humanAtlasLink = 'https://www.ahumanatlas.com/'
     const sutherlandLink = 'https://studio-sutherland.co.uk/'

@@ -14,8 +14,6 @@ import { Video } from 'expo-av';
 
 const IOSScanScreen = ({ model }) => {
 
-    StatusBar.setBackgroundColor('transparent');
-
     const [hasCameraPermission, setHasCameraPermission] = useState(false);
     const TensorCamera = cameraWithTensors(Camera);
     const cameraRef = useRef<Camera>(null);

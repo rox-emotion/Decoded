@@ -9,14 +9,13 @@ import * as ImageManipulator from 'expo-image-manipulator';
 import { captureRef } from 'react-native-view-shot';
 import { useEffect, useRef } from 'react';
 import { useIsFocused, useNavigation } from '@react-navigation/native';
-import { View, Image, StatusBar } from 'react-native';
+import { View, Image, StatusBar, Platform } from 'react-native';
 import React from 'react';
 import { Dimensions } from 'react-native';
 
 
 
 const AndroidScanScreen = ({ model }) => {
-
     StatusBar.setBackgroundColor('transparent');
 
     const cameraRef = useRef<Camera>(null)
@@ -88,7 +87,7 @@ const AndroidScanScreen = ({ model }) => {
 
             tf.dispose([tensor, output, resultData]);
 
-            if(results[0].label == 102){
+            if (results[0].label == 102) {
                 navigation.navigate('Poetry')
             }
             else if (results[0].label != 0 && results[0].label != 103 && results[0].score > 0.98) {
@@ -116,7 +115,7 @@ const AndroidScanScreen = ({ model }) => {
                 <Camera
                     style={styles.camera}
                     type={CameraType.back} ref={cameraRef}
-               
+
                 >
                     <View style={{ marginTop: 52 }}>
                         <Header hasMenu={false} hasBack={false} hasIcon={true} />
@@ -125,7 +124,7 @@ const AndroidScanScreen = ({ model }) => {
                     <View
                         style={{ marginTop: (Dimensions.get('window').height - containerHeight) / 2 - 40 }}
                     >
-                        <View style={{ height: containerHeight, width: '100%'}}>
+                        <View style={{ height: containerHeight, width: '100%' }}>
                             <Image
                                 source={require('./../../assets/icons/target_icon.png')}
                                 style={{ height: 160, width: 95, marginTop: 199 - extraSpace, alignSelf: 'center' }}
