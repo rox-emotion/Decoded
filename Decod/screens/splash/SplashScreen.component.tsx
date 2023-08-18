@@ -1,12 +1,14 @@
 import React from "react";
 import { Video } from 'expo-av';
-import { Dimensions, StatusBar, View } from "react-native";
+import { Dimensions, Platform, StatusBar, View } from "react-native";
 import { useEffect, useRef, useState } from "react";
 import styles from "./SplashScreen.styles";
 import * as tf from '@tensorflow/tfjs';
 
 const SplashScreen = () => {
-    StatusBar.setBackgroundColor('#26170D');
+    if(Platform.OS == 'android'){
+        StatusBar.setBackgroundColor('#26170D');
+    }
 
     const videoPlayer = useRef(null);
     const videoSource = require('./../../assets/video/a.mp4');

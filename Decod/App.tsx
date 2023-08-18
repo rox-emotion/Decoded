@@ -23,6 +23,10 @@ const Stack = createNativeStackNavigator();
 const navTheme = DefaultTheme;
 navTheme.colors.background = '#FFFFFF';
 
+const WaitingScreen = () => {
+  return <View style={{ flex: 1, backgroundColor: '#26170D' }} />;
+}
+
 const App = () => {
 
   const [fontLoaded, setFontLoaded] = useState(false);
@@ -115,33 +119,34 @@ const App = () => {
     return (
       <NavigationContainer theme={navTheme} >
         <Stack.Navigator screenOptions={{ headerShown: false, navigationBarColor: '#26170D' }}>
-          <Stack.Screen name="Waiting" component={() => <View style={{ flex: 1, backgroundColor: "#26170D" }} />} />
+          <Stack.Screen name="Waiting" component={WaitingScreen} />
         </Stack.Navigator >
       </NavigationContainer>
     )
   }
-  else if (showSplash && startVideo) {
-    return (
-      <NavigationContainer theme={navTheme} >
-        <Stack.Navigator screenOptions={{ headerShown: false, navigationBarColor: '#26170D' }}>
-          <Stack.Screen name="Splash" component={SplashScreen} />
-        </Stack.Navigator >
-      </NavigationContainer>
-    )
-  }
-  else {
-    return (
-      <NavigationContainer theme={navTheme}>
-        {
-          hasCameraPermission
-            ? device
-              ? iosPermissionStackScreen
-              : androidpermissionStackScreen
-            : noPermissionStackScreen
-        }
-      </NavigationContainer>
-    )
-  }
+  else
+    if (showSplash && startVideo) {
+      return (
+        <NavigationContainer theme={navTheme} >
+          <Stack.Navigator screenOptions={{ headerShown: false, navigationBarColor: '#26170D' }}>
+            <Stack.Screen name="Splash" component={SplashScreen} />
+          </Stack.Navigator >
+        </NavigationContainer>
+      )
+    }
+    else {
+      return (
+        <NavigationContainer theme={navTheme}>
+          {
+            hasCameraPermission
+              ? device
+                ? iosPermissionStackScreen
+                : androidpermissionStackScreen
+              : noPermissionStackScreen
+          }
+        </NavigationContainer>
+      )
+    }
 }
 
 export default App;

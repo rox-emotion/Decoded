@@ -1,6 +1,6 @@
 import { useIsFocused } from "@react-navigation/native";
 import React, { useEffect, useRef } from "react";
-import { View, Text, StyleSheet, ScrollView, Dimensions, StatusBar } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, Dimensions, StatusBar, Platform } from 'react-native';
 import Header from "../../components/header/Header";
 import { Audio, InterruptionModeAndroid, InterruptionModeIOS } from 'expo-av';
 import sounds from "../detail/sounds";
@@ -8,7 +8,9 @@ import { poem } from './poem'
 import { TEXT_COLOR } from "../../utils";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 const PoetryScreen = () => {
-    StatusBar.setBackgroundColor('white');
+    if(Platform.OS == 'android'){
+        StatusBar.setBackgroundColor('white');
+    }
 
     const isFocused = useIsFocused()
     const soundRef = useRef();

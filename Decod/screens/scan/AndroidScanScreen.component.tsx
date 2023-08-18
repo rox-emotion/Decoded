@@ -13,8 +13,6 @@ import { View, Image, StatusBar, Platform } from 'react-native';
 import React from 'react';
 import { Dimensions } from 'react-native';
 
-
-
 const AndroidScanScreen = ({ model }) => {
     StatusBar.setBackgroundColor('transparent');
 
