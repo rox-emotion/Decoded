@@ -28,7 +28,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   imageContainer: {
-    top: 194,
     height: 160, 
     width: 95,
   },
