@@ -14,9 +14,10 @@ import styles from "./DetailScreen.styles";
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 const DetailScreen = ({ route, navigation }) => {
-    if(Platform.OS == 'android'){
+    if (Platform.OS == 'android') {
         StatusBar.setBackgroundColor('white');
     }
+
 
     const id = route.params.id - 1
     const allData = data
@@ -33,26 +34,14 @@ const DetailScreen = ({ route, navigation }) => {
     const insets = useSafeAreaInsets();
     const bottomNavBarHeight = insets.bottom;
 
-    const [textHeight, setTextHeight] = useState(118)
+    const [textHeight, setTextHeight] = useState(0)
+    const [available, setAvailable] = useState(0)
 
-    // const picHeight =  Dimensions.get("window").height - 38 - 118 - 110 - 19 - 42 - bottomNavBarHeight
-    // const textContainerHeight = Dimensions.get("window").height - 118 - 110 - 38 - 52 - bottomNavBarHeight
+    let elements = 38 + 12 + textHeight + 24 + 115 + 19
 
-    // console.log('TOTAL ' + Dimensions.get("window").height )
-    // console.log('JOS ' + bottomNavBarHeight)
+    let picHeight = available - elements
 
-
-    let picHeight =  Dimensions.get("window").height > 700 ?  Dimensions.get("window").height - 170 - bottomNavBarHeight - textHeight : Dimensions.get("window").height  - 210 - bottomNavBarHeight - textHeight
-
-    let textContainerHeight = Dimensions.get("window").height > 700 ?  Dimensions.get("window").height - 162 - bottomNavBarHeight - textHeight : Dimensions.get("window").height - 200 - bottomNavBarHeight - textHeight
-
-    if(Platform.OS == 'ios'){
-        picHeight -= 100
-        textContainerHeight -=100
-    }
-    // const picHeight =  Dimensions.get("window").height > 700 ?  Dimensions.get("window").height - 270 - bottomNavBarHeight - textHeight : Dimensions.get("window").height  - 210 - bottomNavBarHeight - textHeight
-
-    // const textContainerHeight = Dimensions.get("window").height > 700 ?  Dimensions.get("window").height - 162 - bottomNavBarHeight - textHeight : Dimensions.get("window").height - 200 - bottomNavBarHeight - textHeight
+    let textContainerHeight = available - (38 + 12 + textHeight + 115 + 32)
 
 
     //ANIMATIONS
@@ -61,14 +50,22 @@ const DetailScreen = ({ route, navigation }) => {
     const fadeAnim = useRef(new Animated.Value(0)).current;
 
     const containerRef = useRef(null);
+    const mainRef = useRef(null);
 
+    const handleMainLayout = () => {
+        if (mainRef.current) {
+            mainRef.current.measure((x, y, width, height) => {
+                setAvailable(height)
+            });
+        }
+    }
     const handleLayout = () => {
         if (containerRef.current) {
-          containerRef.current.measure((x, y, width, height) => {
-            setTextHeight(height)
-          });
+            containerRef.current.measure((x, y, width, height) => {
+                setTextHeight(height)
+            });
         }
-      };
+    };
 
     useEffect(() => {
         if (percetange >= 99.9) {
@@ -252,16 +249,11 @@ const DetailScreen = ({ route, navigation }) => {
         }).start()
     };
 
-
-
-
     return (
-        <View style={[styles.pageContainer, { marginBottom: bottomNavBarHeight }]}>
-
+        <View ref={mainRef} onLayout={handleMainLayout} style={[styles.pageContainer, { marginBottom: bottomNavBarHeight }]}>
             <View style={styles.container}>
                 <Header hasBack={true} hasIcon={true} hasMenu={false} />
-                {/* MAIN IMAGE */}
-                <View style={{ height: picHeight, overflow: 'hidden', marginTop:12 }}>
+                <View style={{ height: picHeight, overflow: 'hidden', marginTop: 12 }}>
                     <Animated.Image
                         source={images[id]}
                         style={{
@@ -304,7 +296,7 @@ const DetailScreen = ({ route, navigation }) => {
                     }}
                 >
                     <View ref={containerRef}
-                      onLayout={handleLayout}
+                        onLayout={handleLayout}
                     >
                         <Text style={[styles.name, { color: allData[id].color, marginTop: 16 }]}>{allData[id].name}</Text>
                         {profession.map((paragraph, index) => (
@@ -317,7 +309,7 @@ const DetailScreen = ({ route, navigation }) => {
                         }
                     </View>
                     <View>
-                        <CircularDraggableProgressBar value={percetange} callBack={(val) => { moveTo(val, true) }} pauseCallBack={() => {  toggleSound(); setIsPaused(!isPaused) }} isPaused={isPaused} percentage={percetange} color={allData[id].color} />
+                        <CircularDraggableProgressBar value={percetange} callBack={(val) => { moveTo(val, true) }} pauseCallBack={() => { toggleSound(); setIsPaused(!isPaused) }} isPaused={isPaused} percentage={percetange} color={allData[id].color} />
                     </View>
                     {
                         isScrolled
@@ -353,6 +345,7 @@ const DetailScreen = ({ route, navigation }) => {
                 </Animated.View>
             </View>
         </View>
+
 
     )
 }

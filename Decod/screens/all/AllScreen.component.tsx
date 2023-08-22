@@ -1,5 +1,5 @@
 import React, { useRef } from "react";
-import { Image, View, TouchableOpacity, FlatList, Text, StatusBar, Platform } from "react-native";
+import { Image, View, TouchableOpacity, FlatList, Text, StatusBar, Platform, Dimensions } from "react-native";
 import Header from "../../components/header/Header";
 import { useState } from "react";
 import styles from "./AllScreen.styles";
@@ -12,6 +12,11 @@ const AllScreen = () => {
         StatusBar.setBackgroundColor('white');
     }
 
+    // console.log("latime " +  Dimensions.get('window').width)
+
+    const spaceBetween = (Dimensions.get('window').width - 296 - 54) / 3
+    console.log(spaceBetween)
+
     const navigation = useNavigation()
 
     const insets = useSafeAreaInsets();
@@ -21,7 +26,7 @@ const AllScreen = () => {
         if (!isNavigatingRef.current) {
           isNavigatingRef.current = true;
     
-          console.log(pic);
+        //   console.log(pic);
           navigation.push("Detail", { id: pic });
     
           setTimeout(() => {
@@ -37,7 +42,7 @@ const AllScreen = () => {
         return (
             <View>
                 <TouchableOpacity onPress={() => { navigateToDetail(index + 1) }}>
-                    <Image style={{ height: 99, width: 74, marginBottom: 20 }} source={thumbs[index]} />
+                    <Image style={{ height: 99, width: 74, marginBottom: spaceBetween }} source={thumbs[index]} />
                 </TouchableOpacity>
             </View>
         );

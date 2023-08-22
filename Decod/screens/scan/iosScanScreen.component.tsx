@@ -52,19 +52,17 @@ const IOSScanScreen = ({ model }) => {
                 const nextImageTensor = images.next().value;
                 if (nextImageTensor) {
                     const resizedImage = tf.image.resizeBilinear(nextImageTensor, [224, 224]);
-                    const normalized = tf.expandDims(tf.sub(tf.div(tf.cast(resizedImage, 'float32'), 127.5), 1), 0);
-                    // const prediction = startPrediction(model, normalized);
-                    // face = 0;
-                    // tf.dispose([normalized]);
+                    const normalized = tf.tidy(() => {
+                        const op = tf.expandDims(tf.sub(tf.div(tf.cast(resizedImage, 'float32'), 127.5), 1), 0);
+                        return op})
+                
                     startPrediction(model, normalized, face)
-                        .then(() => {
-                            face = 0;
-                            tf.dispose([nextImageTensor, normalized, resizedImage]);
-                        })
-                        .catch((error) => {
-                            console.log('Error predicting from tensor image', error);
-                            tf.dispose([nextImageTensor, normalized, resizedImage]);
-                        });
+                            .then(() => {
+                                face = 0;
+                                tf.dispose([images,nextImageTensor, normalized, resizedImage]);                            })
+                            .catch((error) => {
+                                console.log('Error predicting from tensor image', error);
+                                tf.dispose([images,nextImageTensor, normalized, resizedImage]);                            });
                 }
             }
             frame += 1;
@@ -73,7 +71,7 @@ const IOSScanScreen = ({ model }) => {
         }
         loop();
     }
-    
+
 
     const containerHeight = Dimensions.get("window").width * 1080 / 608
     const screenHeight = Dimensions.get("window").height
@@ -112,7 +110,7 @@ const IOSScanScreen = ({ model }) => {
                                 <View style={{ height: containerHeight, width: '100%' }}>
                                     <Image
                                         source={require('./../../assets/icons/target_icon.png')}
-                                        style={[styles.imageContainer, { top: 194 - extraSpace}]}
+                                        style={[styles.imageContainer, { top: 194 - extraSpace }]}
                                     />
                                 </View>
                             </View>
