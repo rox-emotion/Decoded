@@ -6,13 +6,13 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  cameraDev:{
+  cameraDev: {
     height: '100%',
     width: Dimensions.get('screen').width,
   },
   camera: {
     height: Dimensions.get('screen').height,
-    width: Dimensions.get('screen').height * 3/4
+    width: Dimensions.get('screen').height * 3 / 4
   },
   button: {
     backgroundColor: '#333',
@@ -20,7 +20,7 @@ const styles = StyleSheet.create({
     padding: 10,
     borderRadius: 5,
   },
-  mainContainer:{
+  mainContainer: {
     height: Dimensions.get('screen').height,
     display: 'flex',
     flexDirection: 'column',
@@ -28,8 +28,15 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   imageContainer: {
-    height: 160, 
+    height: 160,
     width: 95,
+  },
+  container: {
+    flex: 1,
+  },
+  imageBackground: {
+    flex: 1,
+    resizeMode: 'cover', // This is redundant as we already specified resizeMode in the component prop, but it's good practice to keep it here as well
   },
 });
 

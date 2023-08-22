@@ -288,7 +288,7 @@ const DetailScreen = ({ route, navigation }) => {
                                     inputRange: [0, 1],
                                     outputRange: [0, -picHeight],
                                     extrapolate: 'clamp',
-                                }),
+                                })
                             },
                         ],
                         width: Dimensions.get("window").width,
@@ -326,7 +326,7 @@ const DetailScreen = ({ route, navigation }) => {
                         isScrolled
                             ? <View style={{ height: textContainerHeight, marginHorizontal: 28, marginTop: 40 }}>
 
-                                <RNFadedScrollView allowStartFade={true} fadeSize={40} allowEndFade={false}
+                                <RNFadedScrollView allowStartFade={true} allowEndFade={true} fadeSize={40}
                                     showsVerticalScrollIndicator={false}
                                     showsHorizontalScrollIndicator={false}
                                     fadeColors={['rgba(255, 255, 255, 0.1)', 'rgba(255, 255, 255, 0.3)', 'rgba(255, 255, 255, 0.99)']}>

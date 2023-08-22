@@ -18,6 +18,9 @@ const IOSScanScreen = ({ model }) => {
     const navigation = useNavigation();
     const isFocused = useIsFocused()
     const videoRef = useRef<Video>(null);
+
+    tf.env().set("WEBGL_DELETE_TEXTURE_THRESHOLD", 0);
+    
     useEffect(() => {
         askForPermissions()
     }, [])

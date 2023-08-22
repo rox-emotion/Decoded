@@ -9,7 +9,7 @@ import * as ImageManipulator from 'expo-image-manipulator';
 import { captureRef } from 'react-native-view-shot';
 import { useEffect, useRef } from 'react';
 import { useIsFocused, useNavigation } from '@react-navigation/native';
-import { View, Image, StatusBar, Platform } from 'react-native';
+import { View, Image, StatusBar, Platform, ImageBackground, StyleSheet } from 'react-native';
 import React from 'react';
 import { Dimensions } from 'react-native';
 
@@ -20,7 +20,7 @@ const AndroidScanScreen = ({ model }) => {
     const isFocused = useIsFocused()
     const navigation = useNavigation()
 
-
+    tf.env().set("WEBGL_DELETE_TEXTURE_THRESHOLD", 0);
     useEffect(() => {
         const timer = setTimeout(() => {
             main()
@@ -62,11 +62,15 @@ const AndroidScanScreen = ({ model }) => {
             encoding: FileSystem.EncodingType.Base64,
         });
         const imageBytes = new Uint8Array(Buffer.from(imageString, 'base64'));
-        const imageTensor = decodeJpeg(imageBytes);
-        const resized = tf.image.resizeBilinear(imageTensor, [224, 224]);
-        const normalized = tf.expandDims(tf.sub(tf.div(tf.cast(resized, 'float32'), 127.5), 1), 0);
-        tf.dispose([imageTensor, resized])
+        const normalized = tf.tidy(() => {
+            const imageTensor = decodeJpeg(imageBytes);
+            const resized = tf.image.resizeBilinear(imageTensor, [224, 224]);
+            const op = tf.expandDims(tf.sub(tf.div(tf.cast(resized, 'float32'), 127.5), 1), 0);
+            tf.dispose([imageTensor, resized])
+            return op;
+        });
         startPrediction(model, normalized);
+        tf.dispose(normalized)
     }
 
     const startPrediction = async (model, tensor) => {
@@ -115,27 +119,51 @@ const AndroidScanScreen = ({ model }) => {
                     type={CameraType.back} ref={cameraRef}
 
                 >
+
                     <View style={{ marginTop: 52 }}>
                         <Header hasMenu={false} hasBack={false} hasIcon={true} />
                     </View>
 
-                    <View
-                        style={{ marginTop: (Dimensions.get('window').height - containerHeight) / 2 - 40 }}
-                    >
-                        <View style={{ height: containerHeight, width: '100%' }}>
-                            <Image
-                                source={require('./../../assets/icons/target_icon.png')}
-                                style={{ height: 160, width: 95, marginTop: 199 - extraSpace, alignSelf: 'center' }}
 
+                    <View style={newStyles.mainContainer}>
+                        <View style={newStyles.container}>
+                            <Image
+                                source={require('./../../assets/icons/target.png')}
+                                style={newStyles.image}
+                                resizeMode="cover"
                             />
                         </View>
                     </View>
 
+
+
                 </Camera>
+
             )
             }
         </View>
     )
 }
+
+const newStyles = StyleSheet.create({
+    mainContainer: {
+        width: Dimensions.get("screen").width,
+        height: Dimensions.get("screen").height,
+        justifyContent: 'center',
+        alignItems: 'center',
+        position: "absolute",
+        alignSelf: 'center'
+    },
+    container: {
+        width: Dimensions.get("window").width,
+        height: Dimensions.get("window").width,
+        overflow: 'hidden',
+    },
+    image: {
+        flex: 1,
+        width: '100%'
+    },
+});
+
 
 export default AndroidScanScreen;

@@ -6,14 +6,14 @@ import styles from "./SplashScreen.styles";
 import * as tf from '@tensorflow/tfjs';
 
 const SplashScreen = () => {
-    if(Platform.OS == 'android'){
+    if (Platform.OS == 'android') {
         StatusBar.setBackgroundColor('#26170D');
     }
 
     const videoPlayer = useRef(null);
     const videoSource = require('./../../assets/video/a.mp4');
     const [isTfReady, setIsTfReady] = useState(false);
-    
+
     useEffect(() => {
         if (videoPlayer.current) {
             videoPlayer.current.playAsync();
@@ -41,6 +41,7 @@ const SplashScreen = () => {
                 />
             </View>
         </View>
+       
 
     );
 
