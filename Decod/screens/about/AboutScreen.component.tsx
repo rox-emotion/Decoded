@@ -6,6 +6,7 @@ import styles from "./AboutScreen.styles";
 import { aboutDecoded, aboutHA, aboutMarcus } from "./texts";
 import { Linking } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { useNavigation } from "@react-navigation/native";
 
 const AboutScreen = () => {
     if(Platform.OS == 'android'){
@@ -20,6 +21,7 @@ const AboutScreen = () => {
     const paragraphsMarcus = aboutMarcus.split('\n');
     const insets = useSafeAreaInsets();
     const bottomNavBarHeight = insets.bottom;
+    const navigation = useNavigation()
 
     const handleLinkPress = async (url) => {
 

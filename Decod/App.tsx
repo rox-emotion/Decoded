@@ -103,7 +103,6 @@ const App = () => {
       <Stack.Screen name="All" component={AllScreen} />
       <Stack.Screen name="About" component={AboutScreen} />
       <Stack.Screen name="Poetry" component={PoetryScreen} />
-
     </Stack.Navigator>
   )
 

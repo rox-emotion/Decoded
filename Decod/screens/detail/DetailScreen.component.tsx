@@ -334,6 +334,11 @@ const DetailScreen = ({ route, navigation }) => {
                                     {text.map((paragraph, index) => (
                                         <Text style={[styles.smallText]} key={index}>{paragraph}</Text>
                                     ))}
+
+                                    {allData[id].spanishTranscript 
+                                    ? <Text style={[styles.smallText, {fontFamily:'californian-italic'}]}>{allData[id].spanishTranscript}</Text>
+                                    : null
+                                    }
                                 </RNFadedScrollView>
                                 <TouchableOpacity onPress={scrollUp}>
                                     <Image source={require('./../../assets/icons/up_arrow.png')} style={{ height: 19, width: 38, alignSelf: 'center', marginTop: 18 }} />
