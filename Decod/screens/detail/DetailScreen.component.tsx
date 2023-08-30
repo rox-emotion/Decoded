@@ -18,12 +18,15 @@ const DetailScreen = ({ route, navigation }) => {
         StatusBar.setBackgroundColor('white');
     }
 
-
     const id = route.params.id - 1
     const allData = data
     const [percetange, setPercentage] = useState(0)
     const [isPaused, setIsPaused] = useState(false);
     const text = allData[id].transcript.split('\n')
+    let spanishText = []
+    if (allData[id].spanishTranscript) {
+        spanishText = allData[id].spanishTranscript?.split('\n')
+    }
     const isFocused = useIsFocused()
     const win = Dimensions.get('window');
     const ratio = (win.width - 56) / 1944;
@@ -350,6 +353,12 @@ const DetailScreen = ({ route, navigation }) => {
                                     {text.map((paragraph, index) => (
                                         <Text style={[styles.smallText]} key={index}>{paragraph}</Text>
                                     ))}
+
+                                    {spanishText.map((paragraph, index) => (
+                                        <Text style={[styles.smallText, { fontFamily: 'californian-italic' }]} key={index}>{paragraph}</Text>
+                                    ))}
+
+                                    
                                 </RNFadedScrollView>
                                 <TouchableOpacity onPress={scrollUp}>
                                     <Image source={require('./../../assets/icons/up_arrow.png')} style={{ height: 19, width: 38, alignSelf: 'center', marginTop: 18 }} />
