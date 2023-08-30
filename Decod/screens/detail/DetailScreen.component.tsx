@@ -11,7 +11,7 @@ import RNFadedScrollView from 'expo-faded-scrollview';
 import sounds from "./sounds";
 import { CircularDraggableProgressBar } from "./circular/Circular";
 import styles from "./DetailScreen.styles";
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { useSafeAreaInsets } from 'react-native-safe-area-context'
 
 const DetailScreen = ({ route, navigation }) => {
     if (Platform.OS == 'android') {
@@ -78,7 +78,7 @@ const DetailScreen = ({ route, navigation }) => {
 
     useEffect(() => {
         enableAudio();
-
+        console.log(isFocused, "test ");
         if (isFocused === true) {
             playSound();
         } else if (isFocused === false) {
@@ -147,9 +147,23 @@ const DetailScreen = ({ route, navigation }) => {
 
     const playSound = async () => {
         try {
-            const { sound } = await Audio.Sound.createAsync(sounds[id], { shouldPlay: true });
-            soundRef.current = sound;
-            await sound.playAsync();
+
+            // const { sound } = await Audio.Sound.createAsync(sounds[id], { shouldPlay: true });
+            const sound = new Audio.Sound();
+            try {
+                console.log("play", sounds[id])
+                await sound.loadAsync(sounds[id], { shouldPlay: true });
+                console.log("loaded");
+                await sound.setPositionAsync(0);
+                await sound.playAsync();
+                soundRef.current = sound;
+                console.log("play")
+            } catch (error) {
+                console.error(error)
+            }
+
+
+
         } catch (e) {
             console.log('playSound ' + e)
         }
@@ -170,6 +184,8 @@ const DetailScreen = ({ route, navigation }) => {
         try {
             if (soundRef.current) {
                 await soundRef.current.stopAsync();
+                await soundRef.current.unloadAsync();
+                console.log("stopped sound");
             }
         }
         catch (e) {
@@ -288,7 +304,7 @@ const DetailScreen = ({ route, navigation }) => {
                                     inputRange: [0, 1],
                                     outputRange: [0, -picHeight],
                                     extrapolate: 'clamp',
-                                })
+                                }),
                             },
                         ],
                         width: Dimensions.get("window").width,
@@ -326,7 +342,7 @@ const DetailScreen = ({ route, navigation }) => {
                         isScrolled
                             ? <View style={{ height: textContainerHeight, marginHorizontal: 28, marginTop: 40 }}>
 
-                                <RNFadedScrollView allowStartFade={true} allowEndFade={true} fadeSize={40}
+                                <RNFadedScrollView allowStartFade={true} fadeSize={40} allowEndFade={false}
                                     showsVerticalScrollIndicator={false}
                                     showsHorizontalScrollIndicator={false}
                                     fadeColors={['rgba(255, 255, 255, 0.1)', 'rgba(255, 255, 255, 0.3)', 'rgba(255, 255, 255, 0.99)']}>
@@ -334,11 +350,6 @@ const DetailScreen = ({ route, navigation }) => {
                                     {text.map((paragraph, index) => (
                                         <Text style={[styles.smallText]} key={index}>{paragraph}</Text>
                                     ))}
-
-                                    {allData[id].spanishTranscript 
-                                    ? <Text style={[styles.smallText, {fontFamily:'californian-italic'}]}>{allData[id].spanishTranscript}</Text>
-                                    : null
-                                    }
                                 </RNFadedScrollView>
                                 <TouchableOpacity onPress={scrollUp}>
                                     <Image source={require('./../../assets/icons/up_arrow.png')} style={{ height: 19, width: 38, alignSelf: 'center', marginTop: 18 }} />

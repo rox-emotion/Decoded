@@ -17,6 +17,7 @@ const styles = StyleSheet.create({
         fontSize: 20,
         textAlign: 'center',
         fontFamily: 'californian-bold',
+        marginHorizontal:20
         
     },
     smallText: {

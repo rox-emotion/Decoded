@@ -12,7 +12,8 @@ const styles = StyleSheet.create({
   },
   camera: {
     height: Dimensions.get('screen').height,
-    width: Dimensions.get('screen').height * 3 / 4
+    width: Dimensions.get('screen').height * 3 / 4,
+    alignSelf:'center'
   },
   button: {
     backgroundColor: '#333',

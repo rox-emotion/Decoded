@@ -17,6 +17,9 @@ import IOSScanScreen from './screens/scan/iosScanScreen.component';
 import AndroidScanScreen from './screens/scan/AndroidScanScreen.component';
 import { Platform } from 'react-native';
 import PoetryScreen from './screens/poetry/PoetryScreen';
+import { enableScreens, enableFreeze } from 'react-native-screens';
+enableScreens();
+enableFreeze();
 
 const Stack = createNativeStackNavigator();
 
@@ -82,7 +85,8 @@ const App = () => {
   }
 
   const iosPermissionStackScreen = (
-    <Stack.Navigator screenOptions={{ headerShown: false, navigationBarColor: 'transparent' }}>
+    <Stack.Navigator freezeOnBlur={true} detachPreviousScreen={false} detachInactiveScreens={false} screenOptions={{ freezeOnBlur: true, headerShown: false, navigationBarColor: 'transparent', detachPreviousScreen: false, detachInactiveScreens: false }}
+    >
       <Stack.Screen name="Scan">
         {(props) => <IOSScanScreen {...props} model={loadedModel} />}
       </Stack.Screen>
@@ -95,7 +99,7 @@ const App = () => {
   )
 
   const androidpermissionStackScreen = (
-    <Stack.Navigator screenOptions={{ headerShown: false, navigationBarColor: 'white' }}>
+    <Stack.Navigator screenOptions={{ freezeOnBlur: true, headerShown: false, navigationBarColor: 'transparent' }}>
       <Stack.Screen name="Scan" options={{ navigationBarColor: 'transparent' }}>
         {(props) => <AndroidScanScreen {...props} model={loadedModel} />}
       </Stack.Screen>

@@ -1,8 +1,9 @@
 import React from "react";
 import { Image, View, TouchableOpacity } from "react-native";
 import { useNavigation, useRoute } from '@react-navigation/native';
+import { StackActions } from '@react-navigation/native';
 import styles from "./Header.style";
-
+const popAction = StackActions.pop(1);
 const Header = ({ hasMenu, hasBack, hasIcon }) => {
     const menu = hasMenu;
     const back = hasBack;
@@ -15,7 +16,7 @@ const Header = ({ hasMenu, hasBack, hasIcon }) => {
             {
                 !menu && !back && icon
                     ? <View style={styles.singleContainer}>
-                        <TouchableOpacity onPress={() => {  navigation.push('About') }}>
+                        <TouchableOpacity onPress={() => { navigation.push('About') }}>
                             <Image
                                 source={require('../../assets/icons/icon.png')}
                                 style={{ height: 38, width: 40 }}
@@ -24,14 +25,14 @@ const Header = ({ hasMenu, hasBack, hasIcon }) => {
                     </View>
                     : !menu && back && icon
                         ? <View style={styles.container}>
-                            <TouchableOpacity style={{height:45}} onPress={() => { if(route.name === "About") {navigation.navigate('Scan')} else {navigation.goBack()}}}>
+                            <TouchableOpacity style={{ height: 45, width: 70 }} onPress={() => { if (route.name === "About") { navigation.navigate('Scan') } else { navigation.dispatch(popAction) } }}>
                                 <Image
                                     source={require('../../assets/icons/back_arrow.png')}
                                     style={{ height: 38, width: 19 }}
 
                                 />
                             </TouchableOpacity>
-                            <TouchableOpacity onPress={() => {  navigation.push('About') }}>
+                            <TouchableOpacity onPress={() => { navigation.push('About') }}>
                                 <Image
                                     source={require('../../assets/icons/icon.png')}
                                     style={{ height: 38, width: 40 }}
@@ -40,9 +41,9 @@ const Header = ({ hasMenu, hasBack, hasIcon }) => {
                         </View>
                         : menu && back && !icon
                             ? <View style={styles.container}>
-                                
+
                                 <View>
-                                    <TouchableOpacity onPress={() => {  if(route.name === "About") {navigation.navigate('Scan')} else {navigation.goBack()}}}>
+                                    <TouchableOpacity style={{ height: 45, width: 70 }} onPress={() => { if (route.name === "About") { navigation.dispatch(popAction) } else { navigation.goBack() } }}>
                                         <Image
                                             source={require('../../assets/icons/back_arrow.png')}
                                             style={{ height: 38, width: 19 }}
