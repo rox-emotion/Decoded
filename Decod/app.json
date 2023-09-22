@@ -1,11 +1,11 @@
 {
-  "name": "image-classification-expo",
+  "name":"image-classification-expo",
   "displayName": "image-classification-expo",
   "expo": {
     "name": "De.Coded - A Human Atlas",
-    "slug": "image-classification-expo",
-    "version": "2.1.5",
-    "icon": "./assets/icon-x2-120x120.png",
+    "slug": "mihai-1st-project",
+    "version": "1.0.4",
+    "icon": "./assets/icon-1024x1024.png",
     "splash": {
       "backgroundColor": "#26170D"
     },
@@ -15,23 +15,35 @@
     ],
     "ios": {
       "bitcode": false,
-      "bundleIdentifier": "com.glassworks.decoded",
+      "bundleIdentifier": "com.glassworks.decoded.app",
       "infoPlist": {
         "UIBackgroundModes": [
           "audio"
         ],
-        "CFBundleIconName": "icon-x2-120x120.png"
+        "NSCameraUsageDescription":"This app uses the camera to scan the images in the book.",
+        "CFBundleIconName": "icon-1024x1024.png"
       }
     },
     "extra": {
       "eas": {
-        "projectId": "25044ba1-e385-40c7-bc6a-852e876919d5"
+        "projectId": "48160640-6a4e-42a2-8018-11231308c4fc"
       }
     },
     "android": {
-      "package": "com.emotionstudios.decoded"
+      "package": "com.emotionstudios.decoded",
+      "versionCode": 5 
     },
     "plugins": [
+      [
+        "expo-build-properties",
+        {
+          "android": {
+            "compileSdkVersion": 33,
+            "targetSdkVersion": 33,
+            "buildToolsVersion": "33.0.0"
+          }
+        }
+      ],
       "react-native-vision-camera"
     ]
   }

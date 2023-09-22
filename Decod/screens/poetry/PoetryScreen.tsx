@@ -21,9 +21,20 @@ const PoetryScreen = () => {
 
     const playSound = async () => {
         try {
-            const { sound } = await Audio.Sound.createAsync(sounds[101], { shouldPlay: true });
-            soundRef.current = sound;
-            await sound.playAsync();
+            
+
+            const sound = new Audio.Sound();
+            try {
+                await sound.loadAsync({  uri : sounds[101]}, { shouldPlay: true });
+                await sound.setPositionAsync(0);
+                await sound.playAsync();
+                soundRef.current = sound;
+               
+            } catch (error) {
+                console.error(error)
+            }
+
+
         } catch (e) {
             console.log('playSound ' + e)
         }

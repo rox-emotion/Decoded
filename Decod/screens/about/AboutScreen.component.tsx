@@ -16,6 +16,7 @@ const AboutScreen = () => {
     const humanAtlasLink = 'https://www.ahumanatlas.com/'
     const sutherlandLink = 'https://studio-sutherland.co.uk/'
     const tenacityWorksLink = 'https://www.tenacityworks.com/'
+    const bookLink = 'https://www.marcuslyon.com/artworks/de-coded'
     const paragraphsDecoded = aboutDecoded.split('\n');
     const paragraphsHA = aboutHA.split('\n');
     const paragraphsMarcus = aboutMarcus.split('\n');
@@ -52,7 +53,7 @@ const AboutScreen = () => {
                     <Text style={[styles.paragraphText]} key={index}>{paragraph}</Text>
                 ))}
 
-                <TouchableOpacity>
+                <TouchableOpacity onPress={() => { handleLinkPress(bookLink) }}>
                     <Text style={styles.linkText}>Buy the Book → </Text>
                 </TouchableOpacity>
 

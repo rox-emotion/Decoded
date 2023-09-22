@@ -54,19 +54,19 @@ export const CircularDraggableProgressBar = ({
 }: ICircularDraggableProgressBar): JSX.Element => {
 
   //FOR IOS
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setAngleLength(calculateAngleLengthFromValue(percentage))
-    }, 50)
-    return () => { clearTimeout(timer) }
-  })
+  // useEffect(() => {
+  //  const timer = setTimeout(() => {
+  //    setAngleLength(calculateAngleLengthFromValue(percentage))
+  //   }, 50)
+  //   return () => { clearTimeout(timer) }
+  // })
 
   // FOR ANDROID
-  // useEffect(() => {
-  //   // if (Platform.OS === 'android') {
-  //   setAngleLength(calculateAngleLengthFromValue(percentage));
-  //   // }
-  // }, [percentage]);
+  useEffect(() => {
+     if (Platform.OS === 'android') {
+    setAngleLength(calculateAngleLengthFromValue(percentage));
+     }
+  }, [percentage]);
 
 
   const calculateArcCircle = (
@@ -118,7 +118,9 @@ export const CircularDraggableProgressBar = ({
 
   const onTouch = () => {
     if (!responderDragging) {
+   
       setAngleLength(
+       
         calculateAngleLengthFromValue(val < 2 ? val + 1 : val - 1, max)
       )
     }

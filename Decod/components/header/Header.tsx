@@ -25,7 +25,7 @@ const Header = ({ hasMenu, hasBack, hasIcon }) => {
                     </View>
                     : !menu && back && icon
                         ? <View style={styles.container}>
-                            <TouchableOpacity style={{ height: 45, width: 70 }} onPress={() => { if (route.name === "About") { navigation.navigate('Scan') } else { navigation.dispatch(popAction) } }}>
+                            <TouchableOpacity style={{ height: 45,  width: 80, marginLeft:-25, paddingLeft:25 }} onPress={() => { if (route.name === "About") { navigation.navigate('Scan') } else { navigation.dispatch(popAction) } }}>
                                 <Image
                                     source={require('../../assets/icons/back_arrow.png')}
                                     style={{ height: 38, width: 19 }}
@@ -43,7 +43,7 @@ const Header = ({ hasMenu, hasBack, hasIcon }) => {
                             ? <View style={styles.container}>
 
                                 <View>
-                                    <TouchableOpacity style={{ height: 45, width: 70 }} onPress={() => { if (route.name === "About") { navigation.dispatch(popAction) } else { navigation.goBack() } }}>
+                                    <TouchableOpacity style={{ height: 45, width: 80, marginLeft:-25, paddingLeft:25 }} onPress={() => { if (route.name === "About") { navigation.dispatch(popAction) } else { navigation.goBack() } }}>
                                         <Image
                                             source={require('../../assets/icons/back_arrow.png')}
                                             style={{ height: 38, width: 19 }}

@@ -155,7 +155,8 @@ const DetailScreen = ({ route, navigation }) => {
             const sound = new Audio.Sound();
             try {
                 console.log("play", sounds[id])
-                await sound.loadAsync(sounds[id], { shouldPlay: true });
+                console.log(sounds[id]);
+                await sound.loadAsync({  uri : sounds[id]}, { shouldPlay: true });
                 console.log("loaded");
                 await sound.setPositionAsync(0);
                 await sound.playAsync();
