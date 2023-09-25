@@ -26,35 +26,6 @@ const styles = StyleSheet.create({
         color: TEXT_COLOR,
         marginBottom:15
     },
-   
-    modal: {
-        padding: 16,
-        height: 150,
-        width: '80%',
-        marginTop: '100%',
-        marginLeft: '10%',
-        borderColor: 'black',
-        borderWidth: 2,
-        borderStyle: 'solid',
-    },
-    buttons: {
-        flexDirection: 'row',
-        justifyContent: 'center',
-        alignItems: 'center'
-    },
-    player: {
-        display: 'flex',
-        flexDirection: 'row',
-        alignSelf: 'center',
-    },
-    containerScroll: {
-        flexDirection: 'column',
-        justifyContent: 'center',
-        alignItems: 'center',
-        height: '90%',
-        width: Dimensions.get('window').width - 56,
-        alignSelf: 'center',
-    },
     pageContainer: {
         flex:1,
         marginTop:50
@@ -65,7 +36,6 @@ const styles = StyleSheet.create({
         flexDirection: 'column',
         justifyContent: 'flex-start',
         alignItems: 'center',
-        // paddingTop:50
     },
     
 

@@ -8,7 +8,7 @@ import { poem } from './poem'
 import { TEXT_COLOR } from "../../utils";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 const PoetryScreen = () => {
-    if(Platform.OS == 'android'){
+    if (Platform.OS == 'android') {
         StatusBar.setBackgroundColor('white');
     }
 
@@ -18,25 +18,21 @@ const PoetryScreen = () => {
     const insets = useSafeAreaInsets();
     const bottomNavBarHeight = insets.bottom;
 
-
     const playSound = async () => {
         try {
-            
-
             const sound = new Audio.Sound();
             try {
-                await sound.loadAsync({  uri : sounds[101]}, { shouldPlay: true });
+                await sound.loadAsync({ uri: sounds[101] }, { shouldPlay: true });
                 await sound.setPositionAsync(0);
                 await sound.playAsync();
                 soundRef.current = sound;
-               
+
             } catch (error) {
                 console.error(error)
             }
 
-
         } catch (e) {
-            console.log('playSound ' + e)
+            console.log('playSound error' + e)
         }
     };
 
@@ -48,7 +44,7 @@ const PoetryScreen = () => {
             }
         }
         catch (e) {
-            console.log("stopSound " + e)
+            console.log("stopSound error" + e)
         }
     }
 
@@ -82,17 +78,17 @@ const PoetryScreen = () => {
 
             })
         } catch (e) {
-            console.log("enableAudio " + e)
+            console.log("enableAudio error" + e)
         }
     }
     return (
         <View style={[styles.mainPage, { paddingBottom: bottomNavBarHeight + 50 }]}>
             <Header hasMenu={true} hasBack={true} hasIcon={false} />
             <ScrollView style={styles.scrollViewContainer}
-             showsVerticalScrollIndicator={false}
-             showsHorizontalScrollIndicator={false}
+                showsVerticalScrollIndicator={false}
+                showsHorizontalScrollIndicator={false}
             >
-                <Text style={[styles.boldText, {marginBottom:8}]}>Source Code</Text>
+                <Text style={[styles.boldText, { marginBottom: 8 }]}>Source Code</Text>
 
                 {poemParts.map((paragraph: string, index: number) => (
                     <Text style={styles.simpleText} key={index}>{paragraph}</Text>
@@ -100,8 +96,6 @@ const PoetryScreen = () => {
 
                 <Text style={styles.boldText}>Tyson Amir </Text>
             </ScrollView>
-
-
         </View >
     )
 }
@@ -112,8 +106,8 @@ const styles = StyleSheet.create({
         paddingHorizontal: 20,
     },
     scrollViewContainer: {
-        marginTop:32,
-        
+        marginTop: 32,
+
     },
     simpleText: {
         fontSize: 16,

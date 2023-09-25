@@ -3,7 +3,9 @@ import { Image, View, TouchableOpacity } from "react-native";
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { StackActions } from '@react-navigation/native';
 import styles from "./Header.style";
+
 const popAction = StackActions.pop(1);
+
 const Header = ({ hasMenu, hasBack, hasIcon }) => {
     const menu = hasMenu;
     const back = hasBack;

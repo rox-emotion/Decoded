@@ -8,10 +8,6 @@ const styles = StyleSheet.create({
         paddingBottom:40,
         marginTop:9
     },
-    image: {
-        height: 99,
-        width: 74,
-    },
     mainContainer:
     {
         flex: 1,

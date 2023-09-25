@@ -1,5 +1,5 @@
 import React, { useRef } from "react";
-import { View, Text, Platform, Animated, Image, TouchableOpacity, StyleSheet, ImageBackground, StatusBar } from 'react-native';
+import { View, Text, Platform, Animated, Image, TouchableOpacity, StatusBar } from 'react-native';
 import { useEffect, useState } from "react";
 import { Audio, InterruptionModeAndroid, InterruptionModeIOS } from 'expo-av';
 import { useIsFocused, useNavigation } from "@react-navigation/native";
@@ -12,6 +12,7 @@ import sounds from "./sounds";
 import { CircularDraggableProgressBar } from "./circular/Circular";
 import styles from "./DetailScreen.styles";
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
+import { AndroidCircularDraggableProgressBar } from "./circular/androidCircular";
 
 const DetailScreen = ({ route, navigation }) => {
     if (Platform.OS == 'android') {
@@ -45,7 +46,6 @@ const DetailScreen = ({ route, navigation }) => {
     let picHeight = available - elements
 
     let textContainerHeight = available - (38 + 12 + textHeight + 115 + 32)
-
 
     //ANIMATIONS
     const scrollAnim = useRef(new Animated.Value(0)).current;
@@ -143,36 +143,28 @@ const DetailScreen = ({ route, navigation }) => {
                     setPercentage(percentage);
                 }
             } catch (e) {
-                console.log('calculatePosition ' + e)
+                console.log('calculatePosition error ' + e)
             }
         }
     };
 
     const playSound = async () => {
         try {
-
-            // const { sound } = await Audio.Sound.createAsync(sounds[id], { shouldPlay: true });
             const sound = new Audio.Sound();
             try {
-                console.log("play", sounds[id])
                 console.log(sounds[id]);
-                await sound.loadAsync({  uri : sounds[id]}, { shouldPlay: true });
-                console.log("loaded");
+                await sound.loadAsync({ uri: sounds[id] }, { shouldPlay: true });
                 await sound.setPositionAsync(0);
                 await sound.playAsync();
                 soundRef.current = sound;
-                console.log("play")
             } catch (error) {
                 console.error(error)
             }
 
-
-
         } catch (e) {
-            console.log('playSound ' + e)
+            console.log('playSound error' + e)
         }
     };
-
 
     const pauseSound = async () => {
         try {
@@ -180,7 +172,7 @@ const DetailScreen = ({ route, navigation }) => {
                 await soundRef.current.pauseAsync();
             }
         } catch (e) {
-            console.log('pauseSound ' + e)
+            console.log('pauseSound error' + e)
         }
     };
 
@@ -189,11 +181,10 @@ const DetailScreen = ({ route, navigation }) => {
             if (soundRef.current) {
                 await soundRef.current.stopAsync();
                 await soundRef.current.unloadAsync();
-                console.log("stopped sound");
             }
         }
         catch (e) {
-            console.log("stopSound " + e)
+            console.log("stopSound error" + e)
         }
     }
 
@@ -207,11 +198,9 @@ const DetailScreen = ({ route, navigation }) => {
                 shouldDuckAndroid: true,
                 interruptionModeAndroid: InterruptionModeAndroid.DuckOthers,
                 playThroughEarpieceAndroid: false
-
-
             })
         } catch (e) {
-            console.log("enableAudio " + e)
+            console.log("enableAudio error" + e)
         }
     }
 
@@ -233,14 +222,13 @@ const DetailScreen = ({ route, navigation }) => {
                     }
                 }
             } catch (e) {
-                console.log('moving error ' + e)
+                console.log('moving error error' + e)
             }
         }
         catch (e) {
-            console.error("Moving Seek Error" + e)
+            console.error("Moving Seek Error " + e)
         }
     };
-
 
     const scrollDown = () => {
         Animated.parallel([
@@ -329,7 +317,12 @@ const DetailScreen = ({ route, navigation }) => {
                         }
                     </View>
                     <View>
-                        <CircularDraggableProgressBar value={percetange} callBack={(val) => { moveTo(val, true) }} pauseCallBack={() => { toggleSound(); setIsPaused(!isPaused) }} isPaused={isPaused} percentage={percetange} color={allData[id].color} />
+                        {
+                            Platform.OS === 'android'
+                                ? <AndroidCircularDraggableProgressBar value={percetange} callBack={(val) => { moveTo(val, true) }} pauseCallBack={() => { toggleSound(); setIsPaused(!isPaused) }} isPaused={isPaused} percentage={percetange} color={allData[id].color} />
+                                : <CircularDraggableProgressBar value={percetange} callBack={(val) => { moveTo(val, true) }} pauseCallBack={() => { toggleSound(); setIsPaused(!isPaused) }} isPaused={isPaused} percentage={percetange} color={allData[id].color} />
+
+                        }
                     </View>
                     {
                         isScrolled
@@ -359,7 +352,7 @@ const DetailScreen = ({ route, navigation }) => {
                                         <Text style={[styles.smallText, { fontFamily: 'californian-italic' }]} key={index}>{paragraph}</Text>
                                     ))}
 
-                                    
+
                                 </RNFadedScrollView>
                                 <TouchableOpacity onPress={scrollUp}>
                                     <Image source={require('./../../assets/icons/up_arrow.png')} style={{ height: 19, width: 38, alignSelf: 'center', marginTop: 18 }} />
@@ -371,8 +364,6 @@ const DetailScreen = ({ route, navigation }) => {
                 </Animated.View>
             </View>
         </View>
-
-
     )
 }
 

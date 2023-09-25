@@ -8,11 +8,9 @@ import thumbs from "./thumbs";
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 const AllScreen = () => {
-    if(Platform.OS == 'android'){
+    if (Platform.OS == 'android') {
         StatusBar.setBackgroundColor('white');
     }
-
-    // console.log("latime " +  Dimensions.get('window').width)
 
     const spaceBetween = (Dimensions.get('window').width - 296 - 54) / 3
     console.log(spaceBetween)
@@ -21,19 +19,18 @@ const AllScreen = () => {
 
     const insets = useSafeAreaInsets();
     const bottomNavBarHeight = insets.bottom;
-    
+
     const navigateToDetail = (pic) => {
         if (!isNavigatingRef.current) {
-          isNavigatingRef.current = true;
-    
-        //   console.log(pic);
-          navigation.push("Detail", { id: pic });
-    
-          setTimeout(() => {
-            isNavigatingRef.current = false;
-          }, 500);
+            isNavigatingRef.current = true;
+
+            navigation.push("Detail", { id: pic });
+
+            setTimeout(() => {
+                isNavigatingRef.current = false;
+            }, 500);
         }
-      };
+    };
 
     const [images, setImages] = useState(Array.from({ length: 101 }, (_, i) => `00${i + 1}`.slice(-3)));
     const isNavigatingRef = useRef(false);
@@ -48,11 +45,8 @@ const AllScreen = () => {
         );
     };
     return (
-        <View style={[styles.mainContainer, {marginBottom: bottomNavBarHeight }]}>
+        <View style={[styles.mainContainer, { marginBottom: bottomNavBarHeight }]}>
             <Header hasBack={true} hasIcon={true} hasMenu={false} />
-            {/* <TouchableOpacity onPress={() => {navigation.navigate('Poetry')}}>
-                <Text>POEM TO TEST</Text>
-            </TouchableOpacity> */}
             <View style={styles.container}>
                 <FlatList
                     showsVerticalScrollIndicator={false}
@@ -64,7 +58,6 @@ const AllScreen = () => {
                     numColumns={4}
                 />
             </View>
-            
         </View>
     )
 }

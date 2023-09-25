@@ -11,7 +11,6 @@ import { DEV } from './../../config';
 //IOS
 // import * as FaceDetector from 'expo-face-detector'
 
-
 const IOSScanScreen = ({ model }) => {
 
     const TensorCamera = cameraWithTensors(Camera);

@@ -28,7 +28,7 @@ let _circle:
 
 let _iconPanResponder: PanResponderInstance
 
-export const CircularDraggableProgressBar = ({
+export const AndroidCircularDraggableProgressBar = ({
   strokeWidth = 15,
   radius = 50,
   bgCircleColor = 'transparent',
@@ -54,11 +54,8 @@ export const CircularDraggableProgressBar = ({
 }: ICircularDraggableProgressBar): JSX.Element => {
 
   useEffect(() => {
-   const timer = setTimeout(() => {
-     setAngleLength(calculateAngleLengthFromValue(percentage))
-    }, 50)
-    return () => { clearTimeout(timer) }
-  })
+    setAngleLength(calculateAngleLengthFromValue(percentage));
+  }, [percentage]);
 
   const calculateArcCircle = (
     index0 = 0,

@@ -1,18 +1,16 @@
 import React from "react";
-import { SafeAreaView, Text, View, Image, TouchableOpacity, StatusBar, Platform } from "react-native";
+import { Text, View, Image, TouchableOpacity, StatusBar, Platform } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import Header from "../../components/header/Header";
 import styles from "./AboutScreen.styles";
 import { aboutDecoded, aboutHA, aboutMarcus } from "./texts";
 import { Linking } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { useNavigation } from "@react-navigation/native";
 
 const AboutScreen = () => {
-    if(Platform.OS == 'android'){
+    if (Platform.OS == 'android') {
         StatusBar.setBackgroundColor('white');
     }
-
     const humanAtlasLink = 'https://www.ahumanatlas.com/'
     const sutherlandLink = 'https://studio-sutherland.co.uk/'
     const tenacityWorksLink = 'https://www.tenacityworks.com/'
@@ -22,12 +20,9 @@ const AboutScreen = () => {
     const paragraphsMarcus = aboutMarcus.split('\n');
     const insets = useSafeAreaInsets();
     const bottomNavBarHeight = insets.bottom;
-    const navigation = useNavigation()
 
     const handleLinkPress = async (url) => {
-
         const supported = await Linking.canOpenURL(url);
-
         if (supported) {
             await Linking.openURL(url);
         } else {
@@ -36,14 +31,14 @@ const AboutScreen = () => {
     };
 
     return (
-        <View style={[styles.mainContainer, {marginBottom: bottomNavBarHeight + 8}]}>
+        <View style={[styles.mainContainer, { marginBottom: bottomNavBarHeight + 8 }]}>
             <Header hasBack={true} hasIcon={false} hasMenu={true} />
             <ScrollView
                 showsVerticalScrollIndicator={false}
                 showsHorizontalScrollIndicator={false}
                 style={{ marginTop: 15 }}
             >
-                <Image source={require('./../../assets/icons/decoded_logo.png')} style={{ height: 232, width: 158, alignSelf: 'center', marginBottom: 26, marginTop:16 }} />
+                <Image source={require('./../../assets/icons/decoded_logo.png')} style={{ height: 232, width: 158, alignSelf: 'center', marginBottom: 26, marginTop: 16 }} />
                 <Text style={styles.title}>De.Coded</Text>
                 <Text style={styles.subtitle}>A Human Atlas of</Text>
                 <Text style={styles.subtitle}>Silicon Valley</Text>
@@ -86,9 +81,7 @@ const AboutScreen = () => {
                         <Text style={styles.credits}>Tenacity Works</Text>
                     </TouchableOpacity>
                 </View>
-
             </ScrollView>
-
         </View >
 
     )

@@ -9,7 +9,7 @@ import * as ImageManipulator from 'expo-image-manipulator';
 import { captureRef } from 'react-native-view-shot';
 import { useEffect, useRef } from 'react';
 import { useIsFocused, useNavigation } from '@react-navigation/native';
-import { View, Image, StatusBar, Platform, ImageBackground, StyleSheet } from 'react-native';
+import { View, Image, StatusBar, StyleSheet } from 'react-native';
 import React from 'react';
 import { Dimensions } from 'react-native';
 
@@ -34,7 +34,6 @@ const AndroidScanScreen = ({ model }) => {
     const main = async () => {
         if (cameraRef.current) {
             try {
-                console.log('Start picture taking');
                 const uri = await captureRef(cameraRef, {
                     format: 'jpg',
                     quality: 0.8,
@@ -42,7 +41,7 @@ const AndroidScanScreen = ({ model }) => {
                 await transformImageToTensor(uri);
             }
             catch (e) {
-                console.log(e)
+                console.log("take picture error " + e)
             }
         }
     }
@@ -107,10 +106,6 @@ const AndroidScanScreen = ({ model }) => {
 
     };
 
-    const containerHeight = Dimensions.get("window").width * 1080 / 608
-    const screenHeight = Dimensions.get("window").height
-    const extraSpace = screenHeight < containerHeight ? (containerHeight - screenHeight) / 2 : 0
-
     return (
         <View style={styles.mainContainer}>
             {isFocused && (
@@ -124,7 +119,6 @@ const AndroidScanScreen = ({ model }) => {
                         <Header hasMenu={false} hasBack={false} hasIcon={true} />
                     </View>
 
-
                     <View style={newStyles.mainContainer}>
                         <View style={newStyles.container}>
                             <Image
@@ -134,11 +128,7 @@ const AndroidScanScreen = ({ model }) => {
                             />
                         </View>
                     </View>
-
-
-
                 </Camera>
-
             )
             }
         </View>

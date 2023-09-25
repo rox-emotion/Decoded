@@ -1,10 +1,7 @@
-import { Dimensions, Platform, StatusBar, StyleSheet } from 'react-native';
+import { StyleSheet } from 'react-native';
 import { SECONDARY_COLOR_BLUE, SECONDARY_COLOR_GOLD, TEXT_COLOR } from '../../utils';
 
 const styles = StyleSheet.create({
-    scrollContainer: {
-        height: '90%'
-    },
     title: {
         fontSize: 28,
         alignSelf: 'center',
@@ -21,11 +18,6 @@ const styles = StyleSheet.create({
         fontSize: 28,
         alignSelf: 'center',
         fontFamily: 'californian-italic',
-        color: TEXT_COLOR
-    },
-    smallText: {
-        fontSize: 18,
-        fontFamily: 'californian-regular',
         color: TEXT_COLOR
     },
     paragraphText:{
