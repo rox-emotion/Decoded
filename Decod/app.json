@@ -4,7 +4,7 @@
   "expo": {
     "name": "De.Coded - A Human Atlas",
     "slug": "mihai-1st-project",
-    "version": "1.0.4",
+    "version": "3.0.0",
     "icon": "./assets/icon-1024x1024.png",
     "splash": {
       "backgroundColor": "#26170D"
@@ -31,7 +31,7 @@
     },
     "android": {
       "package": "com.emotionstudios.decoded",
-      "versionCode": 5 
+      "versionCode": 22
     },
     "plugins": [
       [
@@ -39,7 +39,7 @@
         {
           "android": {
             "compileSdkVersion": 33,
-            "targetSdkVersion": 33,
+            "targetSdkVersion": 34,
             "buildToolsVersion": "33.0.0"
           }
         }
